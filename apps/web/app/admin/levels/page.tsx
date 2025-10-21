@@ -5,13 +5,12 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   Card,
   CardContent,
-  CardHeader,
-  CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { CircularProgress } from '@/components/ui/circular-progress';
 import { toast } from '@/components/ui/use-toast';
 import { axiosInstance } from '@/lib/axios';
+import { Plus, Edit, X, Trophy } from 'lucide-react';
 
 interface Level {
   id: number;
@@ -22,16 +21,15 @@ interface Level {
 
 interface LevelFormData {
   name: string;
-  passingPercent: number;
   description: string;
 }
 
 export default function LevelsPage() {
-  const [isEditing, setIsEditing] = useState(false);
-  const [currentLevel, setCurrentLevel] = useState<Level | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editingLevel, setEditingLevel] = useState<Level | null>(null);
   const [formData, setFormData] = useState<LevelFormData>({
     name: '',
-    passingPercent: 75,
     description: '',
   });
 
@@ -60,8 +58,8 @@ export default function LevelsPage() {
 
   const mutation = useMutation<Level, Error, LevelFormData>({
     mutationFn: async (data: LevelFormData) => {
-      if (currentLevel) {
-        const response = await axiosInstance.put<Level>(`/levels/${currentLevel.id}`, data);
+      if (isEditMode && editingLevel) {
+        const response = await axiosInstance.put<Level>(`/levels/${editingLevel.id}`, data);
         return response.data;
       }
       const response = await axiosInstance.post<Level>('/levels', data);
@@ -69,37 +67,47 @@ export default function LevelsPage() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['levels'] });
-      toast.success(`Level ${currentLevel ? 'updated' : 'created'} successfully`);
+      toast.success(`Level ${isEditMode ? 'updated' : 'created'} successfully`);
       resetForm();
     },
     onError: () => {
-      toast.error(`Failed to ${currentLevel ? 'update' : 'create'} level`);
+      toast.error(`Failed to ${isEditMode ? 'update' : 'create'} level`);
     },
   });
+
+  const openCreateModal = () => {
+    setIsEditMode(false);
+    setEditingLevel(null);
+    setFormData({
+      name: '',
+      description: '',
+    });
+    setShowModal(true);
+  };
+
+  const openEditModal = (level: Level) => {
+    setIsEditMode(true);
+    setEditingLevel(level);
+    setFormData({
+      name: level.name,
+      description: level.description,
+    });
+    setShowModal(true);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     mutation.mutate(formData);
   };
 
-  const handleEdit = (level: Level) => {
-    setCurrentLevel(level);
-    setFormData({
-      name: level.name,
-      passingPercent: level.passingPercent,
-      description: level.description,
-    });
-    setIsEditing(true);
-  };
-
   const resetForm = () => {
-    setCurrentLevel(null);
+    setShowModal(false);
+    setIsEditMode(false);
+    setEditingLevel(null);
     setFormData({
       name: '',
-      passingPercent: 75,
       description: '',
     });
-    setIsEditing(false);
   };
 
   if (isLoading) {
@@ -108,7 +116,7 @@ export default function LevelsPage() {
 
   if (error) {
     return (
-      <div className="p-6">
+      <div className="p-8">
         <Card className="border-red-200 bg-red-50">
           <CardContent className="p-6">
             <h3 className="text-red-800 font-semibold mb-2">⚠️ Error Loading Levels</h3>
@@ -126,135 +134,139 @@ export default function LevelsPage() {
   const safeLevels = Array.isArray(levels) ? levels : [];
 
   return (
-    <div className="p-6">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Levels List */}
-        <div className="lg:col-span-2">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle>Abacus Levels</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4">
-                {safeLevels.map((level: Level) => (
-                  <Card key={level.id}>
-                    <CardContent className="p-4">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h3 className="text-lg font-semibold">{level.name}</h3>
-                          <p className="text-sm text-gray-600 mt-1">
-                            {level.description}
-                          </p>
-                          <p className="text-sm font-medium mt-2">
-                            Passing: {level.passingPercent}%
-                          </p>
-                        </div>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleEdit(level)}
-                        >
-                          Edit
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Level Form */}
+    <div className="p-8">
+      {/* Header */}
+      <div className="mb-8 flex items-center justify-between">
         <div>
-          <Card>
-            <CardHeader>
-              <CardTitle>
-                {isEditing ? 'Edit Level' : 'Create New Level'}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Level Name
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    className="w-full px-3 py-2 border rounded-md"
-                    required
-                    aria-label="Level Name"
-                  />
-                </div>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+            Abacus Levels
+          </h1>
+          <p className="text-gray-600 mt-2">Manage learning levels and their requirements</p>
+        </div>
+        <Button
+          onClick={openCreateModal}
+          className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-6 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          Add Level
+        </Button>
+      </div>
 
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Passing Percentage
-                  </label>
-                  <input
-                    type="number"
-                    value={formData.passingPercent}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        passingPercent: Number(e.target.value),
-                      })
-                    }
-                    min="0"
-                    max="100"
-                    className="w-full px-3 py-2 border rounded-md"
-                    required
-                    aria-label="Passing Percentage"
-                  />
+      {/* Levels Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {safeLevels.map((level: Level) => (
+          <Card
+            key={level.id}
+            className="overflow-hidden hover:shadow-xl transition-shadow duration-200"
+          >
+            <div className="bg-gradient-to-br from-purple-500 to-blue-500 p-6 text-white">
+              <div className="flex items-center justify-between mb-3">
+                <div className="bg-white/20 p-3 rounded-full">
+                  <Trophy className="w-6 h-6" />
                 </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Description
-                  </label>
-                  <textarea
-                    value={formData.description}
-                    onChange={(e) =>
-                      setFormData({ ...formData, description: e.target.value })
-                    }
-                    className="w-full px-3 py-2 border rounded-md"
-                    rows={4}
-                    aria-label="Level Description"
-                  />
-                </div>
-
-                <div className="flex space-x-2">
-                  <Button
-                    type="submit"
-                    disabled={mutation.isPending}
-                    className="flex-1"
-                  >
-                    {mutation.isPending
-                      ? 'Saving...'
-                      : isEditing
-                      ? 'Update Level'
-                      : 'Create Level'}
-                  </Button>
-                  {isEditing && (
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={resetForm}
-                      className="flex-1"
-                    >
-                      Cancel
-                    </Button>
-                  )}
-                </div>
-              </form>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => openEditModal(level)}
+                  className="text-white hover:bg-white/20"
+                >
+                  <Edit className="w-4 h-4 mr-1" />
+                  Edit
+                </Button>
+              </div>
+              <h3 className="text-2xl font-bold">{level.name}</h3>
+            </div>
+            <CardContent className="p-6">
+              <p className="text-gray-700 leading-relaxed">
+                {level.description || 'No description provided'}
+              </p>
             </CardContent>
           </Card>
-        </div>
+        ))}
+
+        {safeLevels.length === 0 && (
+          <div className="col-span-full text-center py-12">
+            <Trophy className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+            <p className="text-gray-500 text-lg">No levels created yet</p>
+            <p className="text-gray-400 mt-2">Click &quot;Add Level&quot; to create your first level</p>
+          </div>
+        )}
       </div>
+
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between">
+              <h2 className="text-xl font-semibold">
+                {isEditMode ? 'Edit Level' : 'Create New Level'}
+              </h2>
+              <button
+                onClick={resetForm}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+                aria-label="Close modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmit} className="p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Level Name
+                </label>
+                <input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  required
+                  placeholder="e.g., Beginner, Intermediate, Advanced"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Description
+                </label>
+                <textarea
+                  value={formData.description}
+                  onChange={(e) =>
+                    setFormData({ ...formData, description: e.target.value })
+                  }
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  rows={4}
+                  placeholder="Describe the level requirements and objectives..."
+                />
+              </div>
+
+              <div className="flex space-x-3 pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={resetForm}
+                  className="flex-1"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={mutation.isPending}
+                  className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
+                >
+                  {mutation.isPending
+                    ? 'Saving...'
+                    : isEditMode
+                    ? 'Update Level'
+                    : 'Create Level'}
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
