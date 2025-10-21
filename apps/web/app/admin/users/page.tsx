@@ -16,7 +16,6 @@ interface User {
   name: string | null;
   phoneNumber: string | null;
   role: Role;
-  isEmailVerified: boolean;
   createdAt: string;
 }
 
@@ -221,9 +220,6 @@ export default function UsersPage() {
                   Role
                 </th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Created
                 </th>
               </tr>
@@ -231,7 +227,7 @@ export default function UsersPage() {
             <tbody className="divide-y divide-gray-200">
               {filteredUsers.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
+                  <td colSpan={4} className="px-6 py-8 text-center text-gray-500">
                     No users found
                   </td>
                 </tr>
@@ -256,17 +252,6 @@ export default function UsersPage() {
                       <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getRoleBadgeColor(user.role)}`}>
                         {user.role}
                       </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      {user.isEmailVerified ? (
-                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
-                          Verified
-                        </span>
-                      ) : (
-                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">
-                          Pending
-                        </span>
-                      )}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-600">
                       {new Date(user.createdAt).toLocaleDateString()}
