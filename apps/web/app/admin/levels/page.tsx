@@ -37,11 +37,24 @@ export default function LevelsPage() {
 
   const queryClient = useQueryClient();
 
-  const { data: levels, isLoading } = useQuery<Level[], Error>({
+  const { data: levels, isLoading, error } = useQuery<Level[], Error>({
     queryKey: ['levels'],
     queryFn: async () => {
-      const response = await axiosInstance.get<Level[]>('/levels');
-      return response.data;
+      try {
+        const response = await axiosInstance.get('/levels');
+        // Handle both direct array and wrapped response
+        const data = response.data;
+        if (Array.isArray(data)) {
+          return data;
+        } else if (data && Array.isArray(data.data)) {
+          return data.data;
+        }
+        console.error('Unexpected levels response format:', data);
+        return [];
+      } catch (error) {
+        console.error('Error fetching levels:', error);
+        throw error;
+      }
     },
   });
 
@@ -93,6 +106,25 @@ export default function LevelsPage() {
     return <div className="flex justify-center p-8"><CircularProgress /></div>;
   }
 
+  if (error) {
+    return (
+      <div className="p-6">
+        <Card className="border-red-200 bg-red-50">
+          <CardContent className="p-6">
+            <h3 className="text-red-800 font-semibold mb-2">⚠️ Error Loading Levels</h3>
+            <p className="text-red-600 mb-4">{error.message || 'Failed to load levels data'}</p>
+            <Button onClick={() => window.location.reload()} className="bg-red-600 hover:bg-red-700">
+              Reload Page
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // Ensure levels is an array
+  const safeLevels = Array.isArray(levels) ? levels : [];
+
   return (
     <div className="p-6">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -104,7 +136,7 @@ export default function LevelsPage() {
             </CardHeader>
             <CardContent>
               <div className="grid gap-4">
-                {levels?.map((level: Level) => (
+                {safeLevels.map((level: Level) => (
                   <Card key={level.id}>
                     <CardContent className="p-4">
                       <div className="flex justify-between items-start">

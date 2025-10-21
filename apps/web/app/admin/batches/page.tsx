@@ -75,24 +75,61 @@ export default function BatchesPage() {
   const { data: batches, isLoading: loadingBatches, error: batchesError } = useQuery<Batch[], Error>({
     queryKey: ['batches', selectedLevel],
     queryFn: async () => {
-      const response = await axiosInstance.get<Batch[]>(`/batches${selectedLevel ? `?levelId=${selectedLevel}` : ''}`);
-      return response.data;
+      try {
+        const response = await axiosInstance.get(`/batches${selectedLevel ? `?levelId=${selectedLevel}` : ''}`);
+        // Handle both direct array and wrapped response
+        const data = response.data;
+        if (Array.isArray(data)) {
+          return data;
+        } else if (data && Array.isArray(data.data)) {
+          return data.data;
+        }
+        console.error('Unexpected batches response format:', data);
+        return [];
+      } catch (error) {
+        console.error('Error fetching batches:', error);
+        throw error;
+      }
     },
   });
 
-  const { data: levels, isLoading: loadingLevels } = useQuery<Level[], Error>({
+  const { data: levels, isLoading: loadingLevels, error: levelsError } = useQuery<Level[], Error>({
     queryKey: ['levels'],
     queryFn: async () => {
-      const response = await axiosInstance.get<Level[]>('/levels');
-      return response.data;
+      try {
+        const response = await axiosInstance.get('/levels');
+        const data = response.data;
+        if (Array.isArray(data)) {
+          return data;
+        } else if (data && Array.isArray(data.data)) {
+          return data.data;
+        }
+        console.error('Unexpected levels response format:', data);
+        return [];
+      } catch (error) {
+        console.error('Error fetching levels:', error);
+        throw error;
+      }
     },
   });
 
-  const { data: teachers } = useQuery<Teacher[], Error>({
+  const { data: teachers, isLoading: loadingTeachers, error: teachersError } = useQuery<Teacher[], Error>({
     queryKey: ['teachers'],
     queryFn: async () => {
-      const response = await axiosInstance.get<Teacher[]>('/users?role=TEACHER');
-      return response.data;
+      try {
+        const response = await axiosInstance.get('/users?role=TEACHER');
+        const data = response.data;
+        if (Array.isArray(data)) {
+          return data;
+        } else if (data && Array.isArray(data.data)) {
+          return data.data;
+        }
+        console.error('Unexpected teachers response format:', data);
+        return [];
+      } catch (error) {
+        console.error('Error fetching teachers:', error);
+        throw error;
+      }
     },
   });
 
@@ -144,9 +181,32 @@ export default function BatchesPage() {
     setSelectedDays([]);
   };
 
-  if (loadingBatches || loadingLevels) {
+  if (loadingBatches || loadingLevels || loadingTeachers) {
     return <div className="flex justify-center p-8"><CircularProgress /></div>;
   }
+
+  if (batchesError || levelsError || teachersError) {
+    return (
+      <div className="p-6">
+        <Card className="border-red-200 bg-red-50">
+          <CardContent className="p-6">
+            <h3 className="text-red-800 font-semibold mb-2">⚠️ Error Loading Data</h3>
+            <p className="text-red-600 mb-4">
+              {batchesError?.message || levelsError?.message || teachersError?.message || 'Failed to load required data'}
+            </p>
+            <Button onClick={() => window.location.reload()} className="bg-red-600 hover:bg-red-700">
+              Reload Page
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // Ensure batches, levels, and teachers are arrays
+  const safeBatches = Array.isArray(batches) ? batches : [];
+  const safeLevels = Array.isArray(levels) ? levels : [];
+  const safeTeachers = Array.isArray(teachers) ? teachers : [];
 
   return (
     <div className="p-6">
@@ -185,7 +245,7 @@ export default function BatchesPage() {
                         title="Select Level"
                       >
                         <option value="">Select Level</option>
-                        {levels?.map((level: Level) => (
+                        {safeLevels.map((level: Level) => (
                           <option key={level.id} value={level.id}>{level.name}</option>
                         ))}
                       </select>
@@ -200,7 +260,7 @@ export default function BatchesPage() {
                         title="Select Teacher"
                       >
                         <option value="">Select Teacher</option>
-                        {teachers?.map((teacher: Teacher) => (
+                        {safeTeachers.map((teacher: Teacher) => (
                           <option key={teacher.id} value={teacher.id}>
                             {teacher.user?.name || 'Unknown'}
                           </option>
@@ -269,7 +329,7 @@ export default function BatchesPage() {
               title="Filter by Level"
             >
               <option value="">All Levels</option>
-              {levels?.map((level: Level) => (
+              {safeLevels.map((level: Level) => (
                 <option key={level.id} value={level.id}>
                   {level.name}
                 </option>
@@ -279,7 +339,7 @@ export default function BatchesPage() {
 
           {/* Batches Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {batches?.map((batch: Batch) => (
+            {safeBatches.map((batch: Batch) => (
               <Card key={batch.id}>
                 <CardContent className="p-4">
                   <h3 className="text-lg font-semibold mb-2">{batch.name}</h3>

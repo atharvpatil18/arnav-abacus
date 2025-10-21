@@ -20,7 +20,8 @@ import {
   UserCircle,
   GraduationCap,
   ClipboardList,
-  TrendingUp
+  TrendingUp,
+  TrendingDown
 } from 'lucide-react';
 import { useState } from 'react';
 import Loading from '../loading';
@@ -38,6 +39,7 @@ const navItems: NavItem[] = [
   { label: 'Batches', href: '/admin/batches', icon: <BookOpen className="w-5 h-5" /> },
   { label: 'Levels', href: '/admin/levels', icon: <Layers className="w-5 h-5" /> },
   { label: 'Fees', href: '/admin/fees', icon: <CreditCard className="w-5 h-5" /> },
+  { label: 'Expenditure', href: '/admin/expenditure', icon: <TrendingDown className="w-5 h-5" /> },
   { label: 'Reports', href: '/admin/reports', icon: <FileText className="w-5 h-5" /> },
 ];
 
