@@ -349,6 +349,7 @@ export default function UsersPage() {
                   onChange={(e) => setFormData({ ...formData, role: e.target.value as Role })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 >
+                  <option value={Role.ADMIN}>Admin</option>
                   <option value={Role.TEACHER}>Teacher</option>
                   <option value={Role.PARENT}>Parent</option>
                 </select>

@@ -72,26 +72,26 @@ export default function BatchesPage() {
 
   const queryClient = useQueryClient();
 
-  const { data: batches, isLoading: loadingBatches } = useQuery<ApiResponse<Batch[]>, Error>({
+  const { data: batches, isLoading: loadingBatches, error: batchesError } = useQuery<Batch[], Error>({
     queryKey: ['batches', selectedLevel],
     queryFn: async () => {
-      const response = await axiosInstance.get<ApiResponse<Batch[]>>(`/batches${selectedLevel ? `?levelId=${selectedLevel}` : ''}`);
+      const response = await axiosInstance.get<Batch[]>(`/batches${selectedLevel ? `?levelId=${selectedLevel}` : ''}`);
       return response.data;
     },
   });
 
-  const { data: levels, isLoading: loadingLevels } = useQuery<ApiResponse<Level[]>, Error>({
+  const { data: levels, isLoading: loadingLevels } = useQuery<Level[], Error>({
     queryKey: ['levels'],
     queryFn: async () => {
-      const response = await axiosInstance.get<ApiResponse<Level[]>>('/levels');
+      const response = await axiosInstance.get<Level[]>('/levels');
       return response.data;
     },
   });
 
-  const { data: teachers } = useQuery<ApiResponse<Teacher[]>, Error>({
+  const { data: teachers } = useQuery<Teacher[], Error>({
     queryKey: ['teachers'],
     queryFn: async () => {
-      const response = await axiosInstance.get<ApiResponse<Teacher[]>>('/users?role=TEACHER');
+      const response = await axiosInstance.get<Teacher[]>('/users?role=TEACHER');
       return response.data;
     },
   });
@@ -185,7 +185,7 @@ export default function BatchesPage() {
                         title="Select Level"
                       >
                         <option value="">Select Level</option>
-                        {levels?.data.map((level) => (
+                        {levels?.map((level: Level) => (
                           <option key={level.id} value={level.id}>{level.name}</option>
                         ))}
                       </select>
@@ -200,7 +200,7 @@ export default function BatchesPage() {
                         title="Select Teacher"
                       >
                         <option value="">Select Teacher</option>
-                        {teachers?.data.map((teacher) => (
+                        {teachers?.map((teacher: Teacher) => (
                           <option key={teacher.id} value={teacher.id}>
                             {teacher.user?.name || 'Unknown'}
                           </option>
@@ -269,7 +269,7 @@ export default function BatchesPage() {
               title="Filter by Level"
             >
               <option value="">All Levels</option>
-              {levels?.data.map((level: Level) => (
+              {levels?.map((level: Level) => (
                 <option key={level.id} value={level.id}>
                   {level.name}
                 </option>
@@ -279,7 +279,7 @@ export default function BatchesPage() {
 
           {/* Batches Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {batches?.data.map((batch: Batch) => (
+            {batches?.map((batch: Batch) => (
               <Card key={batch.id}>
                 <CardContent className="p-4">
                   <h3 className="text-lg font-semibold mb-2">{batch.name}</h3>
@@ -311,7 +311,7 @@ export default function BatchesPage() {
             ))}
           </div>
 
-          {batches?.data.length === 0 && (
+          {(!batches || batches.length === 0) && (
             <div className="text-center py-8 text-gray-500">
               No batches found. Create a new batch to get started.
             </div>

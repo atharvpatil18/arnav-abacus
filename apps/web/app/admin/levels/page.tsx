@@ -13,12 +13,6 @@ import { CircularProgress } from '@/components/ui/circular-progress';
 import { toast } from '@/components/ui/use-toast';
 import { axiosInstance } from '@/lib/axios';
 
-interface ApiResponse<T> {
-  data: T;
-  message: string;
-  success: boolean;
-}
-
 interface Level {
   id: number;
   name: string;
@@ -43,21 +37,21 @@ export default function LevelsPage() {
 
   const queryClient = useQueryClient();
 
-  const { data: levels, isLoading } = useQuery<ApiResponse<Level[]>, Error>({
+  const { data: levels, isLoading } = useQuery<Level[], Error>({
     queryKey: ['levels'],
     queryFn: async () => {
-      const response = await axiosInstance.get<ApiResponse<Level[]>>('/levels');
+      const response = await axiosInstance.get<Level[]>('/levels');
       return response.data;
     },
   });
 
-  const mutation = useMutation<ApiResponse<Level>, Error, LevelFormData>({
+  const mutation = useMutation<Level, Error, LevelFormData>({
     mutationFn: async (data: LevelFormData) => {
       if (currentLevel) {
-        const response = await axiosInstance.put<ApiResponse<Level>>(`/levels/${currentLevel.id}`, data);
+        const response = await axiosInstance.put<Level>(`/levels/${currentLevel.id}`, data);
         return response.data;
       }
-      const response = await axiosInstance.post<ApiResponse<Level>>('/levels', data);
+      const response = await axiosInstance.post<Level>('/levels', data);
       return response.data;
     },
     onSuccess: () => {
@@ -110,7 +104,7 @@ export default function LevelsPage() {
             </CardHeader>
             <CardContent>
               <div className="grid gap-4">
-                {levels?.data.map((level: Level) => (
+                {levels?.map((level: Level) => (
                   <Card key={level.id}>
                     <CardContent className="p-4">
                       <div className="flex justify-between items-start">

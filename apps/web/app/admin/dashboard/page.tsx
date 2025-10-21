@@ -145,13 +145,13 @@ export default function AdminDashboard() {
           <CardContent>
             <div className="flex flex-col space-y-2">
               <Button variant="outline" asChild>
-                <a href="/admin/students/new">Create Student</a>
+                <a href="/admin/students">Manage Students</a>
               </Button>
               <Button variant="outline" asChild>
-                <a href="/admin/batches/new">Create Batch</a>
+                <a href="/admin/batches">Manage Batches</a>
               </Button>
               <Button variant="outline" asChild>
-                <a href="/admin/levels/new">Create Level</a>
+                <a href="/admin/levels">Manage Levels</a>
               </Button>
             </div>
           </CardContent>

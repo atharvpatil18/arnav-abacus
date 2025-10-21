@@ -15,12 +15,6 @@ import { CircularProgress } from '@/components/ui/circular-progress';
 import { toast } from '@/components/ui/use-toast';
 import { axiosInstance } from '@/lib/axios';
 
-interface ApiResponse<T> {
-  data: T;
-  message: string;
-  success: boolean;
-}
-
 interface Student {
   id: number;
   firstName: string;
@@ -52,20 +46,20 @@ export default function FeesPage() {
 
   const queryClient = useQueryClient();
 
-  const { data: students, isLoading: loadingStudents } = useQuery<ApiResponse<Student[]>, Error>({
+  const { data: students, isLoading: loadingStudents } = useQuery<Student[], Error>({
     queryKey: ['students', searchQuery],
     queryFn: async () => {
-      const response = await axiosInstance.get<ApiResponse<Student[]>>(
+      const response = await axiosInstance.get<Student[]>(
         `/students${searchQuery ? `?search=${searchQuery}` : ''}`
       );
       return response.data;
     },
   });
 
-  const { data: fees, isLoading: loadingFees } = useQuery<ApiResponse<Fee[]>, Error>({
+  const { data: fees, isLoading: loadingFees } = useQuery<Fee[], Error>({
     queryKey: ['fees', selectedStudent],
     queryFn: async () => {
-      const response = await axiosInstance.get<ApiResponse<Fee[]>>(
+      const response = await axiosInstance.get<Fee[]>(
         `/fees${selectedStudent ? `?studentId=${selectedStudent}` : ''}`
       );
       return response.data;
@@ -73,13 +67,13 @@ export default function FeesPage() {
     enabled: !!selectedStudent,
   });
 
-  const createFeeMutation = useMutation<ApiResponse<Fee>, Error, {
+  const createFeeMutation = useMutation<Fee, Error, {
     studentId: number;
     amount: number;
     dueDate: string;
   }>({
     mutationFn: async (data) => {
-      const response = await axiosInstance.post<ApiResponse<Fee>>('/fees', data);
+      const response = await axiosInstance.post<Fee>('/fees', data);
       return response.data;
     },
     onSuccess: () => {
@@ -92,9 +86,9 @@ export default function FeesPage() {
     },
   });
 
-  const markPaidMutation = useMutation<ApiResponse<Fee>, Error, number>({
+  const markPaidMutation = useMutation<Fee, Error, number>({
     mutationFn: async (feeId) => {
-      const response = await axiosInstance.post<ApiResponse<Fee>>(`/fees/${feeId}/mark-paid`);
+      const response = await axiosInstance.post<Fee>(`/fees/${feeId}/mark-paid`);
       return response.data;
     },
     onSuccess: () => {
@@ -137,7 +131,7 @@ export default function FeesPage() {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
               <div className="max-h-96 overflow-y-auto">
-                {students?.data.map((student: Student) => (
+                {students?.map((student: Student) => (
                   <div
                     key={student.id}
                     onClick={() => setSelectedStudent(student.id)}
@@ -235,7 +229,7 @@ export default function FeesPage() {
                           </tr>
                         </thead>
                         <tbody>
-                          {fees?.data.map((fee: Fee) => (
+                          {fees?.map((fee: Fee) => (
                             <tr
                               key={fee.id}
                               className="bg-white border-b hover:bg-gray-50"

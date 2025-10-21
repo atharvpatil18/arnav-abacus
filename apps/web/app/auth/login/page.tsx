@@ -11,7 +11,7 @@ export default function LoginPage() {
   const { login } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
 
@@ -19,11 +19,9 @@ export default function LoginPage() {
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
 
-    try {
-      await login({ email, password });
-    } finally {
-      setIsLoading(false);
-    }
+    login({ email, password });
+    // Note: isLoading state will be reset by the mutation's onSuccess/onError
+    // We can remove the manual reset since the page will redirect on success
   };
 
   return (

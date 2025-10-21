@@ -13,12 +13,6 @@ import { Button } from '@/components/ui/button';
 import { GridSkeleton } from '@/components/ui/loading-skeleton';
 import { axiosInstance } from '@/lib/axios';
 
-interface ApiResponse<T> {
-  data: T;
-  message: string;
-  success: boolean;
-}
-
 interface Student {
   id: number;
   firstName: string;
@@ -36,10 +30,10 @@ export default function StudentsPage() {
   const queryClient = useQueryClient();
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { data: students, isLoading } = useQuery<ApiResponse<Student[]>, Error>({
+  const { data: students, isLoading } = useQuery<Student[], Error>({
     queryKey: ['students'],
     queryFn: async () => {
-      const response = await axiosInstance.get<ApiResponse<Student[]>>('/students');
+      const response = await axiosInstance.get<Student[]>('/students');
       return response.data;
     },
   });
@@ -68,7 +62,7 @@ export default function StudentsPage() {
     );
   }
 
-  const studentsData = Array.isArray(students?.data) ? students.data : [];
+  const studentsData = Array.isArray(students) ? students : [];
   const filteredStudents = studentsData.filter((s: Student) =>
     `${s.firstName} ${s.lastName}`.toLowerCase().includes(searchQuery.toLowerCase())
   );
