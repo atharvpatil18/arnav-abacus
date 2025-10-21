@@ -76,10 +76,10 @@ export default function BatchesPage() {
       try {
         const response = await axiosInstance.get(`/batches${selectedLevel ? `?levelId=${selectedLevel}` : ''}`);
         // Handle both direct array and wrapped response
-        const data = response.data;
+        const data = response.data as Batch[] | { data: Batch[] };
         if (Array.isArray(data)) {
           return data;
-        } else if (data && Array.isArray(data.data)) {
+        } else if (data && 'data' in data && Array.isArray(data.data)) {
           return data.data;
         }
         console.error('Unexpected batches response format:', data);
@@ -96,10 +96,10 @@ export default function BatchesPage() {
     queryFn: async () => {
       try {
         const response = await axiosInstance.get('/levels');
-        const data = response.data;
+        const data = response.data as Level[] | { data: Level[] };
         if (Array.isArray(data)) {
           return data;
-        } else if (data && Array.isArray(data.data)) {
+        } else if (data && 'data' in data && Array.isArray(data.data)) {
           return data.data;
         }
         console.error('Unexpected levels response format:', data);
@@ -116,10 +116,10 @@ export default function BatchesPage() {
     queryFn: async () => {
       try {
         const response = await axiosInstance.get('/users?role=TEACHER');
-        const data = response.data;
+        const data = response.data as Teacher[] | { data: Teacher[] };
         if (Array.isArray(data)) {
           return data;
-        } else if (data && Array.isArray(data.data)) {
+        } else if (data && 'data' in data && Array.isArray(data.data)) {
           return data.data;
         }
         console.error('Unexpected teachers response format:', data);
@@ -292,9 +292,8 @@ export default function BatchesPage() {
                           }`}
                         >
                           {day}
-                          </button>
-                        ))}
-                      </div>
+                        </button>
+                      ))}
                     </div>
                   </div>
                   <Button type="submit" disabled={createBatchMutation.isPending} className="w-full">

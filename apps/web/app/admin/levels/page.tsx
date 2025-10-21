@@ -41,10 +41,10 @@ export default function LevelsPage() {
       try {
         const response = await axiosInstance.get('/levels');
         // Handle both direct array and wrapped response
-        const data = response.data;
+        const data = response.data as Level[] | { data: Level[] };
         if (Array.isArray(data)) {
           return data;
-        } else if (data && Array.isArray(data.data)) {
+        } else if (data && 'data' in data && Array.isArray(data.data)) {
           return data.data;
         }
         console.error('Unexpected levels response format:', data);

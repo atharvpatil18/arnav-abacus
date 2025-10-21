@@ -59,7 +59,7 @@ export default function AdminDashboard() {
         responseType: 'text'
       });
       
-      const csv = response.data;
+      const csv = response.data as string;
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');

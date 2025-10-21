@@ -6,11 +6,8 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   Card,
   CardContent,
-  CardHeader,
-  CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { GridSkeleton } from '@/components/ui/loading-skeleton';
 import { axiosInstance } from '@/lib/axios';
 import { Search, Filter, Users, UserCheck, UserX, GraduationCap } from 'lucide-react';
 
