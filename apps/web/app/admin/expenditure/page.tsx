@@ -53,7 +53,7 @@ const PAYMENT_METHODS = ['Cash', 'Bank Transfer', 'UPI', 'Card', 'Cheque'];
 
 export default function ExpenditurePage() {
   const [showForm, setShowForm] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [dateRange, setDateRange] = useState({
     start: format(new Date(new Date().setMonth(new Date().getMonth() - 1)), 'yyyy-MM-dd'),
     end: format(new Date(), 'yyyy-MM-dd'),
@@ -73,7 +73,7 @@ export default function ExpenditurePage() {
     queryKey: ['expenditures', selectedCategory, dateRange],
     queryFn: async (): Promise<ApiResponse<Expenditure[]>> => {
       const params = new URLSearchParams();
-      if (selectedCategory !== 'all') params.append('category', selectedCategory);
+      if (selectedCategory) params.append('category', selectedCategory);
       params.append('startDate', dateRange.start);
       params.append('endDate', dateRange.end);
       const { data } = await apiClient.get<ApiResponse<Expenditure[]>>(`/expenditure?${params.toString()}`);
