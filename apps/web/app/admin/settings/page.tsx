@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useAuth } from '@/lib/auth';
 import {
   Card,
   CardContent,
@@ -10,7 +11,6 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { 
-  Settings, 
   Building2, 
   Mail, 
   Phone, 
@@ -19,10 +19,12 @@ import {
   Bell,
   Shield,
   Database,
-  Palette
+  User
 } from 'lucide-react';
 
 export default function SettingsPage() {
+  const { user } = useAuth();
+  
   const [academySettings, setAcademySettings] = useState({
     name: 'Arnav Abacus Academy',
     email: 'admin@arnavabacus.com',
@@ -68,6 +70,51 @@ export default function SettingsPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Personal Profile */}
+        <Card className="shadow-lg border-none lg:col-span-2">
+          <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50">
+            <CardTitle className="flex items-center gap-2">
+              <User className="w-5 h-5 text-purple-600" />
+              Personal Profile
+            </CardTitle>
+            <CardDescription>Your account information</CardDescription>
+          </CardHeader>
+          <CardContent className="pt-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="flex flex-col items-center justify-center p-6 bg-gradient-to-br from-purple-50 to-blue-50 rounded-lg">
+                <div className="w-24 h-24 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full flex items-center justify-center text-white text-3xl font-bold mb-4">
+                  {user?.name?.charAt(0)?.toUpperCase() || 'A'}
+                </div>
+                <h3 className="text-xl font-bold text-gray-800">{user?.name || 'Admin'}</h3>
+                <p className="text-sm text-gray-600 mt-1">{user?.role || 'ADMIN'}</p>
+              </div>
+              <div className="md:col-span-2 space-y-4">
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Mail className="w-4 h-4 text-gray-600" />
+                    <span className="text-sm font-medium text-gray-700">Email Address</span>
+                  </div>
+                  <p className="text-gray-900">{user?.email || 'Not available'}</p>
+                </div>
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Phone className="w-4 h-4 text-gray-600" />
+                    <span className="text-sm font-medium text-gray-700">Phone Number</span>
+                  </div>
+                  <p className="text-gray-900">{user?.phoneNumber || 'Not available'}</p>
+                </div>
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Shield className="w-4 h-4 text-gray-600" />
+                    <span className="text-sm font-medium text-gray-700">User ID</span>
+                  </div>
+                  <p className="text-gray-900">#{user?.id || 'N/A'}</p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Academy Information */}
         <Card className="shadow-lg border-none">
           <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50">
