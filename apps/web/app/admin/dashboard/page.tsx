@@ -15,6 +15,17 @@ import { CircularProgress } from '@/components/ui/circular-progress';
 import { toast } from '@/components/ui/use-toast';
 import { axiosInstance } from '@/lib/axios';
 import type { ApiResponse, DashboardStats, AttendanceIssue } from '@/types/api';
+import { 
+  Users, 
+  GraduationCap, 
+  TrendingUp, 
+  IndianRupee,
+  AlertCircle,
+  Download,
+  FileText,
+  ArrowUp,
+  ArrowDown
+} from 'lucide-react';
 
 export default function AdminDashboard() {
   const [attendanceIssues, setAttendanceIssues] = useState<AttendanceIssue[]>([]);
@@ -94,113 +105,191 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 p-6">
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+          Admin Dashboard
+        </h1>
+        <p className="text-gray-600">Welcome back! Here's what's happening with your academy today.</p>
+      </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <Card>
-          <CardHeader>
-            <CardTitle>Total Students</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-semibold">{stats.totalStudents}</p>
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {/* Total Students Card */}
+        <Card className="border-none shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 bg-gradient-to-br from-blue-500 to-blue-600 text-white overflow-hidden">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-white/20 backdrop-blur-lg rounded-xl flex items-center justify-center">
+                <Users className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex items-center text-sm bg-white/20 px-2 py-1 rounded-full">
+                <ArrowUp className="w-4 h-4 mr-1" />
+                <span>12%</span>
+              </div>
+            </div>
+            <p className="text-blue-100 text-sm mb-1">Total Students</p>
+            <p className="text-4xl font-bold">{stats?.totalStudents || 0}</p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Active Batches</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-semibold">{stats.activeBatches}</p>
+        {/* Active Batches Card */}
+        <Card className="border-none shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 bg-gradient-to-br from-purple-500 to-purple-600 text-white overflow-hidden">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-white/20 backdrop-blur-lg rounded-xl flex items-center justify-center">
+                <GraduationCap className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex items-center text-sm bg-white/20 px-2 py-1 rounded-full">
+                <ArrowUp className="w-4 h-4 mr-1" />
+                <span>5%</span>
+              </div>
+            </div>
+            <p className="text-purple-100 text-sm mb-1">Active Batches</p>
+            <p className="text-4xl font-bold">{stats?.activeBatches || 0}</p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Overall Attendance</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-semibold">
-              {stats.attendancePercentOverall.toFixed(1)}%
+        {/* Attendance Card */}
+        <Card className="border-none shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 bg-gradient-to-br from-green-500 to-green-600 text-white overflow-hidden">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-white/20 backdrop-blur-lg rounded-xl flex items-center justify-center">
+                <TrendingUp className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex items-center text-sm bg-white/20 px-2 py-1 rounded-full">
+                <ArrowUp className="w-4 h-4 mr-1" />
+                <span>3%</span>
+              </div>
+            </div>
+            <p className="text-green-100 text-sm mb-1">Overall Attendance</p>
+            <p className="text-4xl font-bold">
+              {stats?.attendancePercentOverall?.toFixed(1) || 0}%
             </p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Fees Due</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-semibold">₹{stats.feesDue.toLocaleString()}</p>
+        {/* Fees Due Card */}
+        <Card className="border-none shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 bg-gradient-to-br from-orange-500 to-red-500 text-white overflow-hidden">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-white/20 backdrop-blur-lg rounded-xl flex items-center justify-center">
+                <IndianRupee className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex items-center text-sm bg-white/20 px-2 py-1 rounded-full">
+                <ArrowDown className="w-4 h-4 mr-1" />
+                <span>8%</span>
+              </div>
+            </div>
+            <p className="text-orange-100 text-sm mb-1">Fees Due</p>
+            <p className="text-4xl font-bold">₹{stats?.feesDue?.toLocaleString() || 0}</p>
           </CardContent>
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Quick Links</CardTitle>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        {/* Quick Actions Card */}
+        <Card className="shadow-lg border-none">
+          <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50">
+            <CardTitle className="flex items-center gap-2">
+              <GraduationCap className="w-5 h-5 text-purple-600" />
+              Quick Actions
+            </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="flex flex-col space-y-2">
-              <Button variant="outline" asChild>
-                <a href="/admin/students">Manage Students</a>
+          <CardContent className="pt-6">
+            <div className="flex flex-col space-y-3">
+              <Button variant="outline" asChild className="justify-start hover:bg-purple-50 transition-colors">
+                <a href="/admin/students">
+                  <Users className="w-4 h-4 mr-2" />
+                  Manage Students
+                </a>
               </Button>
-              <Button variant="outline" asChild>
-                <a href="/admin/batches">Manage Batches</a>
+              <Button variant="outline" asChild className="justify-start hover:bg-blue-50 transition-colors">
+                <a href="/admin/batches">
+                  <GraduationCap className="w-4 h-4 mr-2" />
+                  Manage Batches
+                </a>
               </Button>
-              <Button variant="outline" asChild>
-                <a href="/admin/levels">Manage Levels</a>
+              <Button variant="outline" asChild className="justify-start hover:bg-green-50 transition-colors">
+                <a href="/admin/levels">
+                  <TrendingUp className="w-4 h-4 mr-2" />
+                  Manage Levels
+                </a>
               </Button>
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Export Data</CardTitle>
+        {/* Export Data Card */}
+        <Card className="shadow-lg border-none">
+          <CardHeader className="bg-gradient-to-r from-green-50 to-teal-50">
+            <CardTitle className="flex items-center gap-2">
+              <Download className="w-5 h-5 text-green-600" />
+              Export Data
+            </CardTitle>
             <CardDescription>Download data in CSV format</CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="flex flex-col space-y-2">
-              <Button onClick={() => handleExport('students')}>
+          <CardContent className="pt-6">
+            <div className="flex flex-col space-y-3">
+              <Button 
+                onClick={() => handleExport('students')} 
+                className="bg-green-600 hover:bg-green-700 justify-start"
+              >
+                <FileText className="w-4 h-4 mr-2" />
                 Export Students
               </Button>
-              <Button onClick={() => handleExport('attendance')}>
+              <Button 
+                onClick={() => handleExport('attendance')}
+                className="bg-blue-600 hover:bg-blue-700 justify-start"
+              >
+                <FileText className="w-4 h-4 mr-2" />
                 Export Attendance
               </Button>
-              <Button onClick={() => handleExport('fees')}>
+              <Button 
+                onClick={() => handleExport('fees')}
+                className="bg-purple-600 hover:bg-purple-700 justify-start"
+              >
+                <FileText className="w-4 h-4 mr-2" />
                 Export Fees
               </Button>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle>Attendance Issues</CardTitle>
+        {/* Attendance Issues Card */}
+        <Card className="shadow-lg border-none">
+          <CardHeader className="bg-gradient-to-r from-orange-50 to-red-50">
+            <CardTitle className="flex items-center gap-2">
+              <AlertCircle className="w-5 h-5 text-orange-600" />
+              Attendance Alerts
+            </CardTitle>
             <CardDescription>
-              Students with attendance below threshold this month
+              Students with low attendance this month
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-6">
             {attendanceIssues.length > 0 ? (
-              <div className="divide-y">
-                {attendanceIssues.map((issue: AttendanceIssue, index: number) => (
-                  <div key={index} className="py-3">
-                    <p className="font-medium">{issue.studentName}</p>
-                    <p className="text-sm text-gray-500">
-                      {issue.batchName} - {issue.absencesThisMonth} absences
+              <div className="space-y-3 max-h-64 overflow-y-auto">
+                {attendanceIssues.slice(0, 5).map((issue: AttendanceIssue, index: number) => (
+                  <div key={index} className="p-3 bg-orange-50 rounded-lg border border-orange-200">
+                    <p className="font-medium text-gray-900">{issue.studentName}</p>
+                    <p className="text-sm text-gray-600">
+                      {issue.batchName}
                     </p>
-                    <p className="text-sm text-gray-500">
-                      Last attended: {issue.lastAttendance ? format(new Date(issue.lastAttendance), 'MMM d, yyyy') : 'Never'}
+                    <p className="text-sm text-orange-600 font-semibold">
+                      {issue.absencesThisMonth} absences
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      Last: {issue.lastAttendance ? format(new Date(issue.lastAttendance), 'MMM d') : 'Never'}
                     </p>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500">No attendance issues to report</p>
+              <div className="text-center py-8 text-gray-500">
+                <AlertCircle className="w-12 h-12 mx-auto mb-2 text-gray-400" />
+                <p>No attendance issues</p>
+              </div>
             )}
           </CardContent>
         </Card>
