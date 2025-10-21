@@ -6,8 +6,7 @@ import { toast } from 'sonner';
 export interface User {
   id: number;
   email: string;
-  firstName: string;
-  lastName: string;
+  name: string;
   role: 'ADMIN' | 'TEACHER' | 'PARENT';
   phoneNumber: string;
 }
@@ -18,8 +17,9 @@ interface LoginCredentials {
 }
 
 interface RegisterData extends LoginCredentials {
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
+  name?: string;
   phoneNumber: string;
   role: 'ADMIN' | 'TEACHER' | 'PARENT';
 }
@@ -53,6 +53,8 @@ export function useAuth() {
       return data;
     },
     onSuccess: (data) => {
+      // Store the token in localStorage
+      localStorage.setItem('token', data.token);
       toast.success('Logged in successfully');
       router.push(getHomeRoute(data.user.role));
     },
