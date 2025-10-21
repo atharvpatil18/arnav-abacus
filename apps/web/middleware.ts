@@ -1,26 +1,11 @@
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
 
-const publicPaths = ['/auth/login', '/auth/register'];
-
-export function middleware(request: NextRequest) {
-  const token = request.cookies.get('token')?.value;
-  const { pathname } = request.nextUrl;
-
-  // Allow public paths without token
-  if (publicPaths.includes(pathname)) {
-    return NextResponse.next();
-  }
-
-  // If not authenticated and trying to access protected route
-  if (!token) {
-    const loginUrl = new URL('/auth/login', request.url);
-    return NextResponse.redirect(loginUrl);
-  }
-
+export function middleware() {
+  // Just let all requests through - authentication is handled client-side
+  // by useAuth hook and protected route components
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|api).*)'],
 };
