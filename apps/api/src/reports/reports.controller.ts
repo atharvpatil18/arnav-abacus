@@ -39,31 +39,24 @@ export class ReportsController {
   @Get('export/students')
   @Roles(Role.ADMIN)
   async exportStudents() {
-    // Return mock CSV data for now
-    return {
-      success: true,
-      message: 'Export feature coming soon',
-      data: 'Student ID,Name,Email,Level\n1,John Doe,john@example.com,Level 1'
-    };
+    const students = await this.reportsService.getAllStudents();
+    const csv = this.reportsService.generateStudentsCSV(students);
+    return csv;
   }
 
   @Get('export/attendance')
   @Roles(Role.ADMIN)
   async exportAttendance() {
-    return {
-      success: true,
-      message: 'Export feature coming soon',
-      data: 'Date,Student,Batch,Status\n2025-01-01,John Doe,Morning Batch,Present'
-    };
+    const attendance = await this.reportsService.getAllAttendance();
+    const csv = this.reportsService.generateAttendanceCSV(attendance);
+    return csv;
   }
 
   @Get('export/fees')
   @Roles(Role.ADMIN)
   async exportFees() {
-    return {
-      success: true,
-      message: 'Export feature coming soon',
-      data: 'Invoice,Student,Amount,Status\nINV-001,John Doe,5000,Paid'
-    };
+    const fees = await this.reportsService.getAllFees();
+    const csv = this.reportsService.generateFeesCSV(fees);
+    return csv;
   }
 }

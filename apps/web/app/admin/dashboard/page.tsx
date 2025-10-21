@@ -55,11 +55,12 @@ export default function AdminDashboard() {
 
   const handleExport = async (type: string) => {
     try {
-      const response = await axiosInstance.get<Blob>(`/reports/export/${type}`, {
-        responseType: 'blob'
+      const response = await axiosInstance.get(`/reports/export/${type}`, {
+        responseType: 'text'
       });
       
-      const blob = new Blob([response.data]);
+      const csv = response.data;
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
@@ -68,6 +69,7 @@ export default function AdminDashboard() {
       link.click();
       link.remove();
       URL.revokeObjectURL(url);
+      toast.success(`${type} data exported successfully`);
     } catch (err) {
       console.error('Failed to export file:', err);
       toast.error('Could not generate export file');
@@ -105,17 +107,17 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 p-8">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-6">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
           Admin Dashboard
         </h1>
-        <p className="text-gray-600">Welcome back! Here's what's happening with your academy today.</p>
+        <p className="text-gray-600">Welcome back! Here&apos;s what&apos;s happening with your academy today.</p>
       </div>
       
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         {/* Total Students Card */}
         <Card className="border-none shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 bg-gradient-to-br from-blue-500 to-blue-600 text-white overflow-hidden">
           <CardContent className="p-6">

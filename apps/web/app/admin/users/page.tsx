@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { axiosInstance } from '@/lib/axios';
-import { UserPlus, Search, Filter, Eye, EyeOff } from 'lucide-react';
+import { UserPlus, Search, Filter, Eye, EyeOff, Edit, X } from 'lucide-react';
 
 enum Role {
   ADMIN = 'ADMIN',
@@ -14,14 +14,16 @@ interface User {
   id: number;
   email: string;
   name: string | null;
+  firstName?: string;
+  lastName?: string;
   phoneNumber: string | null;
   role: Role;
   createdAt: string;
 }
 
-interface CreateUserDto {
+interface UserFormData {
   email: string;
-  password: string;
+  password?: string;
   name: string;
   phoneNumber?: string;
   role: Role;
@@ -33,9 +35,11 @@ export default function UsersPage() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [roleFilter, setRoleFilter] = useState<Role | 'ALL'>('ALL');
-  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState<CreateUserDto>({
+  const [formData, setFormData] = useState<UserFormData>({
     email: '',
     password: '',
     name: '',
@@ -71,7 +75,7 @@ export default function UsersPage() {
     try {
       setLoading(true);
       const response = await axiosInstance.get<User[]>('/users');
-      const userData = Array.isArray(response.data) ? response.data : ((response.data as any).data || []);
+      const userData = Array.isArray(response.data) ? response.data : ((response.data as Record<string, unknown>).data as User[] || []);
       setUsers(userData);
     } catch (err) {
       console.error('Error fetching users:', err);
@@ -80,19 +84,55 @@ export default function UsersPage() {
     }
   };
 
-  const handleCreateUser = async (e: React.FormEvent) => {
+  const openCreateModal = () => {
+    setIsEditMode(false);
+    setEditingUser(null);
+    setFormData({
+      email: '',
+      password: '',
+      name: '',
+      phoneNumber: '',
+      role: Role.TEACHER,
+    });
+    setShowModal(true);
+  };
+
+  const openEditModal = (user: User) => {
+    setIsEditMode(true);
+    setEditingUser(user);
+    setFormData({
+      email: user.email,
+      password: '',
+      name: user.name || '',
+      phoneNumber: user.phoneNumber || '',
+      role: user.role,
+    });
+    setShowModal(true);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
     setError('');
 
     try {
-      await axiosInstance.post('/auth/register', {
-        ...formData,
-        firstName: formData.name.split(' ')[0],
-        lastName: formData.name.split(' ').slice(1).join(' ') || '',
-      });
+      if (isEditMode && editingUser) {
+        // Update user
+        await axiosInstance.put(`/users/${editingUser.id}`, {
+          name: formData.name,
+          phoneNumber: formData.phoneNumber,
+          role: formData.role,
+        });
+      } else {
+        // Create user
+        await axiosInstance.post('/auth/register', {
+          ...formData,
+          firstName: formData.name.split(' ')[0],
+          lastName: formData.name.split(' ').slice(1).join(' ') || '',
+        });
+      }
       
-      setShowCreateModal(false);
+      setShowModal(false);
       setFormData({
         email: '',
         password: '',
@@ -102,7 +142,8 @@ export default function UsersPage() {
       });
       fetchUsers();
     } catch (err) {
-      setError((err as any).response?.data?.message || 'Failed to create user');
+      const error = err as { response?: { data?: { message?: string } } };
+      setError(error.response?.data?.message || `Failed to ${isEditMode ? 'update' : 'create'} user`);
     } finally {
       setSubmitting(false);
     }
@@ -140,7 +181,7 @@ export default function UsersPage() {
           <p className="text-gray-600 mt-1">Manage teachers and parents accounts</p>
         </div>
         <button
-          onClick={() => setShowCreateModal(true)}
+          onClick={openCreateModal}
           className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all hover:scale-105"
         >
           <UserPlus className="w-5 h-5" />
@@ -192,8 +233,9 @@ export default function UsersPage() {
             <select
               value={roleFilter}
               onChange={(e) => setRoleFilter(e.target.value as Role | 'ALL')}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent appearance-none bg-white"
               aria-label="Filter by role"
+              style={{ minWidth: '150px' }}
             >
               <option value="ALL">All Roles</option>
               <option value={Role.ADMIN}>Admin</option>
@@ -222,12 +264,15 @@ export default function UsersPage() {
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Created
                 </th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               {filteredUsers.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="px-6 py-8 text-center text-gray-500">
+                  <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
                     No users found
                   </td>
                 </tr>
@@ -256,6 +301,15 @@ export default function UsersPage() {
                     <td className="px-6 py-4 text-sm text-gray-600">
                       {new Date(user.createdAt).toLocaleDateString()}
                     </td>
+                    <td className="px-6 py-4">
+                      <button
+                        onClick={() => openEditModal(user)}
+                        className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors"
+                      >
+                        <Edit className="w-4 h-4" />
+                        Edit
+                      </button>
+                    </td>
                   </tr>
                 ))
               )}
@@ -264,15 +318,32 @@ export default function UsersPage() {
         </div>
       </div>
 
-      {/* Create User Modal */}
-      {showCreateModal && (
+      {/* Create/Edit User Modal */}
+      {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl shadow-2xl max-w-md w-full">
             <div className="p-6 border-b border-gray-200">
-              <h2 className="text-2xl font-bold text-gray-800">Create New User</h2>
-              <p className="text-gray-600 text-sm mt-1">Add a new teacher or parent account</p>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-800">
+                    {isEditMode ? 'Edit User' : 'Create New User'}
+                  </h2>
+                  <p className="text-gray-600 text-sm mt-1">
+                    {isEditMode ? 'Update user information' : 'Add a new teacher or parent account'}
+                  </p>
+                </div>
+                <button
+                  onClick={() => {
+                    setShowModal(false);
+                    setError('');
+                  }}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
             </div>
-            <form onSubmit={handleCreateUser} className="p-6 space-y-4">
+            <form onSubmit={handleSubmit} className="p-6 space-y-4">
               {error && (
                 <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
                   {error}
@@ -302,31 +373,34 @@ export default function UsersPage() {
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   placeholder="john@example.com"
+                  disabled={isEditMode}
                 />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Password *
-                </label>
-                <div className="relative">
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    required
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                    placeholder="••••••••"
-                    minLength={6}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                  >
-                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                  </button>
+              {!isEditMode && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Password *
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      required
+                      value={formData.password}
+                      onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      placeholder="••••••••"
+                      minLength={6}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    >
+                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Phone Number
@@ -358,7 +432,7 @@ export default function UsersPage() {
                 <button
                   type="button"
                   onClick={() => {
-                    setShowCreateModal(false);
+                    setShowModal(false);
                     setError('');
                   }}
                   className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
@@ -370,7 +444,7 @@ export default function UsersPage() {
                   disabled={submitting}
                   className="flex-1 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all disabled:opacity-50"
                 >
-                  {submitting ? 'Creating...' : 'Create User'}
+                  {submitting ? (isEditMode ? 'Updating...' : 'Creating...') : (isEditMode ? 'Update User' : 'Create User')}
                 </button>
               </div>
             </form>

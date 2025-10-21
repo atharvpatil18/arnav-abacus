@@ -195,4 +195,81 @@ export class ReportsService {
     
     return totalAmount - totalPaid;
   }
+
+  async getAllStudents() {
+    return await this.prisma.student.findMany({
+      include: {
+        batch: {
+          include: {
+            level: true
+          }
+        }
+      }
+    });
+  }
+
+  async getAllAttendance() {
+    return await this.prisma.attendance.findMany({
+      include: {
+        student: {
+          select: {
+            firstName: true,
+            lastName: true
+          }
+        },
+        batch: {
+          select: {
+            name: true
+          }
+        }
+      },
+      orderBy: {
+        date: 'desc'
+      },
+      take: 1000 // Limit to recent 1000 records
+    });
+  }
+
+  async getAllFees() {
+    return await this.prisma.fee.findMany({
+      include: {
+        student: {
+          select: {
+            firstName: true,
+            lastName: true
+          }
+        }
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+  }
+
+  generateStudentsCSV(students: any[]) {
+    let csv = 'ID,First Name,Last Name,Email,Phone,Batch,Level,Status\n';
+    students.forEach(student => {
+      csv += `${student.id},${student.firstName},${student.lastName},${student.email || 'N/A'},${student.phoneNumber || 'N/A'},${student.batch?.name || 'N/A'},${student.batch?.level?.name || 'N/A'},${student.status}\n`;
+    });
+    return csv;
+  }
+
+  generateAttendanceCSV(attendance: any[]) {
+    let csv = 'Date,Student Name,Batch,Status\n';
+    attendance.forEach(record => {
+      const date = new Date(record.date).toLocaleDateString();
+      csv += `${date},${record.student.firstName} ${record.student.lastName},${record.batch.name},${record.status}\n`;
+    });
+    return csv;
+  }
+
+  generateFeesCSV(fees: any[]) {
+    let csv = 'Invoice Number,Student Name,Amount,Paid Amount,Due Date,Status,Created Date\n';
+    fees.forEach(fee => {
+      const dueDate = new Date(fee.dueDate).toLocaleDateString();
+      const createdDate = new Date(fee.createdAt).toLocaleDateString();
+      csv += `${fee.invoiceNumber},${fee.student.firstName} ${fee.student.lastName},${fee.amount},${fee.paidAmount},${dueDate},${fee.status},${createdDate}\n`;
+    });
+    return csv;
+  }
 }
