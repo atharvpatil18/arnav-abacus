@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { toast } from 'sonner';
 
 import { axiosInstance } from './axios';
@@ -11,10 +10,17 @@ apiClient.interceptors.response.use(
   (error) => {
     // Show error message from API if available
     const message = error.response?.data?.message || error.message || 'Something went wrong';
-    toast.error(message);
+    
+    // Only show toast for non-401 errors or if not on login page
+    if (error.response?.status !== 401 || (typeof window !== 'undefined' && !window.location.pathname.includes('/auth/login'))) {
+      toast.error(message);
+    }
 
     if (error.response?.status === 401) {
-      window.location.href = '/auth/login';
+      // Only redirect if not already on login page
+      if (typeof window !== 'undefined' && !window.location.pathname.includes('/auth/login')) {
+        window.location.href = '/auth/login';
+      }
     }
     
     return Promise.reject(error);

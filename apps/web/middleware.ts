@@ -7,16 +7,15 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value;
   const { pathname } = request.nextUrl;
 
-  // If not authenticated and trying to access protected route
-  if (!token && !publicPaths.includes(pathname)) {
-    const loginUrl = new URL('/auth/login', request.url);
-    return NextResponse.redirect(loginUrl);
+  // Allow public paths without token
+  if (publicPaths.includes(pathname)) {
+    return NextResponse.next();
   }
 
-  // If authenticated and trying to access auth routes
-  if (token && publicPaths.includes(pathname)) {
-    const homeUrl = new URL('/', request.url);
-    return NextResponse.redirect(homeUrl);
+  // If not authenticated and trying to access protected route
+  if (!token) {
+    const loginUrl = new URL('/auth/login', request.url);
+    return NextResponse.redirect(loginUrl);
   }
 
   return NextResponse.next();

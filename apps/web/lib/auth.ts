@@ -42,6 +42,9 @@ export function useAuth() {
         return null;
       }
     },
+    retry: false,
+    refetchOnWindowFocus: false,
+    enabled: typeof window !== 'undefined' && !window.location.pathname.startsWith('/auth/'),
   });
 
   const loginMutation = useMutation({
