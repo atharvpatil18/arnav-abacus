@@ -15,15 +15,15 @@ function Kill-ProcessOnPort {
         $connections | ForEach-Object {
             $line = $_.Line.Trim()
             $parts = $line -split '\s+'
-            $pid = $parts[-1]
+            $processId = $parts[-1]
             
-            if ($pid -and $pid -match '^\d+$') {
+            if ($processId -and $processId -match '^\d+$') {
                 try {
-                    Write-Host "  [X] Killing process $pid on port $Port..." -ForegroundColor Red
-                    Stop-Process -Id $pid -Force -ErrorAction SilentlyContinue
+                    Write-Host "  [X] Killing process $processId on port $Port..." -ForegroundColor Red
+                    Stop-Process -Id $processId -Force -ErrorAction SilentlyContinue
                     Start-Sleep -Milliseconds 500
                 } catch {
-                    Write-Host "  [!] Could not kill process $pid" -ForegroundColor Red
+                    Write-Host "  [!] Could not kill process $processId" -ForegroundColor Red
                 }
             }
         }

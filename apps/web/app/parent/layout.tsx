@@ -18,8 +18,7 @@ import {
   X,
   UserCircle,
   GraduationCap,
-  BookOpen,
-  Home
+  BookOpen
 } from 'lucide-react';
 import { useState } from 'react';
 import Loading from '../loading';
@@ -63,7 +62,7 @@ export default function ParentLayout({
     return <Loading />;
   }
 
-  const displayName = user ? `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim() || 'Parent' : 'Parent';
+  const displayName = user?.name || 'Parent';
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-purple-50 to-pink-50">
@@ -108,7 +107,7 @@ export default function ParentLayout({
               <UserCircle className="w-8 h-8 text-purple-600" />
               <div className="hidden md:block">
                 <p className="text-sm font-semibold text-gray-800">{displayName}</p>
-                <p className="text-xs text-gray-500">{user?.role}</p>
+                <p className="text-xs text-gray-500">{user?.role || 'PARENT'}</p>
               </div>
             </div>
             <button

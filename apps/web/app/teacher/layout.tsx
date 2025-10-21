@@ -8,7 +8,6 @@ import {
   Users,
   ClipboardCheck,
   FileText,
-  Calendar,
   Bell,
   Settings,
   LogOut,
@@ -95,8 +94,8 @@ export default function TeacherLayout({
             <div className="flex items-center gap-3 px-3 py-2 bg-gray-50 rounded-lg">
               <UserCircle className="w-8 h-8 text-blue-600" />
               <div className="hidden md:block">
-                <p className="text-sm font-semibold text-gray-800">{user ? `${user.firstName} ${user.lastName}` : 'Teacher'}</p>
-                <p className="text-xs text-gray-500">{user?.role}</p>
+                <p className="text-sm font-semibold text-gray-800">{user?.name || 'Teacher'}</p>
+                <p className="text-xs text-gray-500">{user?.role || 'TEACHER'}</p>
               </div>
             </div>
             <button

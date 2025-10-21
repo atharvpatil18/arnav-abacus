@@ -86,9 +86,13 @@ export default function FeesPage() {
     },
   });
 
-  const markPaidMutation = useMutation<Fee, Error, number>({
-    mutationFn: async (feeId) => {
-      const response = await axiosInstance.post<Fee>(`/fees/${feeId}/mark-paid`);
+  const markPaidMutation = useMutation<Fee, Error, {feeId: number, amount: number}>({
+    mutationFn: async ({feeId, amount}) => {
+      const response = await axiosInstance.post<Fee>(`/fees/${feeId}/mark-paid`, {
+        paidAmount: amount,
+        paidDate: new Date().toISOString(),
+        paidBy: 'Admin'
+      });
       return response.data;
     },
     onSuccess: () => {
@@ -266,7 +270,7 @@ export default function FeesPage() {
                                   <Button
                                     variant="outline"
                                     size="sm"
-                                    onClick={() => markPaidMutation.mutate(fee.id)}
+                                    onClick={() => markPaidMutation.mutate({feeId: fee.id, amount: fee.amount - fee.paidAmount})}
                                     disabled={markPaidMutation.isPending}
                                   >
                                     Mark as Paid
