@@ -26,6 +26,58 @@ export class ReportsService {
     };
   }
 
+  async getAttendanceIssues() {
+    // Get students with low attendance in the current month
+    const today = new Date();
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    
+    const students = await this.prisma.student.findMany({
+      where: {
+        status: 'ACTIVE'
+      },
+      include: {
+        batch: {
+          select: {
+            name: true
+          }
+        },
+        attendances: {
+          where: {
+            date: {
+              gte: startOfMonth
+            }
+          },
+          orderBy: {
+            date: 'desc'
+          }
+        }
+      }
+    });
+
+    const issues = students
+      .map(student => {
+        const totalClasses = student.attendances.length;
+        const absences = student.attendances.filter(
+          a => a.status === 'ABSENT'
+        ).length;
+        const lastAttendance = student.attendances.find(
+          a => a.status === 'PRESENT' || a.status === 'LATE'
+        );
+
+        return {
+          studentName: `${student.firstName} ${student.lastName}`,
+          batchName: student.batch?.name || 'No Batch',
+          absencesThisMonth: absences,
+          totalClassesThisMonth: totalClasses,
+          lastAttendance: lastAttendance?.date || null
+        };
+      })
+      .filter(issue => issue.absencesThisMonth > 3) // Students with more than 3 absences
+      .sort((a, b) => b.absencesThisMonth - a.absencesThisMonth);
+
+    return issues;
+  }
+
   async getStudentLevelSummary(studentId: number) {
     const tests = await this.prisma.test.findMany({
       where: { studentId },

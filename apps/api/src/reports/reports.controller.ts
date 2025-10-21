@@ -7,13 +7,19 @@ import { Role } from '@prisma/client';
 
 @Controller('reports')
 @UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(Role.ADMIN)
 export class ReportsController {
   constructor(private reportsService: ReportsService) {}
 
   @Get('dashboard')
   async getDashboardStats() {
-    return this.reportsService.getDashboardStats();
+    const stats = await this.reportsService.getDashboardStats();
+    return { data: stats };
+  }
+
+  @Get('attendance-issues')
+  async getAttendanceIssues() {
+    const issues = await this.reportsService.getAttendanceIssues();
+    return { data: issues };
   }
 
   @Get('student-level-summary/:id')
