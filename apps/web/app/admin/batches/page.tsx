@@ -52,7 +52,6 @@ interface BatchFormData {
   teacherId: number | null;
   dayMask: number;
   timeSlot: string;
-  capacity: number;
 }
 
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -66,7 +65,6 @@ export default function BatchesPage() {
     teacherId: null,
     dayMask: 0,
     timeSlot: '',
-    capacity: 30,
   });
   const [selectedDays, setSelectedDays] = useState<number[]>([]);
 
@@ -176,7 +174,6 @@ export default function BatchesPage() {
       teacherId: null,
       dayMask: 0,
       timeSlot: '',
-      capacity: 30,
     });
     setSelectedDays([]);
   };
@@ -279,33 +276,22 @@ export default function BatchesPage() {
                         title="Time Slot"
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Capacity</label>
-                      <input
-                        type="number"
-                        value={formData.capacity}
-                        onChange={(e) => setFormData({ ...formData, capacity: Number(e.target.value) })}
-                        className="w-full px-3 py-2 border rounded-md"
-                        min="1"
-                        max="100"
-                        title="Capacity"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Days *</label>
-                      <div className="flex gap-2">
-                        {DAYS.map((day, index) => (
-                          <button
-                            key={day}
-                            type="button"
-                            onClick={() => toggleDay(index)}
-                            className={`px-3 py-1 rounded text-sm ${
-                              selectedDays.includes(index)
-                                ? 'bg-blue-600 text-white'
-                                : 'bg-gray-200 text-gray-700'
-                            }`}
-                          >
-                            {day}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Days *</label>
+                    <div className="flex gap-2">
+                      {DAYS.map((day, index) => (
+                        <button
+                          key={day}
+                          type="button"
+                          onClick={() => toggleDay(index)}
+                          className={`px-3 py-1 rounded text-sm ${
+                            selectedDays.includes(index)
+                              ? 'bg-blue-600 text-white'
+                              : 'bg-gray-200 text-gray-700'
+                          }`}
+                        >
+                          {day}
                           </button>
                         ))}
                       </div>
@@ -355,7 +341,7 @@ export default function BatchesPage() {
                     </p>
                     <p>
                       <span className="font-medium">Students:</span>{' '}
-                      {batch.currentStudents || 0}/{batch.capacity}
+                      {batch.currentStudents || 0} students enrolled
                     </p>
                   </div>
                   <div className="mt-4 flex space-x-2">
