@@ -41,4 +41,18 @@ export class AnalyticsController {
       new Date(endDate),
     );
   }
+
+  @Get('monthly-revenue')
+  @ApiOperation({ summary: 'Get monthly revenue analytics' })
+  @ApiResponse({ status: 200, description: 'Returns monthly revenue data including fees collected and expenditures' })
+  @Roles('ADMIN')
+  async getMonthlyRevenue(
+    @Query('start') startDate: string,
+    @Query('end') endDate: string,
+  ) {
+    return this.analyticsService.getMonthlyRevenue(
+      new Date(startDate),
+      new Date(endDate),
+    );
+  }
 }
