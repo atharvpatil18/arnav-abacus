@@ -66,6 +66,7 @@ export interface FindAllBatchesParams {
   skip: number;
   take: number;
   search?: string;
+  levelId?: number;
 }
 
 export interface GetBatchStudentsParams {

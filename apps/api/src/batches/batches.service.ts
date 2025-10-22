@@ -26,14 +26,20 @@ export class BatchesService {
   }
 
   async findAll(params: FindAllBatchesParams) {
-    const { skip, take, search } = params;
+    const { skip, take, search, levelId } = params;
     
-    const whereClause: Prisma.BatchWhereInput = search ? {
-      name: {
+    const whereClause: Prisma.BatchWhereInput = {};
+    
+    if (search) {
+      whereClause.name = {
         contains: search,
         mode: 'insensitive' as Prisma.QueryMode,
-      }
-    } : {};
+      };
+    }
+    
+    if (levelId) {
+      whereClause.levelId = levelId;
+    }
 
     const [total, items] = await Promise.all([
       this.prisma.batch.count({ where: whereClause }),

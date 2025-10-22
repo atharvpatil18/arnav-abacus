@@ -74,12 +74,14 @@ export default function BatchesPage() {
     queryKey: ['batches', selectedLevel],
     queryFn: async () => {
       try {
-        const response = await axiosInstance.get(`/batches${selectedLevel ? `?levelId=${selectedLevel}` : ''}`);
-        // Handle both direct array and wrapped response
-        const data = response.data as Batch[] | { data: Batch[] };
+        const response = await axiosInstance.get(`/batches?page=1&limit=1000${selectedLevel ? `&levelId=${selectedLevel}` : ''}`);
+        // Handle paginated response {total, items} or direct array
+        const data = response.data as Batch[] | { items: Batch[]; total: number } | { data: Batch[] };
         if (Array.isArray(data)) {
           return data;
-        } else if (data && 'data' in data && Array.isArray(data.data)) {
+        } else if ('items' in data && Array.isArray(data.items)) {
+          return data.items;
+        } else if ('data' in data && Array.isArray(data.data)) {
           return data.data;
         }
         console.error('Unexpected batches response format:', data);

@@ -45,6 +45,7 @@ export class BatchesController {
     @Query('page', new ParseIntPipe({ optional: true })) page?: number,
     @Query('limit', new ParseIntPipe({ optional: true })) limit?: number,
     @Query('search') search?: string,
+    @Query('levelId', new ParseIntPipe({ optional: true })) levelId?: number,
   ) {
     try {
       const actualPage = page || 1;
@@ -58,6 +59,7 @@ export class BatchesController {
         skip: (actualPage - 1) * actualLimit,
         take: actualLimit,
         search,
+        levelId,
       });
     } catch (error) {
       if (error instanceof BadRequestException) {
