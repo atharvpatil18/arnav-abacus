@@ -15,12 +15,6 @@ import { toast } from 'sonner';
 import { apiClient } from '@/lib/api';
 import { Plus, Trash2, TrendingDown, DollarSign, FileText } from 'lucide-react';
 
-interface ApiResponse<T> {
-  data: T;
-  message: string;
-  success: boolean;
-}
-
 interface Expenditure {
   id: number;
   category: string;
@@ -31,11 +25,6 @@ interface Expenditure {
   receiptUrl?: string;
   recordedBy: number;
   remarks?: string;
-}
-
-interface ExpenditureSummary {
-  total: number;
-  categoryWise: { category: string; total: number; count: number }[];
 }
 
 const CATEGORIES = [
@@ -69,26 +58,35 @@ export default function ExpenditurePage() {
 
   const queryClient = useQueryClient();
 
-  const { data: expenditures, isLoading: isLoadingExpenditures } = useQuery<ApiResponse<Expenditure[]>>({
+  const { data: expenditures, isLoading: isLoadingExpenditures } = useQuery<Expenditure[]>({
     queryKey: ['expenditures', selectedCategory, dateRange],
-    queryFn: async (): Promise<ApiResponse<Expenditure[]>> => {
+    queryFn: async (): Promise<Expenditure[]> => {
       const params = new URLSearchParams();
       if (selectedCategory) params.append('category', selectedCategory);
       params.append('startDate', dateRange.start);
       params.append('endDate', dateRange.end);
-      const { data } = await apiClient.get<ApiResponse<Expenditure[]>>(`/expenditure?${params.toString()}`);
+      const { data } = await apiClient.get<Expenditure[]>(`/expenditure?${params.toString()}`);
       return data;
     },
   });
 
-  const { data: summary, isLoading: isLoadingSummary } = useQuery<ApiResponse<ExpenditureSummary>>({
+  const { data: summary, isLoading: isLoadingSummary } = useQuery<{ total: number; categoryWise: { category: string; total: number }[] }>({
     queryKey: ['expenditure-summary', dateRange],
-    queryFn: async (): Promise<ApiResponse<ExpenditureSummary>> => {
+    queryFn: async () => {
       const params = new URLSearchParams();
       params.append('startDate', dateRange.start);
       params.append('endDate', dateRange.end);
-      const { data } = await apiClient.get<ApiResponse<ExpenditureSummary>>(`/expenditure/total?${params.toString()}`);
-      return data;
+      
+      // Fetch total and category-wise in parallel
+      const [totalRes, categoryRes] = await Promise.all([
+        apiClient.get<number>(`/expenditure/total?${params.toString()}`),
+        apiClient.get<{ category: string; total: number }[]>(`/expenditure/category-wise?${params.toString()}`)
+      ]);
+      
+      return {
+        total: totalRes.data,
+        categoryWise: categoryRes.data
+      };
     },
   });
 
@@ -140,9 +138,9 @@ export default function ExpenditurePage() {
     setFormData(prev => ({ ...prev, [name]: name === 'amount' ? Number(value) : value }));
   };
 
-  const totalExpenditure = summary?.data?.total || 0;
-  const summaryData = summary?.data;
-  const expendituresData = expenditures?.data || [];
+  const totalExpenditure = summary?.total || 0;
+  const summaryData = summary;
+  const expendituresData = expenditures || [];
 
   return (
     <div className="p-6 space-y-6">
@@ -449,7 +447,7 @@ export default function ExpenditurePage() {
             </div>
           ) : summaryData && summaryData.categoryWise && summaryData.categoryWise.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {summaryData.categoryWise.map((item: { category: string; total: number; count: number }) => (
+              {summaryData.categoryWise.map((item: { category: string; total: number }) => (
                 <div
                   key={item.category}
                   className="p-4 border rounded-lg bg-gradient-to-br from-purple-50 to-pink-50"
@@ -457,9 +455,6 @@ export default function ExpenditurePage() {
                   <h3 className="font-medium text-gray-700 mb-2">{item.category}</h3>
                   <p className="text-2xl font-bold text-purple-600">
                     ₹{item.total.toLocaleString()}
-                  </p>
-                  <p className="text-sm text-gray-600 mt-1">
-                    {item.count} transaction{item.count !== 1 ? 's' : ''}
                   </p>
                 </div>
               ))}

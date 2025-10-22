@@ -120,6 +120,20 @@ model Fee {
   updatedAt     DateTime  @updatedAt
 }
 
+model Expenditure {
+  id            Int      @id @default(autoincrement())
+  category      String
+  amount        Float
+  description   String
+  date          DateTime
+  paymentMethod String
+  receiptUrl    String?
+  recordedBy    Int
+  remarks       String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
 enum Role {
   ADMIN
   TEACHER
