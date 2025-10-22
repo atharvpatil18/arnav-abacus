@@ -19,8 +19,10 @@ interface Student {
   parentPhone: string;
   email: string;
   currentLevel: number;
-  batch?: { name: string };
+  batch?: { id?: number; name: string };
   status: string;
+  joiningDate?: string;
+  dob?: string;
 }
 
 export default function StudentsPage() {
@@ -28,12 +30,27 @@ export default function StudentsPage() {
   const queryClient = useQueryClient();
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'ALL' | 'ACTIVE' | 'INACTIVE'>('ALL');
+  const [levelFilter, setLevelFilter] = useState<string>('ALL');
+  const [batchFilter, setBatchFilter] = useState<string>('ALL');
+  const [sortBy, setSortBy] = useState<'name' | 'level' | 'joining' | 'age'>('name');
+  const [showFilters, setShowFilters] = useState(false);
 
   const { data: students, isLoading } = useQuery<Student[], Error>({
     queryKey: ['students'],
     queryFn: async () => {
       const response = await axiosInstance.get<Student[]>('/students');
       return response.data;
+    },
+  });
+
+  // Fetch batches for filter
+  const { data: batches } = useQuery({
+    queryKey: ['batches'],
+    queryFn: async () => {
+      const response = await axiosInstance.get('/batches?page=1&limit=1000');
+      const data = response.data as { items?: unknown[] } | unknown[];
+      if (data && typeof data === 'object' && 'items' in data) return data.items;
+      return Array.isArray(data) ? data : [];
     },
   });
 
@@ -64,7 +81,27 @@ export default function StudentsPage() {
                          s.parentName.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          s.parentPhone.includes(searchQuery);
     const matchesStatus = statusFilter === 'ALL' || s.status === statusFilter;
-    return matchesSearch && matchesStatus;
+    const matchesLevel = levelFilter === 'ALL' || s.currentLevel.toString() === levelFilter;
+    const matchesBatch = batchFilter === 'ALL' || 
+                        (batchFilter === 'NONE' ? !s.batch : s.batch?.id?.toString() === batchFilter);
+    return matchesSearch && matchesStatus && matchesLevel && matchesBatch;
+  });
+
+  // Apply sorting
+  const sortedStudents = [...filteredStudents].sort((a, b) => {
+    switch (sortBy) {
+      case 'name':
+        return `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`);
+      case 'level':
+        return a.currentLevel - b.currentLevel;
+      case 'joining':
+        return new Date(b.joiningDate || 0).getTime() - new Date(a.joiningDate || 0).getTime();
+      case 'age':
+        if (!a.dob || !b.dob) return 0;
+        return new Date(a.dob).getTime() - new Date(b.dob).getTime();
+      default:
+        return 0;
+    }
   });
 
   const activeCount = studentsData.filter(s => s.status === 'ACTIVE').length;
@@ -116,38 +153,100 @@ export default function StudentsPage() {
 
       {/* Filters */}
       <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input
-              type="text"
-              placeholder="Search by name, parent name, or phone..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            />
+        <div className="flex flex-col gap-4">
+          {/* Search and Main Controls */}
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search by name, parent name, or phone..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                onClick={() => setShowFilters(!showFilters)}
+                className="flex items-center gap-2"
+              >
+                <Filter className="w-5 h-5" />
+                Filters
+              </Button>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as 'name' | 'level' | 'joining' | 'age')}
+                className="px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent appearance-none bg-white"
+                aria-label="Sort by"
+              >
+                <option value="name">Sort by Name</option>
+                <option value="level">Sort by Level</option>
+                <option value="joining">Sort by Joining Date</option>
+                <option value="age">Sort by Age</option>
+              </select>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Filter className="text-gray-400 w-5 h-5" />
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value as 'ALL' | 'ACTIVE' | 'INACTIVE')}
-              className="px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent appearance-none bg-white"
-              aria-label="Filter by status"
-            >
-              <option value="ALL">All Status</option>
-              <option value="ACTIVE">Active</option>
-              <option value="INACTIVE">Inactive</option>
-            </select>
-          </div>
+
+          {/* Advanced Filters (Collapsible) */}
+          {showFilters && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-gray-200">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value as 'ALL' | 'ACTIVE' | 'INACTIVE')}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent appearance-none bg-white"
+                  aria-label="Filter by status"
+                >
+                  <option value="ALL">All Status</option>
+                  <option value="ACTIVE">Active</option>
+                  <option value="INACTIVE">Inactive</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Level</label>
+                <select
+                  value={levelFilter}
+                  onChange={(e) => setLevelFilter(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent appearance-none bg-white"
+                  aria-label="Filter by level"
+                >
+                  <option value="ALL">All Levels</option>
+                  {Array.from(new Set(studentsData.map(s => s.currentLevel)))
+                    .sort((a, b) => a - b)
+                    .map(level => (
+                      <option key={level} value={level}>Level {level}</option>
+                    ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Batch</label>
+                <select
+                  value={batchFilter}
+                  onChange={(e) => setBatchFilter(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent appearance-none bg-white"
+                  aria-label="Filter by batch"
+                >
+                  <option value="ALL">All Batches</option>
+                  <option value="NONE">No Batch Assigned</option>
+                  {batches && Array.isArray(batches) && batches.map((batchItem: unknown) => {
+                    const batch = batchItem as { id: number; name: string };
+                    return <option key={batch.id} value={batch.id}>{batch.name}</option>;
+                  })}
+                </select>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
       {/* Students Grid */}
       <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredStudents.length > 0 ? (
-            filteredStudents.map((student: Student) => (
+          {sortedStudents.length > 0 ? (
+            sortedStudents.map((student: Student) => (
             <Card key={student.id} className="border-none shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
               <div className="bg-gradient-to-br from-purple-500 to-blue-500 text-white p-5 rounded-t-xl">
                 <div className="flex items-start justify-between mb-3">
