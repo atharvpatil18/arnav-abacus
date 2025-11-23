@@ -42,7 +42,7 @@ export default function LeaveRequestsPage() {
     queryKey: ['leave-requests'],
     queryFn: async () => {
       const response = await axiosInstance.get('/leave?page=1&limit=1000');
-      return Array.isArray(response.data) ? response.data : response.data?.items || [];
+      return Array.isArray(response.data) ? response.data : (response.data as any)?.items || [];
     },
   });
 
@@ -50,7 +50,7 @@ export default function LeaveRequestsPage() {
     queryKey: ['teachers'],
     queryFn: async () => {
       const response = await axiosInstance.get('/teacher?page=1&limit=1000');
-      return Array.isArray(response.data) ? response.data : response.data?.items || [];
+      return Array.isArray(response.data) ? response.data : (response.data as any)?.items || [];
     },
   });
 

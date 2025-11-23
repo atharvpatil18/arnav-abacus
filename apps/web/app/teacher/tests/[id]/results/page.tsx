@@ -283,7 +283,7 @@ export default function TestResultsPage() {
                     cx="50%"
                     cy="50%"
                     labelLine={false}
-                    label={(props: Record<string, unknown>) => {
+                    label={(props: any) => {
                       const name = props.name as string;
                       const value = props.value as number;
                       const percent = props.percent as number;

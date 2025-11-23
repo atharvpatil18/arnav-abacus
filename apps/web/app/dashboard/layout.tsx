@@ -24,7 +24,7 @@ export default function DashboardLayout({
             </div>
             <div className="flex items-center">
               <span className="mr-4 text-sm text-gray-700">
-                {user?.firstName} {user?.lastName}
+                {user?.name}
               </span>
               <Button
                 variant="outline"

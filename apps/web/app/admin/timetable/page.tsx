@@ -77,7 +77,7 @@ export default function TimetablePage() {
         ? `/timetable?batchId=${selectedBatch}`
         : '/timetable?page=1&limit=1000';
       const response = await axiosInstance.get(url);
-      return Array.isArray(response.data) ? response.data : response.data?.items || [];
+      return Array.isArray(response.data) ? response.data : (response.data as any)?.items || [];
     },
   });
 
@@ -85,7 +85,7 @@ export default function TimetablePage() {
     queryKey: ['batches'],
     queryFn: async () => {
       const response = await axiosInstance.get('/batches?page=1&limit=1000');
-      return Array.isArray(response.data) ? response.data : response.data?.items || [];
+      return Array.isArray(response.data) ? response.data : (response.data as any)?.items || [];
     },
   });
 
@@ -93,7 +93,7 @@ export default function TimetablePage() {
     queryKey: ['teachers'],
     queryFn: async () => {
       const response = await axiosInstance.get('/teacher?page=1&limit=1000');
-      return Array.isArray(response.data) ? response.data : response.data?.items || [];
+      return Array.isArray(response.data) ? response.data : (response.data as any)?.items || [];
     },
   });
 

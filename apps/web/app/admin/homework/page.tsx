@@ -102,7 +102,7 @@ export default function HomeworkPage() {
         ? `/homework?batchId=${selectedBatch}`
         : '/homework?page=1&limit=1000';
       const response = await axiosInstance.get(url);
-      return Array.isArray(response.data) ? response.data : response.data?.items || [];
+      return Array.isArray(response.data) ? response.data : (response.data as any)?.items || [];
     }
   });
 
@@ -110,7 +110,7 @@ export default function HomeworkPage() {
     queryKey: ['batches'],
     queryFn: async () => {
       const response = await axiosInstance.get('/batches?page=1&limit=1000');
-      return Array.isArray(response.data) ? response.data : response.data?.items || [];
+      return Array.isArray(response.data) ? response.data : (response.data as any)?.items || [];
     }
   });
 
@@ -118,7 +118,7 @@ export default function HomeworkPage() {
     queryKey: ['teachers'],
     queryFn: async () => {
       const response = await axiosInstance.get('/teacher?page=1&limit=1000');
-      return Array.isArray(response.data) ? response.data : response.data?.items || [];
+      return Array.isArray(response.data) ? response.data : (response.data as any)?.items || [];
     }
   });
 
@@ -620,7 +620,7 @@ export default function HomeworkPage() {
             <div className="text-center py-12 text-gray-500">
               <BookOpen className="w-16 h-16 mx-auto mb-4 text-gray-300" />
               <p>No homework assignments yet</p>
-              <p className="text-sm">Click "New Homework" to create one</p>
+              <p className="text-sm">Click &quot;New Homework&quot; to create one</p>
             </div>
           )}
         </CardContent>

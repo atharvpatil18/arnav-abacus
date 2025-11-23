@@ -58,14 +58,14 @@ export default function AttendancePage() {
     queryKey: ['batches-with-students'],
     queryFn: async () => {
       const response = await axiosInstance.get('/batches?page=1&limit=1000');
-      const batchesData = Array.isArray(response.data) ? response.data : response.data?.items || [];
+      const batchesData = Array.isArray(response.data) ? response.data : (response.data as any)?.items || [];
       
       // Fetch students for each batch
       const batchesWithStudents = await Promise.all(
         batchesData.map(async (batch: Batch) => {
           try {
             const studentsRes = await axiosInstance.get(`/batches/${batch.id}/students`);
-            const students = Array.isArray(studentsRes.data) ? studentsRes.data : studentsRes.data?.items || [];
+            const students = Array.isArray(studentsRes.data) ? studentsRes.data : (studentsRes.data as any)?.items || [];
             return { ...batch, students };
           } catch {
             return { ...batch, students: [] };

@@ -51,13 +51,15 @@ export default function FeeTypesPage() {
   });
 
   // Fetch fee types
-  const { data: feeTypes = [], isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['fee-types'],
     queryFn: async () => {
       const response = await axiosInstance.get('/fee-types');
       return response.data;
     },
   });
+  
+  const feeTypes = (data || []) as FeeTypeConfig[];
 
   // Create mutation
   const createMutation = useMutation({

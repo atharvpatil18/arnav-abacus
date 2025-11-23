@@ -17,7 +17,11 @@ import {
   X,
   UserCircle,
   GraduationCap,
-  TrendingDown
+  TrendingDown,
+  ClipboardCheck,
+  Calendar,
+  Megaphone,
+  MessageSquare
 } from 'lucide-react';
 import { useState } from 'react';
 import Loading from '../loading';
@@ -34,8 +38,14 @@ const navItems: NavItem[] = [
   { label: 'Students', href: '/admin/students', icon: <Users className="w-5 h-5" /> },
   { label: 'Batches', href: '/admin/batches', icon: <BookOpen className="w-5 h-5" /> },
   { label: 'Levels', href: '/admin/levels', icon: <Layers className="w-5 h-5" /> },
+  { label: 'Attendance', href: '/admin/attendance', icon: <ClipboardCheck className="w-5 h-5" /> },
+  { label: 'Tests', href: '/admin/tests', icon: <FileText className="w-5 h-5" /> },
+  { label: 'Homework', href: '/admin/homework', icon: <BookOpen className="w-5 h-5" /> },
   { label: 'Fees', href: '/admin/fees', icon: <CreditCard className="w-5 h-5" /> },
   { label: 'Expenditure', href: '/admin/expenditure', icon: <TrendingDown className="w-5 h-5" /> },
+  { label: 'Events', href: '/admin/events', icon: <Calendar className="w-5 h-5" /> },
+  { label: 'Announcements', href: '/admin/announcements', icon: <Megaphone className="w-5 h-5" /> },
+  { label: 'Messages', href: '/admin/messages', icon: <MessageSquare className="w-5 h-5" /> },
   { label: 'Reports', href: '/admin/reports', icon: <FileText className="w-5 h-5" /> },
 ];
 

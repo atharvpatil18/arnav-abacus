@@ -96,7 +96,7 @@ export default function TestsPage() {
       const response = await axiosInstance.get('/batches?page=1&limit=1000');
       const data = response.data;
       if (Array.isArray(data)) return data;
-      if (data?.items) return data.items;
+      if ((data as any)?.items) return (data as any).items;
       return [];
     },
   });

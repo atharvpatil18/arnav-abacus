@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
+import Link from 'next/link';
 import { 
   Card,
   CardContent,
@@ -201,22 +202,22 @@ export default function AdminDashboard() {
           <CardContent className="pt-6">
             <div className="flex flex-col space-y-3">
               <Button variant="outline" asChild className="justify-start hover:bg-purple-50 transition-colors">
-                <a href="/admin/students">
+                <Link href="/admin/students">
                   <Users className="w-4 h-4 mr-2" />
                   Manage Students
-                </a>
+                </Link>
               </Button>
               <Button variant="outline" asChild className="justify-start hover:bg-blue-50 transition-colors">
-                <a href="/admin/batches">
+                <Link href="/admin/batches">
                   <GraduationCap className="w-4 h-4 mr-2" />
                   Manage Batches
-                </a>
+                </Link>
               </Button>
               <Button variant="outline" asChild className="justify-start hover:bg-green-50 transition-colors">
-                <a href="/admin/levels">
+                <Link href="/admin/levels">
                   <TrendingUp className="w-4 h-4 mr-2" />
                   Manage Levels
-                </a>
+                </Link>
               </Button>
             </div>
           </CardContent>

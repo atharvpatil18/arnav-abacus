@@ -62,13 +62,15 @@ export default function BroadcastMessagesPage() {
   });
 
   // Fetch broadcast messages
-  const { data: broadcasts = [], isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['broadcast-messages'],
     queryFn: async () => {
       const response = await axiosInstance.get('/broadcast-messages');
       return response.data;
     },
   });
+  
+  const broadcasts = (data || []) as BroadcastMessage[];
 
   // Create mutation
   const createMutation = useMutation({
@@ -165,7 +167,7 @@ export default function BroadcastMessagesPage() {
   };
 
   // Filter broadcasts
-  const filteredBroadcasts = broadcasts.filter((broadcast: BroadcastMessage) => {
+  const filteredBroadcasts = (broadcasts || []).filter((broadcast: BroadcastMessage) => {
     if (filterStatus !== 'ALL' && broadcast.status !== filterStatus) return false;
     if (filterChannel !== 'ALL' && broadcast.channel !== filterChannel) return false;
     return true;
