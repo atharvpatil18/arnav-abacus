@@ -25,7 +25,6 @@ interface RegisterData extends LoginCredentials {
 }
 
 interface AuthResponse {
-  token: string;
   user: User;
 }
 
@@ -53,8 +52,7 @@ export function useAuth() {
       return data;
     },
     onSuccess: (data) => {
-      // Store the token in localStorage
-      localStorage.setItem('token', data.token);
+      // Token is now stored in httpOnly cookie by the server
       toast.success('Logged in successfully');
       router.push(getHomeRoute(data.user.role));
     },

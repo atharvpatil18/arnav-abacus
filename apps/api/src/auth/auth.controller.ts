@@ -1,4 +1,5 @@
-import { Body, Controller, Post, Query, Get, UseGuards, Request } from '@nestjs/common';
+import { Body, Controller, Post, Query, Get, UseGuards, Request, Response } from '@nestjs/common';
+import { Response as ExpressResponse } from 'express';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './auth.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
@@ -13,13 +14,35 @@ export class AuthController {
   @Post('register')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
-  register(@Body() dto: RegisterDto) {
-    return this.authService.register(dto);
+  async register(@Body() dto: RegisterDto, @Response() res: ExpressResponse) {
+    const result = await this.authService.register(dto);
+    
+    // Set JWT token as httpOnly cookie
+    res.cookie('Authentication', result.token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
+
+    // Return user data without token
+    return res.json({ user: result.user });
   }
 
   @Post('login')
-  login(@Body() dto: LoginDto) {
-    return this.authService.login(dto);
+  async login(@Body() dto: LoginDto, @Response() res: ExpressResponse) {
+    const result = await this.authService.login(dto);
+    
+    // Set JWT token as httpOnly cookie
+    res.cookie('Authentication', result.token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
+
+    // Return user data without token
+    return res.json({ user: result.user });
   }
 
   @Get('verify-email')
@@ -49,5 +72,13 @@ export class AuthController {
   @Get('me')
   getProfile(@Request() req: { user: any }) {
     return req.user;
+  }
+
+  @Post('logout')
+  @UseGuards(JwtAuthGuard)
+  logout(@Response() res: ExpressResponse) {
+    // Clear the authentication cookie
+    res.clearCookie('Authentication');
+    return res.json({ message: 'Logged out successfully' });
   }
 }

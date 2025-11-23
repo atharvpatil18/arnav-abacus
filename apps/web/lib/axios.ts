@@ -10,20 +10,7 @@ const axiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // Enable sending cookies
-});
-
-// Add a request interceptor for authentication
-axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    if (config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
-    } else {
-      config.headers = { Authorization: `Bearer ${token}` };
-    }
-  }
-  return config;
+  withCredentials: true, // Enable sending cookies with requests
 });
 
 // Add a response interceptor for error handling
@@ -31,8 +18,7 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Handle unauthorized access
-      localStorage.removeItem('token');
+      // Handle unauthorized access - cookie is missing or invalid
       // Only redirect if not already on login page
       if (typeof window !== 'undefined' && !window.location.pathname.includes('/auth/login')) {
         window.location.href = '/auth/login';
