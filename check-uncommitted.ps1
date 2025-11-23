@@ -24,9 +24,13 @@ Write-Host ""
 
 # Check if we're in a git repository
 try {
-    git rev-parse --git-dir | Out-Null
+    git rev-parse --git-dir 2>&1 | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "✗ Error: Not a git repository" -ForegroundColor Red
+        exit 2
+    }
 } catch {
-    Write-Error "✗ Error: Not a git repository"
+    Write-Host "✗ Error: Not a git repository" -ForegroundColor Red
     exit 2
 }
 
@@ -41,18 +45,18 @@ if ($statusOutput) {
     Write-Host ""
     
     # Count changes
-    $modifiedFiles = @(git diff --name-only).Count
+    $unstagedFiles = @(git diff --name-only).Count
     $stagedFiles = @(git diff --cached --name-only).Count
     $untrackedFiles = @(git ls-files --others --exclude-standard).Count
     
     Write-Host "Summary:"
-    Write-Host "  - Modified files: $modifiedFiles"
+    Write-Host "  - Unstaged files: $unstagedFiles"
     Write-Host "  - Staged files: $stagedFiles"
     Write-Host "  - Untracked files: $untrackedFiles"
     Write-Host ""
     
     if ($Strict) {
-        Write-Error "✗ Cannot proceed in strict mode with uncommitted changes"
+        Write-Host "✗ Cannot proceed in strict mode with uncommitted changes" -ForegroundColor Red
         exit 1
     } else {
         Write-Warning "ℹ  You can:"

@@ -59,7 +59,8 @@ If your changes are complete and ready:
 git add .
 
 # Or stage specific files
-git add path/to/file
+git add apps/web/src/components/StudentList.tsx
+git add apps/api/src/students/students.service.ts
 
 # Commit with a descriptive message
 git commit -m "feat: add feature description"
@@ -95,7 +96,7 @@ git stash apply stash@{0}
 
 ```bash
 # Discard changes to specific file
-git checkout -- path/to/file
+git checkout -- apps/web/src/components/StudentCard.tsx
 
 # Discard all changes
 git checkout -- .
@@ -107,6 +108,8 @@ git clean -n
 git clean -f
 
 # Remove untracked files and directories
+git clean -fd
+```
 git clean -fd
 ```
 

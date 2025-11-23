@@ -26,8 +26,8 @@
     "prisma:generate": "cd apps/api && npx prisma generate",
     "prisma:migrate": "cd apps/api && npx prisma migrate dev",
     "prisma:studio": "cd apps/api && npx prisma studio",
-    "check:uncommitted": "bash check-uncommitted.sh",
-    "check:uncommitted:strict": "bash check-uncommitted.sh --strict"
+    "check:uncommitted": "sh check-uncommitted.sh",
+    "check:uncommitted:strict": "sh check-uncommitted.sh --strict"
   },
   "keywords": [
     "lms",
