@@ -10,14 +10,22 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Check if authentication cookie exists
+  // Check if authentication cookie exists and has basic JWT format (3 parts separated by dots)
   if (!authCookie || !authCookie.value) {
-    // Redirect to login if cookie is missing
     const loginUrl = new URL('/auth/login', request.url);
     return NextResponse.redirect(loginUrl);
   }
 
-  // Cookie exists, allow the request
+  // Validate basic JWT structure (header.payload.signature)
+  const jwtParts = authCookie.value.split('.');
+  if (jwtParts.length !== 3) {
+    // Invalid JWT format, redirect to login
+    const loginUrl = new URL('/auth/login', request.url);
+    return NextResponse.redirect(loginUrl);
+  }
+
+  // Cookie exists with valid format, allow the request
+  // Full JWT validation is done by the API backend
   return NextResponse.next();
 }
 

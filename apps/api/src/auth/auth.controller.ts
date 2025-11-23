@@ -11,37 +11,28 @@ import { Role } from '@prisma/client';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('register')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMIN)
-  async register(@Body() dto: RegisterDto, @Response() res: ExpressResponse) {
-    const result = await this.authService.register(dto);
-    
-    // Set JWT token as httpOnly cookie
-    res.cookie('Authentication', result.token, {
+  private setAuthCookie(res: ExpressResponse, token: string) {
+    res.cookie('Authentication', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
+  }
 
-    // Return user data without token
+  @Post('register')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  async register(@Body() dto: RegisterDto, @Response() res: ExpressResponse) {
+    const result = await this.authService.register(dto);
+    this.setAuthCookie(res, result.token);
     return res.json({ user: result.user });
   }
 
   @Post('login')
   async login(@Body() dto: LoginDto, @Response() res: ExpressResponse) {
     const result = await this.authService.login(dto);
-    
-    // Set JWT token as httpOnly cookie
-    res.cookie('Authentication', result.token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    });
-
-    // Return user data without token
+    this.setAuthCookie(res, result.token);
     return res.json({ user: result.user });
   }
 
