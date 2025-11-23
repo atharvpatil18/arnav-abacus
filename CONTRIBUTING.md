@@ -73,18 +73,25 @@ Follow conventional commits:
    git commit -m "feat: your feature description"
    ```
 
-3. Push to your fork
+3. Check for uncommitted changes before pushing
+   ```bash
+   ./check-uncommitted.sh
+   ```
+   
+   For detailed guidance on handling uncommitted changes, see [UNCOMMITTED_CHANGES.md](UNCOMMITTED_CHANGES.md)
+
+4. Push to your fork
    ```bash
    git push origin feature/your-feature-name
    ```
 
-4. Open a Pull Request with:
+5. Open a Pull Request with:
    - Clear title and description
    - Reference any related issues
    - Screenshots for UI changes
    - Test results
 
-5. Wait for code review and address feedback
+6. Wait for code review and address feedback
 
 ## 🏗️ Code Standards
 
