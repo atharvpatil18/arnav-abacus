@@ -24,9 +24,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           className={clsx(
-            'block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm',
+            'block w-full rounded-xl border-slate-200 bg-slate-50 shadow-sm focus:border-primary-500 focus:ring-primary-500 focus:bg-white transition-all duration-200 sm:text-sm',
             {
-              'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500':
+              'border-rose-300 text-rose-900 placeholder-rose-300 focus:border-rose-500 focus:ring-rose-500 bg-rose-50':
                 error,
             },
             className,
@@ -36,8 +36,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {helperText ? (
           <p
             className={clsx('mt-1 text-sm', {
-              'text-red-600': error,
-              'text-gray-500': !error,
+              'text-rose-600': error,
+              'text-slate-500': !error,
             })}
           >
             {helperText}

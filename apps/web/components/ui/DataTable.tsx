@@ -98,25 +98,25 @@ export default function DataTable<T extends Record<string, any>>({
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
       {/* Toolbar */}
-      <div className="p-4 border-b border-gray-200 flex items-center justify-between gap-4">
+      <div className="p-4 border-b border-slate-200 flex items-center justify-between gap-4 bg-white">
         {searchable && (
           <div className="flex-1 max-w-md relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
             <input
               type="text"
               placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-slate-50 focus:bg-white transition-colors"
             />
           </div>
         )}
         {exportable && onExport && (
           <button
             onClick={onExport}
-            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all"
+            className="flex items-center gap-2 px-4 py-2 bg-secondary-600 text-white font-semibold rounded-lg hover:bg-secondary-700 transition-all shadow-sm hover:shadow-md"
           >
             <Download className="w-4 h-4" />
             Export CSV
@@ -127,36 +127,38 @@ export default function DataTable<T extends Record<string, any>>({
       {/* Table */}
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-gray-50">
+          <thead className="bg-slate-50 border-b border-slate-200">
             <tr>
               <th className="px-4 py-3 text-left">
                 <input
                   type="checkbox"
+                  aria-label="Select all rows"
+                  title="Select all rows"
                   checked={selectedRows.size === paginatedData.length && paginatedData.length > 0}
                   onChange={toggleAllRows}
-                  className="w-4 h-4 text-purple-600 rounded focus:ring-purple-500"
+                  className="w-4 h-4 text-primary-600 rounded focus:ring-primary-500 border-slate-300"
                 />
               </th>
               {columns.map((column) => (
                 <th
                   key={String(column.key)}
-                  className="px-4 py-3 text-left text-sm font-semibold text-gray-700"
+                  className="px-4 py-3 text-left text-sm font-semibold text-slate-700"
                 >
                   <div className="flex items-center gap-2">
                     {column.header}
                     {column.sortable !== false && (
                       <button
                         onClick={() => handleSort(column.key)}
-                        className="hover:bg-gray-200 p-1 rounded transition-colors"
+                        className="hover:bg-slate-200 p-1 rounded transition-colors"
                       >
                         {sortConfig.key === column.key ? (
                           sortConfig.direction === 'asc' ? (
-                            <ChevronUp className="w-4 h-4" />
+                            <ChevronUp className="w-4 h-4 text-primary-600" />
                           ) : (
-                            <ChevronDown className="w-4 h-4" />
+                            <ChevronDown className="w-4 h-4 text-primary-600" />
                           )
                         ) : (
-                          <div className="w-4 h-4 text-gray-400">
+                          <div className="w-4 h-4 text-slate-400">
                             <ChevronUp className="w-4 h-4 opacity-30" />
                           </div>
                         )}
@@ -167,31 +169,36 @@ export default function DataTable<T extends Record<string, any>>({
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-slate-200">
             {paginatedData.length === 0 ? (
               <tr>
-                <td colSpan={columns.length + 1} className="px-4 py-8 text-center text-gray-500">
-                  No data found
+                <td colSpan={columns.length + 1} className="px-4 py-12 text-center text-slate-500">
+                  <div className="flex flex-col items-center justify-center">
+                    <Search className="w-12 h-12 text-slate-300 mb-2" />
+                    <p>No data found</p>
+                  </div>
                 </td>
               </tr>
             ) : (
               paginatedData.map((row, index) => (
                 <tr
                   key={index}
-                  className={`hover:bg-gray-50 transition-colors ${
-                    selectedRows.has(index) ? 'bg-purple-50' : ''
+                  className={`hover:bg-slate-50 transition-colors ${
+                    selectedRows.has(index) ? 'bg-primary-50/50' : ''
                   }`}
                 >
                   <td className="px-4 py-3">
                     <input
                       type="checkbox"
+                      aria-label={`Select row ${index + 1}`}
+                      title={`Select row ${index + 1}`}
                       checked={selectedRows.has(index)}
                       onChange={() => toggleRowSelection(index)}
-                      className="w-4 h-4 text-purple-600 rounded focus:ring-purple-500"
+                      className="w-4 h-4 text-primary-600 rounded focus:ring-primary-500 border-slate-300"
                     />
                   </td>
                   {columns.map((column) => (
-                    <td key={String(column.key)} className="px-4 py-3 text-sm text-gray-800">
+                    <td key={String(column.key)} className="px-4 py-3 text-sm text-slate-700">
                       {column.render
                         ? column.render(row[column.key], row)
                         : String(row[column.key] ?? '')}
@@ -206,8 +213,8 @@ export default function DataTable<T extends Record<string, any>>({
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="p-4 border-t border-gray-200 flex items-center justify-between">
-          <p className="text-sm text-gray-600">
+        <div className="p-4 border-t border-slate-200 flex items-center justify-between bg-white">
+          <p className="text-sm text-slate-600">
             Showing {(currentPage - 1) * rowsPerPage + 1} to{' '}
             {Math.min(currentPage * rowsPerPage, filteredAndSortedData.length)} of{' '}
             {filteredAndSortedData.length} results
@@ -216,7 +223,7 @@ export default function DataTable<T extends Record<string, any>>({
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
-              className="px-4 py-2 bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg font-medium transition-colors"
+              className="px-4 py-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg font-medium transition-colors text-slate-700"
             >
               Previous
             </button>
@@ -238,8 +245,8 @@ export default function DataTable<T extends Record<string, any>>({
                     onClick={() => setCurrentPage(pageNum)}
                     className={`w-10 h-10 rounded-lg font-medium transition-colors ${
                       currentPage === pageNum
-                        ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white'
-                        : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                        ? 'bg-primary-600 text-white shadow-md'
+                        : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
                     }`}
                   >
                     {pageNum}
@@ -250,7 +257,7 @@ export default function DataTable<T extends Record<string, any>>({
             <button
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
-              className="px-4 py-2 bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg font-medium transition-colors"
+              className="px-4 py-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg font-medium transition-colors text-slate-700"
             >
               Next
             </button>
