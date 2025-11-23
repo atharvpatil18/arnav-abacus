@@ -25,7 +25,9 @@
     "lint:web": "cd apps/web && npm run lint",
     "prisma:generate": "cd apps/api && npx prisma generate",
     "prisma:migrate": "cd apps/api && npx prisma migrate dev",
-    "prisma:studio": "cd apps/api && npx prisma studio"
+    "prisma:studio": "cd apps/api && npx prisma studio",
+    "check:uncommitted": "sh check-uncommitted.sh",
+    "check:uncommitted:strict": "sh check-uncommitted.sh --strict"
   },
   "keywords": [
     "lms",

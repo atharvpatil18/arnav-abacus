@@ -312,9 +312,14 @@ npx prisma migrate reset
 
 1. Fork the repository
 2. Create feature branch: `git checkout -b feature/AmazingFeature`
-3. Commit changes: `git commit -m 'Add AmazingFeature'`
-4. Push to branch: `git push origin feature/AmazingFeature`
-5. Open a Pull Request
+3. Make your changes
+4. Check for uncommitted changes: `./check-uncommitted.sh`
+5. Commit changes: `git commit -m 'Add AmazingFeature'`
+6. Push to branch: `git push origin feature/AmazingFeature`
+7. Open a Pull Request
+
+For detailed guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md).  
+For handling uncommitted changes, see [UNCOMMITTED_CHANGES.md](UNCOMMITTED_CHANGES.md).
 
 ## 📄 License
 
