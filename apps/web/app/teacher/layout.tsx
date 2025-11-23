@@ -14,7 +14,9 @@ import {
   Menu,
   X,
   UserCircle,
-  GraduationCap
+  GraduationCap,
+  CreditCard,
+  BookOpen
 } from 'lucide-react';
 import { useState } from 'react';
 import Loading from '../loading';
@@ -30,6 +32,8 @@ const navItems: NavItem[] = [
   { label: 'Students', href: '/teacher/students', icon: <Users className="w-5 h-5" /> },
   { label: 'Attendance', href: '/teacher/attendance', icon: <ClipboardCheck className="w-5 h-5" /> },
   { label: 'Tests', href: '/teacher/tests', icon: <FileText className="w-5 h-5" /> },
+  { label: 'Homework', href: '/teacher/homework', icon: <BookOpen className="w-5 h-5" /> },
+  { label: 'Fees', href: '/teacher/fees', icon: <CreditCard className="w-5 h-5" /> },
 ];
 
 export default function TeacherLayout({
