@@ -51,3 +51,25 @@ export class StudentHomeworkQueryDto {
   @IsDateString()
   endDate?: string;
 }
+
+export class UpdateParentProfileDto {
+  @IsOptional()
+  @IsString()
+  name?: string;
+
+  @IsOptional()
+  @IsString()
+  phoneNumber?: string;
+
+  @IsOptional()
+  @IsString()
+  email?: string;
+}
+
+export class UpdateParentPasswordDto {
+  @IsString()
+  currentPassword!: string;
+
+  @IsString()
+  newPassword!: string;
+}

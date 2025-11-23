@@ -1,5 +1,7 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
+import * as bcrypt from 'bcrypt';
+import { UpdateParentProfileDto, UpdateParentPasswordDto } from './parents.dto';
 
 @Injectable()
 export class ParentsService {
@@ -150,5 +152,40 @@ export class ParentsService {
     }
 
     return student;
+  }
+
+  async updateProfile(userId: number, dto: UpdateParentProfileDto) {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        name: dto.name,
+        phoneNumber: dto.phoneNumber,
+        email: dto.email,
+      },
+    });
+  }
+
+  async updatePassword(userId: number, dto: UpdateParentPasswordDto) {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const isPasswordValid = await bcrypt.compare(dto.currentPassword, user.password);
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid current password');
+    }
+
+    const hashedPassword = await bcrypt.hash(dto.newPassword, 10);
+
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        password: hashedPassword,
+      },
+    });
   }
 }

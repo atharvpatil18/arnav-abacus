@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from '@nestjs/common';
 import { TestsService } from './tests.service';
-import { CreateTestDto, UpdateTestDto } from './tests.dto';
+import { CreateTestDto, UpdateTestDto, BulkCreateTestDto } from './tests.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
@@ -15,6 +15,12 @@ export class TestsController {
   @Roles(Role.ADMIN, Role.TEACHER)
   create(@Body() createTestDto: CreateTestDto) {
     return this.testsService.create(createTestDto);
+  }
+
+  @Post('bulk')
+  @Roles(Role.ADMIN, Role.TEACHER)
+  createBulk(@Body() bulkCreateTestDto: BulkCreateTestDto) {
+    return this.testsService.createBulk(bulkCreateTestDto);
   }
 
   @Get()

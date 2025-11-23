@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { CreateTestDto, UpdateTestDto } from './tests.dto';
+import { CreateTestDto, UpdateTestDto, BulkCreateTestDto } from './tests.dto';
 import { Prisma } from '@prisma/client';
 
 @Injectable()
@@ -51,6 +51,30 @@ export class TestsService {
         }
       }
     });
+  }
+
+  async createBulk(dto: BulkCreateTestDto) {
+    const results = await Promise.all(dto.results.map(async (result) => {
+      const { totalObtained, totalPossible, percent } = this.calculateTestSummary(result.subjects);
+      
+      const jsonData = {
+        studentId: result.studentId,
+        batchId: dto.batchId,
+        level: result.level,
+        testName: dto.testName,
+        date: dto.date,
+        subjects: JSON.parse(JSON.stringify(result.subjects)) as Prisma.JsonObject,
+        totalObtained,
+        totalPossible,
+        percent,
+      };
+
+      return this.prisma.test.create({
+        data: jsonData,
+      });
+    }));
+
+    return results;
   }
 
   async findAll() {

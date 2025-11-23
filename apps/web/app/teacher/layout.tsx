@@ -53,49 +53,49 @@ export default function TeacherLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-slate-50">
       {/* Top Header */}
-      <header className="bg-white shadow-md sticky top-0 z-40">
+      <header className="bg-white/80 backdrop-blur-md border-b border-white/20 shadow-sm sticky top-0 z-40">
         <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              className="lg:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors"
               aria-label="Toggle mobile menu"
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="hidden lg:block p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              className="hidden lg:block p-2 rounded-lg hover:bg-slate-100 transition-colors"
               aria-label="Toggle sidebar"
             >
               <Menu className="w-6 h-6" />
             </button>
             <Link href="/teacher/dashboard" className="flex items-center gap-2">
-              <GraduationCap className="w-8 h-8 text-blue-600" />
+              <GraduationCap className="w-8 h-8 text-primary-600" />
               <div>
-                <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                <h1 className="text-xl font-bold text-primary-900">
                   Arnav Abacus Academy
                 </h1>
-                <p className="text-xs text-gray-500">Teacher Portal</p>
+                <p className="text-xs text-slate-500">Teacher Portal</p>
               </div>
             </Link>
           </div>
 
           <div className="flex items-center gap-4">
             <button 
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative"
+              className="p-2 rounded-lg hover:bg-slate-100 transition-colors relative"
               aria-label="Notifications"
             >
-              <Bell className="w-5 h-5 text-gray-600" />
+              <Bell className="w-5 h-5 text-slate-600" />
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
             </button>
-            <div className="flex items-center gap-3 px-3 py-2 bg-gray-50 rounded-lg">
-              <UserCircle className="w-8 h-8 text-blue-600" />
+            <div className="flex items-center gap-3 px-3 py-2 bg-slate-50 rounded-lg border border-slate-100">
+              <UserCircle className="w-8 h-8 text-primary-600" />
               <div className="hidden md:block">
-                <p className="text-sm font-semibold text-gray-800">{user?.name || 'Teacher'}</p>
-                <p className="text-xs text-gray-500">{user?.role || 'TEACHER'}</p>
+                <p className="text-sm font-semibold text-slate-800">{user?.name || 'Teacher'}</p>
+                <p className="text-xs text-slate-500">{user?.role || 'TEACHER'}</p>
               </div>
             </div>
             <button
@@ -112,7 +112,7 @@ export default function TeacherLayout({
       <div className="flex">
         {/* Sidebar - Desktop */}
         <aside
-          className={`hidden lg:block fixed left-0 top-[73px] h-[calc(100vh-73px)] bg-white shadow-lg transition-all duration-300 ${
+          className={`hidden lg:block fixed left-0 top-[73px] h-[calc(100vh-73px)] bg-white/80 backdrop-blur-md border-r border-white/20 shadow-sm transition-all duration-300 ${
             isSidebarOpen ? 'w-64' : 'w-0'
           } overflow-hidden`}
         >
@@ -126,8 +126,8 @@ export default function TeacherLayout({
                       href={item.href}
                       className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                         isActive
-                          ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
-                          : 'text-gray-700 hover:bg-gray-100'
+                          ? 'bg-primary-600 text-white shadow-md'
+                          : 'text-slate-700 hover:bg-slate-100'
                       }`}
                     >
                       {item.icon}
@@ -138,10 +138,10 @@ export default function TeacherLayout({
               })}
             </ul>
 
-            <div className="mt-8 pt-8 border-t border-gray-200">
+            <div className="mt-8 pt-8 border-t border-slate-200">
               <Link
                 href="/teacher/settings"
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors"
               >
                 <Settings className="w-5 h-5" />
                 <span className="font-medium">Settings</span>
@@ -152,8 +152,8 @@ export default function TeacherLayout({
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden fixed inset-0 top-[73px] z-30 bg-black/50" onClick={() => setIsMobileMenuOpen(false)}>
-            <aside className="w-64 h-full bg-white shadow-lg" onClick={(e) => e.stopPropagation()}>
+          <div className="lg:hidden fixed inset-0 top-[73px] z-30 bg-black/50 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)}>
+            <aside className="w-64 h-full bg-white shadow-xl" onClick={(e) => e.stopPropagation()}>
               <nav className="p-4">
                 <ul className="space-y-2">
                   {navItems.map((item) => {
@@ -165,8 +165,8 @@ export default function TeacherLayout({
                           onClick={() => setIsMobileMenuOpen(false)}
                           className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                             isActive
-                              ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
-                              : 'text-gray-700 hover:bg-gray-100'
+                              ? 'bg-primary-600 text-white shadow-md'
+                              : 'text-slate-700 hover:bg-slate-100'
                           }`}
                         >
                           {item.icon}
@@ -177,11 +177,11 @@ export default function TeacherLayout({
                   })}
                 </ul>
 
-                <div className="mt-8 pt-8 border-t border-gray-200">
+                <div className="mt-8 pt-8 border-t border-slate-200">
                   <Link
                     href="/teacher/settings"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors"
                   >
                     <Settings className="w-5 h-5" />
                     <span className="font-medium">Settings</span>

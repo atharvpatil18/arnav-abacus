@@ -50,3 +50,33 @@ export class UpdateTestDto {
   @Type(() => SubjectMark)
   subjects!: SubjectMark[];
 }
+
+export class StudentTestResultDto {
+  @IsInt()
+  studentId!: number;
+
+  @IsInt()
+  level!: number;
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => SubjectMark)
+  subjects!: SubjectMark[];
+}
+
+export class BulkCreateTestDto {
+  @IsInt()
+  batchId!: number;
+
+  @IsString()
+  testName!: string;
+
+  @IsDate()
+  @Type(() => Date)
+  date!: Date;
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => StudentTestResultDto)
+  results!: StudentTestResultDto[];
+}
