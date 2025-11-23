@@ -75,7 +75,7 @@ export default function InventoryPage() {
     queryKey: ['inventory'],
     queryFn: async () => {
       const response = await axiosInstance.get('/inventory?page=1&limit=1000');
-      return Array.isArray(response.data) ? response.data : response.data?.items || [];
+      return Array.isArray(response.data) ? response.data : (response.data as any)?.items || [];
     },
   });
 
@@ -83,7 +83,7 @@ export default function InventoryPage() {
     queryKey: ['batches'],
     queryFn: async () => {
       const response = await axiosInstance.get('/batches?page=1&limit=1000');
-      return Array.isArray(response.data) ? response.data : response.data?.items || [];
+      return Array.isArray(response.data) ? response.data : (response.data as any)?.items || [];
     },
   });
 

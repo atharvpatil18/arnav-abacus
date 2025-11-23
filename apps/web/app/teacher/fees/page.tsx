@@ -51,7 +51,7 @@ export default function TeacherFeesPage() {
     queryKey: ['teacher-fees'],
     queryFn: async () => {
       const response = await axiosInstance.get('/fees?page=1&limit=1000');
-      return Array.isArray(response.data) ? response.data : response.data?.items || [];
+      return Array.isArray(response.data) ? response.data : (response.data as any)?.items || [];
     },
   });
 

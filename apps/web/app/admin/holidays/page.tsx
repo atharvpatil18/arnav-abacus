@@ -49,7 +49,7 @@ export default function HolidaysPage() {
     queryKey: ['holidays'],
     queryFn: async () => {
       const response = await axiosInstance.get('/holidays?page=1&limit=1000');
-      return Array.isArray(response.data) ? response.data : response.data?.items || [];
+      return Array.isArray(response.data) ? response.data : (response.data as any)?.items || [];
     },
   });
 

@@ -53,22 +53,26 @@ export default function MakeupClassesPage() {
   });
 
   // Fetch makeup classes
-  const { data: makeupClasses = [], isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['makeup-classes'],
     queryFn: async () => {
       const response = await axiosInstance.get('/makeup-classes');
       return response.data;
     },
   });
+  
+  const makeupClasses = (data || []) as MakeupClass[];
 
   // Fetch batches
-  const { data: batches = [] } = useQuery({
+  const { data: batchesData } = useQuery({
     queryKey: ['batches'],
     queryFn: async () => {
       const response = await axiosInstance.get('/batches');
       return response.data;
     },
   });
+  
+  const batches = (batchesData || []) as Batch[];
 
   // Create mutation
   const createMutation = useMutation({

@@ -65,31 +65,35 @@ export default function GuardiansPage() {
   });
 
   // Fetch guardians
-  const { data: guardians = [], isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['guardians'],
     queryFn: async () => {
       const response = await axiosInstance.get('/guardians');
       return response.data;
     },
   });
+  
+  const guardians = (data || []) as Guardian[];
 
   // Fetch users
   const { data: users = [] } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
       const response = await axiosInstance.get('/users');
-      return response.data.filter((u: User) => u.name); // Only users with names
+      return (response.data as User[]).filter((u: User) => u.name); // Only users with names
     },
   });
 
   // Fetch students
-  const { data: students = [] } = useQuery({
+  const { data: studentsData } = useQuery({
     queryKey: ['students'],
     queryFn: async () => {
       const response = await axiosInstance.get('/students');
       return response.data;
     },
   });
+  
+  const students = (studentsData || []) as Student[];
 
   // Create mutation
   const createMutation = useMutation({

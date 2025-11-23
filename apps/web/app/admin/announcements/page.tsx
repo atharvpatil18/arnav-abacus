@@ -53,7 +53,7 @@ export default function AnnouncementsPage() {
     queryKey: ['announcements'],
     queryFn: async () => {
       const response = await axiosInstance.get('/announcements?page=1&limit=1000');
-      return Array.isArray(response.data) ? response.data : response.data?.items || [];
+      return Array.isArray(response.data) ? response.data : (response.data as any)?.items || [];
     },
   });
 

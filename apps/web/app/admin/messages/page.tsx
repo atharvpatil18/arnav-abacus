@@ -65,7 +65,7 @@ export default function MessagesPage() {
     queryFn: async () => {
       const endpoint = view === 'inbox' ? '/messages/inbox' : '/messages/sent';
       const response = await axiosInstance.get(`${endpoint}?page=1&limit=1000`);
-      return Array.isArray(response.data) ? response.data : response.data?.items || [];
+      return Array.isArray(response.data) ? response.data : (response.data as any)?.items || [];
     },
   });
 
@@ -73,7 +73,7 @@ export default function MessagesPage() {
     queryKey: ['users-all'],
     queryFn: async () => {
       const response = await axiosInstance.get('/users?page=1&limit=1000');
-      return Array.isArray(response.data) ? response.data : response.data?.items || [];
+      return Array.isArray(response.data) ? response.data : (response.data as any)?.items || [];
     },
   });
 
