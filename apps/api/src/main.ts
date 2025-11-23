@@ -3,13 +3,21 @@ import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Enable CORS
+  // Security: Use Helmet for security headers
+  app.use(helmet());
+
+  // Enable CORS with strict origin
+  const frontendUrl = process.env.FRONTEND_URL;
+  if (!frontendUrl) {
+    throw new Error('FRONTEND_URL environment variable is required');
+  }
   app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3001',
+    origin: frontendUrl,
     credentials: true,
   });
 

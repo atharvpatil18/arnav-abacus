@@ -57,7 +57,7 @@ export class AuthService {
           role: user.role,
           phoneNumber: user.phoneNumber,
         },
-        token,
+        token, // Return token for controller to set as httpOnly cookie
       };
     } catch (error) {
       if (error && typeof error === 'object' && 'code' in error && error.code === 'P2002') {
@@ -96,7 +96,7 @@ export class AuthService {
         role: user.role,
         phoneNumber: user.phoneNumber,
       },
-      token,
+      token, // Return token for controller to set as httpOnly cookie
     };
   }
 
