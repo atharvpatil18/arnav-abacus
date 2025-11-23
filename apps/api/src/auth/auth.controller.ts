@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Query, Get, UseGuards, Request, Response } from '@nestjs/common';
+import { Body, Controller, Post, Query, Get, UseGuards, Request, Res } from '@nestjs/common';
 import { Response as ExpressResponse } from 'express';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './auth.dto';
@@ -23,17 +23,17 @@ export class AuthController {
   @Post('register')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
-  async register(@Body() dto: RegisterDto, @Response() res: ExpressResponse) {
+  async register(@Body() dto: RegisterDto, @Res({ passthrough: true }) res: ExpressResponse) {
     const result = await this.authService.register(dto);
     this.setAuthCookie(res, result.token);
-    return res.json({ user: result.user });
+    return { user: result.user };
   }
 
   @Post('login')
-  async login(@Body() dto: LoginDto, @Response() res: ExpressResponse) {
+  async login(@Body() dto: LoginDto, @Res({ passthrough: true }) res: ExpressResponse) {
     const result = await this.authService.login(dto);
     this.setAuthCookie(res, result.token);
-    return res.json({ user: result.user });
+    return { user: result.user };
   }
 
   @Get('verify-email')
@@ -67,9 +67,8 @@ export class AuthController {
 
   @Post('logout')
   @UseGuards(JwtAuthGuard)
-  logout(@Response() res: ExpressResponse) {
-    // Clear the authentication cookie
+  logout(@Res({ passthrough: true }) res: ExpressResponse) {
     res.clearCookie('Authentication');
-    return res.json({ message: 'Logged out successfully' });
+    return { message: 'Logged out successfully' };
   }
 }
