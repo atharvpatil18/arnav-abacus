@@ -53,26 +53,26 @@ export default function Modal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
+        className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
 
       {/* Modal */}
       <div
         ref={modalRef}
-        className={`relative bg-white rounded-2xl shadow-2xl w-full ${sizeClasses[size]} transform transition-all`}
+        className={`relative bg-white rounded-2xl shadow-xl border border-slate-200 w-full ${sizeClasses[size]} transform transition-all`}
       >
         {/* Header */}
         {(title || showCloseButton) && (
-          <div className="flex items-center justify-between p-6 border-b border-gray-200">
-            {title && <h2 className="text-2xl font-bold text-gray-800">{title}</h2>}
+          <div className="flex items-center justify-between p-6 border-b border-slate-200">
+            {title && <h2 className="text-2xl font-bold text-slate-900">{title}</h2>}
             {showCloseButton && (
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                className="p-2 hover:bg-slate-100 rounded-full transition-colors"
                 aria-label="Close modal"
               >
-                <X className="w-5 h-5 text-gray-500" />
+                <X className="w-5 h-5 text-slate-500" />
               </button>
             )}
           </div>

@@ -10,7 +10,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={`rounded-xl border border-white/20 bg-white/80 backdrop-blur-md shadow-lg text-card-foreground transition-all duration-200 hover:shadow-xl ${className || ''}`}
+      className={`rounded-xl border border-slate-200 bg-white shadow-sm text-slate-900 transition-all duration-200 hover:shadow-md ${className || ''}`}
       {...props}
     />
   )
@@ -43,7 +43,7 @@ const CardDescription = forwardRef<HTMLParagraphElement, CardDescriptionProps>(
   ({ className, ...props }, ref) => (
     <p
       ref={ref}
-      className={`text-sm text-muted-foreground ${className || ''}`}
+      className={`text-sm text-slate-500 ${className || ''}`}
       {...props}
     />
   )
