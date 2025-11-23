@@ -9,6 +9,14 @@ import { Role } from '@prisma/client';
 
 @Controller('auth')
 export class AuthController {
+  // Cookie configuration for JWT
+  private readonly cookieOptions = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict' as const,
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  };
+
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
@@ -18,12 +26,7 @@ export class AuthController {
     const result = await this.authService.register(dto);
     
     // Set JWT as httpOnly cookie
-    res.cookie('jwt', result.token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // HTTPS only in production
-      sameSite: 'strict',
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    });
+    res.cookie('jwt', result.token, this.cookieOptions);
 
     // Return user data without token
     return res.json({ user: result.user });
@@ -34,12 +37,7 @@ export class AuthController {
     const result = await this.authService.login(dto);
     
     // Set JWT as httpOnly cookie
-    res.cookie('jwt', result.token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // HTTPS only in production
-      sameSite: 'strict',
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    });
+    res.cookie('jwt', result.token, this.cookieOptions);
 
     // Return user data without token
     return res.json({ user: result.user });
@@ -78,9 +76,7 @@ export class AuthController {
   logout(@Response() res: ExpressResponse) {
     // Clear the JWT cookie
     res.cookie('jwt', '', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      ...this.cookieOptions,
       maxAge: 0, // Expire immediately
     });
 
