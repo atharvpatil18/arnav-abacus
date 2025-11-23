@@ -620,7 +620,7 @@ export default function HomeworkPage() {
             <div className="text-center py-12 text-gray-500">
               <BookOpen className="w-16 h-16 mx-auto mb-4 text-gray-300" />
               <p>No homework assignments yet</p>
-              <p className="text-sm">Click "New Homework" to create one</p>
+              <p className="text-sm">Click &quot;New Homework&quot; to create one</p>
             </div>
           )}
         </CardContent>
