@@ -8,7 +8,7 @@ export const CircularProgress = forwardRef<HTMLDivElement, CircularProgressProps
   ({ size = 24, className, ...props }, ref) => (
     <div
       ref={ref}
-      className={`inline-block animate-spin rounded-full border-2 border-current border-t-transparent text-primary ${className || ''}`}
+      className={`inline-block animate-spin rounded-full border-2 border-current border-t-transparent text-primary-600 ${className || ''}`}
       style={{ width: size, height: size }}
       role="status"
       aria-label="Loading"
