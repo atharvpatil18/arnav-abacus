@@ -51,6 +51,12 @@ export class ReferralsController {
     return this.referralsService.findByReferrer(referrerName);
   }
 
+  @Get('phone')
+  @Roles(Role.ADMIN, Role.TEACHER)
+  findByPhone(@Query('number') phone: string) {
+    return this.referralsService.findByPhone(phone);
+  }
+
   @Get('source/:source')
   @Roles(Role.ADMIN, Role.TEACHER)
   findBySource(@Param('source') source: string) {

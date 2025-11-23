@@ -6,6 +6,11 @@ import { CreateReferralDto, UpdateReferralDto } from './referrals.dto';
 export class ReferralsService {
   constructor(private prisma: PrismaService) {}
 
+  // Normalize phone number by stripping non-digits
+  private canonicalizePhone(phone: string): string {
+    return phone.replace(/\D/g, '');
+  }
+
   async create(data: CreateReferralDto) {
     // Verify student exists
     const student = await this.prisma.student.findUnique({
@@ -28,11 +33,14 @@ export class ReferralsService {
     return this.prisma.referralTracking.create({
       data: {
         studentId: data.studentId,
+        source: data.referralSource || data.source,
+        referralSource: data.referralSource,
         referredBy: data.referredBy,
         referredByPhone: data.referredByPhone,
-        referralSource: data.referralSource,
+        referralCode: data.referralCode,
         referralDate: data.referralDate ? new Date(data.referralDate) : new Date(),
-        referralRewards: data.referralRewards,
+        conversionDate: data.conversionDate ? new Date(data.conversionDate) : null,
+        notes: data.notes,
       },
       include: {
         student: {
@@ -60,7 +68,7 @@ export class ReferralsService {
           },
         },
       },
-      orderBy: { referralDate: 'desc' },
+      orderBy: { createdAt: 'desc' },
     });
   }
 
@@ -100,14 +108,20 @@ export class ReferralsService {
           },
         },
       },
-      orderBy: { referralDate: 'desc' },
+      orderBy: { createdAt: 'desc' },
     });
   }
 
-  async findBySource(source: string) {
-    return this.prisma.referralTracking.findMany({
+  async findByPhone(phone: string) {
+    // Canonicalize the search term
+    const canonical = this.canonicalizePhone(phone);
+
+    // Get all referrals with phone numbers
+    const allReferrals = await this.prisma.referralTracking.findMany({
       where: {
-        referralSource: source,
+        referredByPhone: {
+          not: null,
+        },
       },
       include: {
         student: {
@@ -120,7 +134,33 @@ export class ReferralsService {
           },
         },
       },
-      orderBy: { referralDate: 'desc' },
+    });
+
+    // Filter by canonicalized phone numbers
+    return allReferrals.filter((referral) => {
+      if (!referral.referredByPhone) return false;
+      const dbCanonical = this.canonicalizePhone(referral.referredByPhone);
+      return dbCanonical.includes(canonical);
+    });
+  }
+
+  async findBySource(source: string) {
+    return this.prisma.referralTracking.findMany({
+      where: {
+        source: source,
+      },
+      include: {
+        student: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            joiningDate: true,
+            status: true,
+          },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
     });
   }
 
@@ -128,7 +168,7 @@ export class ReferralsService {
     const total = await this.prisma.referralTracking.count();
 
     const bySource = await this.prisma.referralTracking.groupBy({
-      by: ['referralSource'],
+      by: ['source'],
       _count: true,
     });
 
@@ -162,10 +202,12 @@ export class ReferralsService {
     return this.prisma.referralTracking.update({
       where: { id },
       data: {
+        source: data.referralSource || data.source,
+        referralSource: data.referralSource,
         referredBy: data.referredBy,
         referredByPhone: data.referredByPhone,
-        referralSource: data.referralSource,
-        referralRewards: data.referralRewards,
+        referralCode: data.referralCode,
+        notes: data.notes,
       },
       include: {
         student: {

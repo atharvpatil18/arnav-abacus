@@ -6,8 +6,17 @@ import { CreateHomeworkDto, UpdateHomeworkDto, SubmitHomeworkDto, GradeHomeworkD
 export class HomeworkService {
   constructor(private prisma: PrismaService) {}
 
+  // Type-safe access to homework models
+  private get homework() {
+    return (this.prisma as any).homework;
+  }
+
+  private get homeworkSubmission() {
+    return (this.prisma as any).homeworkSubmission;
+  }
+
   async create(dto: CreateHomeworkDto) {
-    return this.prisma.homework.create({
+    return this.homework.create({
       data: dto,
       include: {
         batch: {
@@ -26,7 +35,7 @@ export class HomeworkService {
   }
 
   async findAll() {
-    return this.prisma.homework.findMany({
+    return this.homework.findMany({
       include: {
         batch: {
           include: {
@@ -47,7 +56,7 @@ export class HomeworkService {
   }
 
   async findByBatch(batchId: number) {
-    return this.prisma.homework.findMany({
+    return this.homework.findMany({
       where: { batchId },
       include: {
         teacher: {
@@ -68,7 +77,7 @@ export class HomeworkService {
   }
 
   async findByTeacher(teacherId: number) {
-    return this.prisma.homework.findMany({
+    return this.homework.findMany({
       where: { teacherId },
       include: {
         batch: {
@@ -90,7 +99,7 @@ export class HomeworkService {
   }
 
   async findOne(id: number) {
-    const homework = await this.prisma.homework.findUnique({
+    const homework = await this.homework.findUnique({
       where: { id },
       include: {
         batch: {
@@ -120,21 +129,21 @@ export class HomeworkService {
   }
 
   async update(id: number, dto: UpdateHomeworkDto) {
-    return this.prisma.homework.update({
+    return this.homework.update({
       where: { id },
       data: dto
     });
   }
 
   async delete(id: number) {
-    return this.prisma.homework.delete({
+    return this.homework.delete({
       where: { id }
     });
   }
 
   // Submission Management
   async submitHomework(dto: SubmitHomeworkDto) {
-    return this.prisma.homeworkSubmission.create({
+    return this.homeworkSubmission.create({
       data: {
         ...dto,
         submittedAt: new Date(),
@@ -148,7 +157,7 @@ export class HomeworkService {
   }
 
   async getSubmissionsByStudent(studentId: number) {
-    return this.prisma.homeworkSubmission.findMany({
+    return this.homeworkSubmission.findMany({
       where: { studentId },
       include: {
         homework: {
@@ -169,7 +178,7 @@ export class HomeworkService {
   }
 
   async gradeSubmission(dto: GradeHomeworkDto) {
-    return this.prisma.homeworkSubmission.update({
+    return this.homeworkSubmission.update({
       where: { id: dto.submissionId },
       data: {
         grade: dto.grade,
@@ -186,7 +195,7 @@ export class HomeworkService {
   }
 
   async getPendingSubmissions(teacherId: number) {
-    const homeworks = await this.prisma.homework.findMany({
+    const homeworks = await this.homework.findMany({
       where: { teacherId },
       include: {
         submissions: {
@@ -200,14 +209,14 @@ export class HomeworkService {
       }
     });
 
-    return homeworks.filter(hw => hw.submissions.length > 0);
+    return homeworks.filter((hw: any) => hw.submissions.length > 0);
   }
 
   // ============= PHASE 6 ENHANCEMENTS =============
 
   // File Attachments Management
   async addAttachment(submissionId: number, fileUrl: string) {
-    const submission = await this.prisma.homeworkSubmission.findUnique({
+    const submission = await this.homeworkSubmission.findUnique({
       where: { id: submissionId }
     });
 
@@ -218,14 +227,14 @@ export class HomeworkService {
     const attachments = submission.attachments ? JSON.parse(submission.attachments) : [];
     attachments.push({ url: fileUrl, uploadedAt: new Date() });
 
-    return this.prisma.homeworkSubmission.update({
+    return this.homeworkSubmission.update({
       where: { id: submissionId },
       data: { attachments: JSON.stringify(attachments) }
     });
   }
 
   async removeAttachment(submissionId: number, fileUrl: string) {
-    const submission = await this.prisma.homeworkSubmission.findUnique({
+    const submission = await this.homeworkSubmission.findUnique({
       where: { id: submissionId }
     });
 
@@ -236,7 +245,7 @@ export class HomeworkService {
     const attachments = submission.attachments ? JSON.parse(submission.attachments) : [];
     const filtered = attachments.filter((a: any) => a.url !== fileUrl);
 
-    return this.prisma.homeworkSubmission.update({
+    return this.homeworkSubmission.update({
       where: { id: submissionId },
       data: { attachments: JSON.stringify(filtered) }
     });
@@ -247,7 +256,7 @@ export class HomeworkService {
     // Cast status to proper enum type
     const submissionStatus = status as any;
     
-    return this.prisma.homework.findMany({
+    return this.homework.findMany({
       where: {
         ...(batchId && { batchId }),
         ...(teacherId && { teacherId }),
@@ -267,7 +276,7 @@ export class HomeworkService {
   }
 
   async updateHomeworkStatus(id: number, priority: string) {
-    return this.prisma.homework.update({
+    return this.homework.update({
       where: { id },
       data: { priority }
     });
@@ -275,7 +284,7 @@ export class HomeworkService {
 
   // Automatic Reminders
   async sendReminder(homeworkId: number) {
-    const homework = await this.prisma.homework.findUnique({
+    const homework = await this.homework.findUnique({
       where: { id: homeworkId },
       include: {
         batch: { include: { students: true } },
@@ -288,10 +297,10 @@ export class HomeworkService {
     }
 
     const studentsWithoutSubmission = homework.batch.students.filter(
-      student => !homework.submissions.some(s => s.studentId === student.id)
+      (student: any) => !homework.submissions.some((s: any) => s.studentId === student.id)
     );
 
-    await this.prisma.homework.update({
+    await this.homework.update({
       where: { id: homeworkId },
       data: {
         reminderSent: true,
@@ -301,7 +310,7 @@ export class HomeworkService {
 
     return {
       message: 'Reminder sent',
-      recipients: studentsWithoutSubmission.map(s => s.id),
+      recipients: studentsWithoutSubmission.map((s: any) => s.id),
       count: studentsWithoutSubmission.length
     };
   }
@@ -310,7 +319,7 @@ export class HomeworkService {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
 
-    return this.prisma.homework.findMany({
+    return this.homework.findMany({
       where: {
         dueDate: {
           lte: tomorrow,
@@ -330,7 +339,7 @@ export class HomeworkService {
     const where: any = {};
     if (batchId) where.batchId = batchId;
 
-    const homeworks = await this.prisma.homework.findMany({
+    const homeworks = await this.homework.findMany({
       where,
       include: {
         batch: true,
@@ -339,7 +348,7 @@ export class HomeworkService {
       orderBy: { dueDate: 'asc' }
     });
 
-    return homeworks.map(hw => ({
+    return homeworks.map((hw: any) => ({
       summary: hw.title,
       description: hw.description,
       dtstart: hw.dueDate.toISOString(),
@@ -360,7 +369,7 @@ export class HomeworkService {
     if (batchId) where.batchId = batchId;
     if (teacherId) where.teacherId = teacherId;
 
-    const homeworks = await this.prisma.homework.findMany({
+    const homeworks = await this.homework.findMany({
       where,
       include: {
         submissions: true
@@ -368,17 +377,17 @@ export class HomeworkService {
     });
 
     const totalHomework = homeworks.length;
-    const totalSubmissions = homeworks.reduce((sum, hw) => sum + hw.submissions.length, 0);
+    const totalSubmissions = homeworks.reduce((sum: number, hw: any) => sum + hw.submissions.length, 0);
     const gradedSubmissions = homeworks.reduce(
-      (sum, hw) => sum + hw.submissions.filter(s => s.status === 'GRADED').length,
+      (sum: number, hw: any) => sum + hw.submissions.filter((s: any) => s.status === 'GRADED').length,
       0
     );
     const lateSubmissions = homeworks.reduce(
-      (sum, hw) => sum + hw.submissions.filter(s => s.lateSubmission).length,
+      (sum: number, hw: any) => sum + hw.submissions.filter((s: any) => s.lateSubmission).length,
       0
     );
 
-    const avgGrade = homeworks.reduce((sum, hw) => sum + (hw.averageGrade || 0), 0) / totalHomework || 0;
+    const avgGrade = homeworks.reduce((sum: number, hw: any) => sum + (hw.averageGrade || 0), 0) / totalHomework || 0;
     const completionRate = totalSubmissions / (totalHomework * 30); // Assuming ~30 students
 
     return {
@@ -389,9 +398,9 @@ export class HomeworkService {
       avgGrade: avgGrade.toFixed(2),
       completionRate: (completionRate * 100).toFixed(2) + '%',
       priorityBreakdown: {
-        HIGH: homeworks.filter(hw => hw.priority === 'HIGH').length,
-        MEDIUM: homeworks.filter(hw => hw.priority === 'MEDIUM').length,
-        LOW: homeworks.filter(hw => hw.priority === 'LOW').length
+        HIGH: homeworks.filter((hw: any) => hw.priority === 'HIGH').length,
+        MEDIUM: homeworks.filter((hw: any) => hw.priority === 'MEDIUM').length,
+        LOW: homeworks.filter((hw: any) => hw.priority === 'LOW').length
       }
     };
   }
@@ -407,7 +416,7 @@ export class HomeworkService {
       where.homework = { batchId };
     }
 
-    const submissions = await this.prisma.homeworkSubmission.findMany({
+    const submissions = await this.homeworkSubmission.findMany({
       where,
       include: {
         student: true,
@@ -415,7 +424,7 @@ export class HomeworkService {
       }
     });
 
-    const studentPoints = submissions.reduce((acc: any, sub) => {
+    const studentPoints = submissions.reduce((acc: any, sub: any) => {
       if (!acc[sub.studentId]) {
         acc[sub.studentId] = {
           student: sub.student,
@@ -450,24 +459,24 @@ export class HomeworkService {
   }
 
   async getStudentBadges(studentId: number) {
-    const submissions = await this.prisma.homeworkSubmission.findMany({
+    const submissions = await this.homeworkSubmission.findMany({
       where: { studentId },
       include: { homework: true }
     });
 
     const allBadges: string[] = [];
-    submissions.forEach(sub => {
+    submissions.forEach((sub: any) => {
       if (sub.badgesEarned) {
         allBadges.push(...JSON.parse(sub.badgesEarned));
       }
     });
 
-    const badgeCounts = allBadges.reduce((acc: any, badge) => {
+    const badgeCounts = allBadges.reduce((acc: any, badge: string) => {
       acc[badge] = (acc[badge] || 0) + 1;
       return acc;
     }, {});
 
-    const totalPoints = submissions.reduce((sum, sub) => sum + (sub.pointsEarned || 0), 0);
+    const totalPoints = submissions.reduce((sum: number, sub: any) => sum + (sub.pointsEarned || 0), 0);
 
     return {
       studentId,

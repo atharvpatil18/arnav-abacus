@@ -12,12 +12,12 @@ export class AnnouncementsService {
         title: dto.title,
         content: dto.content,
         targetRoles: dto.targetRoles as any,
-        createdById: dto.createdById,
+        createdBy: dto.createdById,
         isActive: dto.isPublished ?? true,
         expiresAt: dto.expiryDate ? new Date(dto.expiryDate) : null,
       },
       include: {
-        createdBy: {
+        createdByUser: {
           select: { id: true, name: true, email: true, role: true },
         },
       },
@@ -47,7 +47,7 @@ export class AnnouncementsService {
     const announcements = await this.prisma.announcement.findMany({
       where,
       include: {
-        createdBy: {
+        createdByUser: {
           select: { id: true, name: true, email: true, role: true },
         },
       },
@@ -75,7 +75,7 @@ export class AnnouncementsService {
     const announcements = await this.prisma.announcement.findMany({
       where,
       include: {
-        createdBy: {
+        createdByUser: {
           select: { id: true, name: true, email: true, role: true },
         },
       },
@@ -89,7 +89,7 @@ export class AnnouncementsService {
     const announcement = await this.prisma.announcement.findUnique({
       where: { id },
       include: {
-        createdBy: {
+        createdByUser: {
           select: { id: true, name: true, email: true, role: true },
         },
       },
@@ -116,7 +116,7 @@ export class AnnouncementsService {
       where: { id },
       data: updateData,
       include: {
-        createdBy: {
+        createdByUser: {
           select: { id: true, name: true, email: true, role: true },
         },
       },
@@ -132,7 +132,7 @@ export class AnnouncementsService {
       where: { id },
       data: { isActive: dto.isPublished },
       include: {
-        createdBy: {
+        createdByUser: {
           select: { id: true, name: true, email: true, role: true },
         },
       },

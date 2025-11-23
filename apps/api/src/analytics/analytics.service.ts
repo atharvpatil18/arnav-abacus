@@ -45,12 +45,12 @@ export class AnalyticsService {
   async getMonthlyRevenue(startDate: Date, endDate: Date) {
     // Generate array of months between start and end date
     const months: string[] = [];
-    const current = new Date(startDate);
+    let current = new Date(startDate);
     const end = new Date(endDate);
 
     while (current <= end) {
       months.push(current.toISOString().slice(0, 7)); // YYYY-MM format
-      current.setMonth(current.getMonth() + 1);
+      current = new Date(current.getFullYear(), current.getMonth() + 1, 1);
     }
 
     // Fetch fees and expenditures for each month

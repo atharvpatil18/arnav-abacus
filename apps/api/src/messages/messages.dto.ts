@@ -1,25 +1,19 @@
-import { IsString, IsInt, IsOptional } from 'class-validator';
+import { IsString, IsInt, IsOptional, ValidateIf } from 'class-validator';
 
 export class CreateMessageDto {
   @IsInt()
-  fromUserId!: number;
+  senderId!: number;
 
   @IsInt()
-  toUserId!: number;
-
-  @IsInt()
-  @IsOptional()
-  studentId?: number;
+  recipientId!: number;
 
   @IsString()
-  subject!: string;
+  @IsOptional()
+  subject?: string;
 
   @IsString()
-  message!: string;
-
-  @IsInt()
-  @IsOptional()
-  parentId?: number;
+  @ValidateIf((o) => !o.subject || o.body)
+  body?: string;
 }
 
 export class MarkAsReadDto {

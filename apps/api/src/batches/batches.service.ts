@@ -196,6 +196,7 @@ export class BatchesService {
     const batch = await this.prisma.batch.findUnique({
       where: { id: batchId },
       include: {
+        level: true,
         _count: {
           select: { students: true }
         }
@@ -226,6 +227,15 @@ export class BatchesService {
     if (batch.capacity && batch._count.students >= batch.capacity) {
       throw new BadRequestException(
         `Batch is at full capacity (${batch._count.students}/${batch.capacity})`
+      );
+    }
+
+    // Warn if student level doesn't match batch level
+    if (student.currentLevel !== batch.levelId) {
+      console.warn(
+        `Student ${student.firstName} ${student.lastName} (Level ${student.currentLevel}) ` +
+        `is being added to batch "${batch.name}" (Level ${batch.levelId}). ` +
+        `Consider updating student's current level.`
       );
     }
 

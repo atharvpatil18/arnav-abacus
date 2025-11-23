@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { CircularProgress } from '@/components/ui/circular-progress';
 import { toast } from '@/components/ui/use-toast';
 import { axiosInstance } from '@/lib/axios';
+import Link from 'next/link';
 
 interface ApiResponse<T> {
   data: T;
@@ -346,12 +347,16 @@ export default function BatchesPage() {
                     </p>
                   </div>
                   <div className="mt-4 flex space-x-2">
-                    <Button variant="outline" size="sm" className="flex-1">
-                      Edit
-                    </Button>
-                    <Button variant="outline" size="sm" className="flex-1">
-                      View Students
-                    </Button>
+                    <Link href={`/admin/batches/${batch.id}/edit`} className="flex-1">
+                      <Button variant="outline" size="sm" className="w-full">
+                        Edit
+                      </Button>
+                    </Link>
+                    <Link href={`/admin/batches/${batch.id}`} className="flex-1">
+                      <Button variant="outline" size="sm" className="w-full">
+                        View Students
+                      </Button>
+                    </Link>
                   </div>
                 </CardContent>
               </Card>

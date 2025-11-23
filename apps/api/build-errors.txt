@@ -1,0 +1,1358 @@
+﻿
+> api@1.0.0 build
+> nest build
+
+node.exe : [96mprisma/seed.ts[0m:[93m24[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject 
+literal may only specify known properties, and 'isEmailVerified' does not exist in type 
+'(Without<UserCreateInput, UserUncheckedCreateInput> & UserUncheckedCreateInput) | (Without<...> & 
+UserCreateInput)'.
+At line:1 char:1
++ & "C:\Users\Atharv Patil\AppData\Local\nvm\v22.20.0/node.exe" "C:\Use ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([96mprisma/see...rCreateInput)'.:String) [], RemoteExcept 
+   ion
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+[7m24[0m       isEmailVerified: true,
+[7m  [0m [91m      ~~~~~~~~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m3833[0m:[93m5[0m
+    [7m3833[0m     create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    [7m    [0m [96m    ~~~~~~[0m
+    The expected type comes from property 'create' which is declared here on type '{ select?: 
+UserSelect<DefaultArgs> | null | undefined; omit?: UserOmit<DefaultArgs> | null | undefined; include?: 
+UserInclude<DefaultArgs> | null | undefined; where: UserWhereUniqueInput; create: (Without<...> & 
+UserUncheckedCreateInput) | (Without<...> & UserCreateInput); update: (Without<...> & 
+UserUncheckedUpdate...'
+[96mprisma/seed.ts[0m:[93m39[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may 
+only specify known properties, and 'isEmailVerified' does not exist in type '(Without<UserCreateInput, 
+UserUncheckedCreateInput> & UserUncheckedCreateInput) | (Without<...> & UserCreateInput)'.
+
+[7m39[0m       isEmailVerified: true,
+[7m  [0m [91m      ~~~~~~~~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m3833[0m:[93m5[0m
+    [7m3833[0m     create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    [7m    [0m [96m    ~~~~~~[0m
+    The expected type comes from property 'create' which is declared here on type '{ select?: 
+UserSelect<DefaultArgs> | null | undefined; omit?: UserOmit<DefaultArgs> | null | undefined; include?: 
+UserInclude<DefaultArgs> | null | undefined; where: UserWhereUniqueInput; create: (Without<...> & 
+UserUncheckedCreateInput) | (Without<...> & UserCreateInput); update: (Without<...> & 
+UserUncheckedUpdate...'
+[96mprisma/seed.ts[0m:[93m69[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may 
+only specify known properties, and 'isEmailVerified' does not exist in type '(Without<UserCreateInput, 
+UserUncheckedCreateInput> & UserUncheckedCreateInput) | (Without<...> & UserCreateInput)'.
+
+[7m69[0m       isEmailVerified: true,
+[7m  [0m [91m      ~~~~~~~~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m3833[0m:[93m5[0m
+    [7m3833[0m     create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    [7m    [0m [96m    ~~~~~~[0m
+    The expected type comes from property 'create' which is declared here on type '{ select?: 
+UserSelect<DefaultArgs> | null | undefined; omit?: UserOmit<DefaultArgs> | null | undefined; include?: 
+UserInclude<DefaultArgs> | null | undefined; where: UserWhereUniqueInput; create: (Without<...> & 
+UserUncheckedCreateInput) | (Without<...> & UserCreateInput); update: (Without<...> & 
+UserUncheckedUpdate...'
+[96mseed-admin.ts[0m:[93m19[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may only 
+specify known properties, and 'isEmailVerified' does not exist in type '(Without<UserCreateInput, 
+UserUncheckedCreateInput> & UserUncheckedCreateInput) | (Without<...> & UserCreateInput)'.
+
+[7m19[0m       isEmailVerified: true,
+[7m  [0m [91m      ~~~~~~~~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m3833[0m:[93m5[0m
+    [7m3833[0m     create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    [7m    [0m [96m    ~~~~~~[0m
+    The expected type comes from property 'create' which is declared here on type '{ select?: 
+UserSelect<DefaultArgs> | null | undefined; omit?: UserOmit<DefaultArgs> | null | undefined; include?: 
+UserInclude<DefaultArgs> | null | undefined; where: UserWhereUniqueInput; create: (Without<...> & 
+UserUncheckedCreateInput) | (Without<...> & UserCreateInput); update: (Without<...> & 
+UserUncheckedUpdate...'
+[96mseed-complete.ts[0m:[93m24[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may 
+only specify known properties, and 'isEmailVerified' does not exist in type '(Without<UserCreateInput, 
+UserUncheckedCreateInput> & UserUncheckedCreateInput) | (Without<...> & UserCreateInput)'.
+
+[7m24[0m       isEmailVerified: true,
+[7m  [0m [91m      ~~~~~~~~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m3833[0m:[93m5[0m
+    [7m3833[0m     create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    [7m    [0m [96m    ~~~~~~[0m
+    The expected type comes from property 'create' which is declared here on type '{ select?: 
+UserSelect<DefaultArgs> | null | undefined; omit?: UserOmit<DefaultArgs> | null | undefined; include?: 
+UserInclude<DefaultArgs> | null | undefined; where: UserWhereUniqueInput; create: (Without<...> & 
+UserUncheckedCreateInput) | (Without<...> & UserCreateInput); update: (Without<...> & 
+UserUncheckedUpdate...'
+[96mseed-complete.ts[0m:[93m39[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may 
+only specify known properties, and 'isEmailVerified' does not exist in type '(Without<UserCreateInput, 
+UserUncheckedCreateInput> & UserUncheckedCreateInput) | (Without<...> & UserCreateInput)'.
+
+[7m39[0m       isEmailVerified: true,
+[7m  [0m [91m      ~~~~~~~~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m3833[0m:[93m5[0m
+    [7m3833[0m     create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    [7m    [0m [96m    ~~~~~~[0m
+    The expected type comes from property 'create' which is declared here on type '{ select?: 
+UserSelect<DefaultArgs> | null | undefined; omit?: UserOmit<DefaultArgs> | null | undefined; include?: 
+UserInclude<DefaultArgs> | null | undefined; where: UserWhereUniqueInput; create: (Without<...> & 
+UserUncheckedCreateInput) | (Without<...> & UserCreateInput); update: (Without<...> & 
+UserUncheckedUpdate...'
+[96mseed-complete.ts[0m:[93m69[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may 
+only specify known properties, and 'isEmailVerified' does not exist in type '(Without<UserCreateInput, 
+UserUncheckedCreateInput> & UserUncheckedCreateInput) | (Without<...> & UserCreateInput)'.
+
+[7m69[0m       isEmailVerified: true,
+[7m  [0m [91m      ~~~~~~~~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m3833[0m:[93m5[0m
+    [7m3833[0m     create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    [7m    [0m [96m    ~~~~~~[0m
+    The expected type comes from property 'create' which is declared here on type '{ select?: 
+UserSelect<DefaultArgs> | null | undefined; omit?: UserOmit<DefaultArgs> | null | undefined; include?: 
+UserInclude<DefaultArgs> | null | undefined; where: UserWhereUniqueInput; create: (Without<...> & 
+UserUncheckedCreateInput) | (Without<...> & UserCreateInput); update: (Without<...> & 
+UserUncheckedUpdate...'
+[96mseed-test-users.ts[0m:[93m22[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may 
+only specify known properties, and 'isEmailVerified' does not exist in type '(Without<UserCreateInput, 
+UserUncheckedCreateInput> & UserUncheckedCreateInput) | (Without<...> & UserCreateInput)'.
+
+[7m22[0m       isEmailVerified: true,
+[7m  [0m [91m      ~~~~~~~~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m3833[0m:[93m5[0m
+    [7m3833[0m     create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    [7m    [0m [96m    ~~~~~~[0m
+    The expected type comes from property 'create' which is declared here on type '{ select?: 
+UserSelect<DefaultArgs> | null | undefined; omit?: UserOmit<DefaultArgs> | null | undefined; include?: 
+UserInclude<DefaultArgs> | null | undefined; where: UserWhereUniqueInput; create: (Without<...> & 
+UserUncheckedCreateInput) | (Without<...> & UserCreateInput); update: (Without<...> & 
+UserUncheckedUpdate...'
+[96mseed-test-users.ts[0m:[93m38[0m:[93m7[0m - [91merror[0m[90m TS2353: [0mObject literal may 
+only specify known properties, and 'isEmailVerified' does not exist in type '(Without<UserCreateInput, 
+UserUncheckedCreateInput> & UserUncheckedCreateInput) | (Without<...> & UserCreateInput)'.
+
+[7m38[0m       isEmailVerified: true,
+[7m  [0m [91m      ~~~~~~~~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m3833[0m:[93m5[0m
+    [7m3833[0m     create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    [7m    [0m [96m    ~~~~~~[0m
+    The expected type comes from property 'create' which is declared here on type '{ select?: 
+UserSelect<DefaultArgs> | null | undefined; omit?: UserOmit<DefaultArgs> | null | undefined; include?: 
+UserInclude<DefaultArgs> | null | undefined; where: UserWhereUniqueInput; create: (Without<...> & 
+UserUncheckedCreateInput) | (Without<...> & UserCreateInput); update: (Without<...> & 
+UserUncheckedUpdate...'
+[96msrc/announcements/announcements.service.ts[0m:[93m10[0m:[93m44[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'announcement' does not exist on type 'PrismaService'.
+
+[7m10[0m     const announcement = await this.prisma.announcement.create({
+[7m  [0m [91m                                           ~~~~~~~~~~~~[0m
+[96msrc/announcements/announcements.service.ts[0m:[93m47[0m:[93m45[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'announcement' does not exist on type 'PrismaService'.
+
+[7m47[0m     const announcements = await this.prisma.announcement.findMany({
+[7m  [0m [91m                                            ~~~~~~~~~~~~[0m
+[96msrc/announcements/announcements.service.ts[0m:[93m75[0m:[93m45[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'announcement' does not exist on type 'PrismaService'.
+
+[7m75[0m     const announcements = await this.prisma.announcement.findMany({
+[7m  [0m [91m                                            ~~~~~~~~~~~~[0m
+[96msrc/announcements/announcements.service.ts[0m:[93m89[0m:[93m44[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'announcement' does not exist on type 'PrismaService'.
+
+[7m89[0m     const announcement = await this.prisma.announcement.findUnique({
+[7m  [0m [91m                                           ~~~~~~~~~~~~[0m
+[96msrc/announcements/announcements.service.ts[0m:[93m115[0m:[93m44[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'announcement' does not exist on type 'PrismaService'.
+
+[7m115[0m     const announcement = await this.prisma.announcement.update({
+[7m   [0m [91m                                           ~~~~~~~~~~~~[0m
+[96msrc/announcements/announcements.service.ts[0m:[93m131[0m:[93m44[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'announcement' does not exist on type 'PrismaService'.
+
+[7m131[0m     const announcement = await this.prisma.announcement.update({
+[7m   [0m [91m                                           ~~~~~~~~~~~~[0m
+[96msrc/announcements/announcements.service.ts[0m:[93m147[0m:[93m23[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'announcement' does not exist on type 'PrismaService'.
+
+[7m147[0m     await this.prisma.announcement.delete({
+[7m   [0m [91m                      ~~~~~~~~~~~~[0m
+[96msrc/broadcasts/broadcasts.service.ts[0m:[93m32[0m:[93m41[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'broadcastMessage' does not exist on type 'PrismaService'.
+
+[7m32[0m     const broadcast = await this.prisma.broadcastMessage.create({
+[7m  [0m [91m                                        ~~~~~~~~~~~~~~~~[0m
+[96msrc/broadcasts/broadcasts.service.ts[0m:[93m63[0m:[93m42[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'broadcastMessage' does not exist on type 'PrismaService'.
+
+[7m63[0m     const broadcasts = await this.prisma.broadcastMessage.findMany({
+[7m  [0m [91m                                         ~~~~~~~~~~~~~~~~[0m
+[96msrc/broadcasts/broadcasts.service.ts[0m:[93m76[0m:[93m41[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'broadcastMessage' does not exist on type 'PrismaService'.
+
+[7m76[0m     const broadcast = await this.prisma.broadcastMessage.findUnique({
+[7m  [0m [91m                                        ~~~~~~~~~~~~~~~~[0m
+[96msrc/broadcasts/broadcasts.service.ts[0m:[93m124[0m:[93m23[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'broadcastMessage' does not exist on type 'PrismaService'.
+
+[7m124[0m     await this.prisma.broadcastMessage.delete({
+[7m   [0m [91m                      ~~~~~~~~~~~~~~~~[0m
+[96msrc/certificates/certificates.service.ts[0m:[93m163[0m:[93m59[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'enrollmentNumber' does not exist on type '{ batch: ({ level: { id: number; name: 
+string; createdAt: Date; updatedAt: Date; passingPercent: number; description: string | null; }; } & { 
+id: number; name: string; createdAt: Date; ... 5 more ...; capacity: number | null; }) | null; } & { 
+...; }'.
+
+[7m163[0m     const qrCodeDataUrl = await QRCode.toDataURL(student?.enrollmentNumber || 
+`STUDENT-${studentId}`);
+[7m   [0m [91m                                                          ~~~~~~~~~~~~~~~~[0m
+[96msrc/certificates/certificates.service.ts[0m:[93m192[0m:[93m31[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'enrollmentNumber' does not exist on type '{ batch: ({ level: { id: number; name: 
+string; createdAt: Date; updatedAt: Date; passingPercent: number; description: string | null; }; } & { 
+id: number; name: string; createdAt: Date; ... 5 more ...; capacity: number | null; }) | null; } & { 
+...; }'.
+
+[7m192[0m         .text(`ID: ${student?.enrollmentNumber}`, 20, 220, { align: 'center', width: 200 });
+[7m   [0m [91m                              ~~~~~~~~~~~~~~~~[0m
+[96msrc/certificates/certificates.service.ts[0m:[93m264[0m:[93m43[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'enrollmentNumber' does not exist on type '{ attendances: { id: number; createdAt: 
+Date; batchId: number; status: AttendanceStatus; date: Date; studentId: number; note: string | null; 
+markedBy: number | null; }[]; tests: { ...; }[]; batch: ({ ...; } & { ...; }) | null; } & { ...; }'.
+
+[7m264[0m       doc.text(`Enrollment No: ${student?.enrollmentNumber || 'N/A'}`, 50);
+[7m   [0m [91m                                          ~~~~~~~~~~~~~~~~[0m
+[96msrc/communications/communications.service.ts[0m:[93m50[0m:[93m39[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'communicationLog' does not exist on type 'PrismaService'.
+
+[7m50[0m         const log = await this.prisma.communicationLog.create({
+[7m  [0m [91m                                      ~~~~~~~~~~~~~~~~[0m
+[96msrc/communications/communications.service.ts[0m:[93m66[0m:[93m39[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'communicationLog' does not exist on type 'PrismaService'.
+
+[7m66[0m         const log = await this.prisma.communicationLog.create({
+[7m  [0m [91m                                      ~~~~~~~~~~~~~~~~[0m
+[96msrc/communications/communications.service.ts[0m:[93m101[0m:[93m37[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'communicationLog' does not exist on type 'PrismaService'.
+
+[7m101[0m       const log = await this.prisma.communicationLog.create({
+[7m   [0m [91m                                    ~~~~~~~~~~~~~~~~[0m
+[96msrc/communications/communications.service.ts[0m:[93m135[0m:[93m37[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'communicationLog' does not exist on type 'PrismaService'.
+
+[7m135[0m       const log = await this.prisma.communicationLog.create({
+[7m   [0m [91m                                    ~~~~~~~~~~~~~~~~[0m
+[96msrc/communications/communications.service.ts[0m:[93m166[0m:[93m40[0m - [91merror[0m[90m 
+TS2353: [0mObject literal may only specify known properties, and 'fcmToken' does not exist in type 
+'UserSelect<DefaultArgs>'.
+
+[7m166[0m       select: { id: true, email: true, fcmToken: true },
+[7m   [0m [91m                                       ~~~~~~~~[0m
+[96msrc/communications/communications.service.ts[0m:[93m170[0m:[93m17[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'fcmToken' does not exist on type '{ id: number; email: string; password: string; 
+name: string | null; phoneNumber: string | null; role: Role; createdAt: Date; updatedAt: Date; }'.
+
+[7m170[0m       if (!user.fcmToken) {
+[7m   [0m [91m                ~~~~~~~~[0m
+[96msrc/communications/communications.service.ts[0m:[93m172[0m:[93m39[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'communicationLog' does not exist on type 'PrismaService'.
+
+[7m172[0m         const log = await this.prisma.communicationLog.create({
+[7m   [0m [91m                                      ~~~~~~~~~~~~~~~~[0m
+[96msrc/communications/communications.service.ts[0m:[93m193[0m:[93m37[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'communicationLog' does not exist on type 'PrismaService'.
+
+[7m193[0m       const log = await this.prisma.communicationLog.create({
+[7m   [0m [91m                                    ~~~~~~~~~~~~~~~~[0m
+[96msrc/communications/communications.service.ts[0m:[93m234[0m:[93m19[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'communicationLog' does not exist on type 'PrismaService'.
+
+[7m234[0m       this.prisma.communicationLog.findMany({
+[7m   [0m [91m                  ~~~~~~~~~~~~~~~~[0m
+[96msrc/communications/communications.service.ts[0m:[93m240[0m:[93m19[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'communicationLog' does not exist on type 'PrismaService'.
+
+[7m240[0m       this.prisma.communicationLog.count({ where }),
+[7m   [0m [91m                  ~~~~~~~~~~~~~~~~[0m
+[96msrc/communications/communications.service.ts[0m:[93m261[0m:[93m19[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'communicationLog' does not exist on type 'PrismaService'.
+
+[7m261[0m       this.prisma.communicationLog.count({ where }),
+[7m   [0m [91m                  ~~~~~~~~~~~~~~~~[0m
+[96msrc/communications/communications.service.ts[0m:[93m262[0m:[93m19[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'communicationLog' does not exist on type 'PrismaService'.
+
+[7m262[0m       this.prisma.communicationLog.groupBy({
+[7m   [0m [91m                  ~~~~~~~~~~~~~~~~[0m
+[96msrc/communications/communications.service.ts[0m:[93m267[0m:[93m19[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'communicationLog' does not exist on type 'PrismaService'.
+
+[7m267[0m       this.prisma.communicationLog.groupBy({
+[7m   [0m [91m                  ~~~~~~~~~~~~~~~~[0m
+[96msrc/communications/communications.service.ts[0m:[93m276[0m:[93m30[0m - [91merror[0m[90m 
+TS7006: [0mParameter 'acc' implicitly has an 'any' type.
+
+[7m276[0m       byType: byType.reduce((acc, curr) => {
+[7m   [0m [91m                             ~~~[0m
+[96msrc/communications/communications.service.ts[0m:[93m276[0m:[93m35[0m - [91merror[0m[90m 
+TS7006: [0mParameter 'curr' implicitly has an 'any' type.
+
+[7m276[0m       byType: byType.reduce((acc, curr) => {
+[7m   [0m [91m                                  ~~~~[0m
+[96msrc/communications/communications.service.ts[0m:[93m280[0m:[93m34[0m - [91merror[0m[90m 
+TS7006: [0mParameter 'acc' implicitly has an 'any' type.
+
+[7m280[0m       byStatus: byStatus.reduce((acc, curr) => {
+[7m   [0m [91m                                 ~~~[0m
+[96msrc/communications/communications.service.ts[0m:[93m280[0m:[93m39[0m - [91merror[0m[90m 
+TS7006: [0mParameter 'curr' implicitly has an 'any' type.
+
+[7m280[0m       byStatus: byStatus.reduce((acc, curr) => {
+[7m   [0m [91m                                      ~~~~[0m
+[96msrc/communications/communications.service.ts[0m:[93m289[0m:[93m24[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'communicationLog' does not exist on type 'PrismaService'.
+
+[7m289[0m     return this.prisma.communicationLog.update({
+[7m   [0m [91m                       ~~~~~~~~~~~~~~~~[0m
+[96msrc/communications/communications.service.ts[0m:[93m300[0m:[93m24[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'communicationLog' does not exist on type 'PrismaService'.
+
+[7m300[0m     return this.prisma.communicationLog.update({
+[7m   [0m [91m                       ~~~~~~~~~~~~~~~~[0m
+[96msrc/events/events.service.ts[0m:[93m10[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'event' does not exist on type 'PrismaService'.
+
+[7m10[0m     return this.prisma.event.create({ data });
+[7m  [0m [91m                       ~~~~~[0m
+[96msrc/events/events.service.ts[0m:[93m21[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'event' does not exist on type 'PrismaService'.
+
+[7m21[0m     return this.prisma.event.findMany({
+[7m  [0m [91m                       ~~~~~[0m
+[96msrc/events/events.service.ts[0m:[93m34[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'event' does not exist on type 'PrismaService'.
+
+[7m34[0m     return this.prisma.event.findUnique({
+[7m  [0m [91m                       ~~~~~[0m
+[96msrc/events/events.service.ts[0m:[93m48[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'event' does not exist on type 'PrismaService'.
+
+[7m48[0m     return this.prisma.event.update({ where: { id }, data });
+[7m  [0m [91m                       ~~~~~[0m
+[96msrc/events/events.service.ts[0m:[93m53[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'event' does not exist on type 'PrismaService'.
+
+[7m53[0m     return this.prisma.event.update({
+[7m  [0m [91m                       ~~~~~[0m
+[96msrc/events/events.service.ts[0m:[93m61[0m:[93m37[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'event' does not exist on type 'PrismaService'.
+
+[7m61[0m     const event = await this.prisma.event.findUnique({
+[7m  [0m [91m                                    ~~~~~[0m
+[96msrc/events/events.service.ts[0m:[93m73[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'eventRegistration' does not exist on type 'PrismaService'.
+
+[7m73[0m     return this.prisma.eventRegistration.create({
+[7m  [0m [91m                       ~~~~~~~~~~~~~~~~~[0m
+[96msrc/events/events.service.ts[0m:[93m80[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'eventRegistration' does not exist on type 'PrismaService'.
+
+[7m80[0m     return this.prisma.eventRegistration.update({
+[7m  [0m [91m                       ~~~~~~~~~~~~~~~~~[0m
+[96msrc/events/events.service.ts[0m:[93m88[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'eventRegistration' does not exist on type 'PrismaService'.
+
+[7m88[0m     return this.prisma.eventRegistration.update({
+[7m  [0m [91m                       ~~~~~~~~~~~~~~~~~[0m
+[96msrc/events/events.service.ts[0m:[93m96[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'eventRegistration' does not exist on type 'PrismaService'.
+
+[7m96[0m     return this.prisma.eventRegistration.findMany({
+[7m  [0m [91m                       ~~~~~~~~~~~~~~~~~[0m
+[96msrc/events/events.service.ts[0m:[93m107[0m:[93m37[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'event' does not exist on type 'PrismaService'.
+
+[7m107[0m     const event = await this.prisma.event.findUnique({ where: { id: eventId } });
+[7m   [0m [91m                                    ~~~~~[0m
+[96msrc/fee-templates/fee-templates.service.ts[0m:[93m11[0m:[93m40[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'feeTypeConfig' does not exist on type 'PrismaService'.
+
+[7m11[0m     const existing = await this.prisma.feeTypeConfig.findFirst({
+[7m  [0m [91m                                       ~~~~~~~~~~~~~[0m
+[96msrc/fee-templates/fee-templates.service.ts[0m:[93m19[0m:[93m40[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'feeTypeConfig' does not exist on type 'PrismaService'.
+
+[7m19[0m     const template = await this.prisma.feeTypeConfig.create({
+[7m  [0m [91m                                       ~~~~~~~~~~~~~[0m
+[96msrc/fee-templates/fee-templates.service.ts[0m:[93m34[0m:[93m41[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'feeTypeConfig' does not exist on type 'PrismaService'.
+
+[7m34[0m     const templates = await this.prisma.feeTypeConfig.findMany({
+[7m  [0m [91m                                        ~~~~~~~~~~~~~[0m
+[96msrc/fee-templates/fee-templates.service.ts[0m:[93m42[0m:[93m41[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'feeTypeConfig' does not exist on type 'PrismaService'.
+
+[7m42[0m     const templates = await this.prisma.feeTypeConfig.findMany({
+[7m  [0m [91m                                        ~~~~~~~~~~~~~[0m
+[96msrc/fee-templates/fee-templates.service.ts[0m:[93m55[0m:[93m40[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'feeTypeConfig' does not exist on type 'PrismaService'.
+
+[7m55[0m     const template = await this.prisma.feeTypeConfig.findUnique({
+[7m  [0m [91m                                       ~~~~~~~~~~~~~[0m
+[96msrc/fee-templates/fee-templates.service.ts[0m:[93m71[0m:[93m42[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'feeTypeConfig' does not exist on type 'PrismaService'.
+
+[7m71[0m       const existing = await this.prisma.feeTypeConfig.findFirst({
+[7m  [0m [91m                                         ~~~~~~~~~~~~~[0m
+[96msrc/fee-templates/fee-templates.service.ts[0m:[93m83[0m:[93m40[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'feeTypeConfig' does not exist on type 'PrismaService'.
+
+[7m83[0m     const template = await this.prisma.feeTypeConfig.update({
+[7m  [0m [91m                                       ~~~~~~~~~~~~~[0m
+[96msrc/fee-templates/fee-templates.service.ts[0m:[93m103[0m:[93m16[0m - [91merror[0m[90m 
+TS2353: [0mObject literal may only specify known properties, and 'feeTypeConfigId' does not exist in 
+type 'FeeWhereInput'.
+
+[7m103[0m       where: { feeTypeConfigId: id },
+[7m   [0m [91m               ~~~~~~~~~~~~~~~[0m
+[96msrc/fee-templates/fee-templates.service.ts[0m:[93m111[0m:[93m23[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'feeTypeConfig' does not exist on type 'PrismaService'.
+
+[7m111[0m     await this.prisma.feeTypeConfig.delete({
+[7m   [0m [91m                      ~~~~~~~~~~~~~[0m
+[96msrc/fee-templates/fee-templates.service.ts[0m:[93m119[0m:[93m41[0m - [91merror[0m[90m 
+TS2339: [0mProperty 'feeTypeConfig' does not exist on type 'PrismaService'.
+
+[7m119[0m     const templates = await this.prisma.feeTypeConfig.findMany({
+[7m   [0m [91m                                        ~~~~~~~~~~~~~[0m
+[96msrc/fee-templates/fee-templates.service.ts[0m:[93m131[0m:[93m16[0m - [91merror[0m[90m 
+TS2353: [0mObject literal may only specify known properties, and 'feeTypeConfigId' does not exist in 
+type 'FeeWhereInput'.
+
+[7m131[0m       where: { feeTypeConfigId: id },
+[7m   [0m [91m               ~~~~~~~~~~~~~~~[0m
+[96msrc/fee-templates/fee-templates.service.ts[0m:[93m137[0m:[93m11[0m - [91merror[0m[90m 
+TS2353: [0mObject literal may only specify known properties, and 'feeTypeConfigId' does not exist in 
+type '(Without<FeeScalarRelationFilter, FeeWhereInput> & FeeWhereInput) | (Without<FeeWhereInput, 
+FeeScalarRelationFilter> & FeeScalarRelationFilter)'.
+
+[7m137[0m           feeTypeConfigId: id,
+[7m   [0m [91m          ~~~~~~~~~~~~~~~[0m
+[96msrc/fee-templates/fee-templates.service.ts[0m:[93m145[0m:[93m11[0m - [91merror[0m[90m 
+TS2353: [0mObject literal may only specify known properties, and 'feeTypeConfigId' does not exist in 
+type '(Without<FeeScalarRelationFilter, FeeWhereInput> & FeeWhereInput) | (Without<FeeWhereInput, 
+FeeScalarRelationFilter> & FeeScalarRelationFilter)'.
+
+[7m145[0m           feeTypeConfigId: id,
+[7m   [0m [91m          ~~~~~~~~~~~~~~~[0m
+[96msrc/fees/fee-payments.controller.ts[0m:[93m57[0m:[93m9[0m - [91merror[0m[90m TS2322: 
+[0mType 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+
+[7m57[0m         paymentMethod: dto.paymentMethod,
+[7m  [0m [91m        ~~~~~~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m27281[0m:[93m5[0m
+    [7m27281[0m     paymentMethod: string
+    [7m     [0m [96m    ~~~~~~~~~~~~~[0m
+    The expected type comes from property 'paymentMethod' which is declared here on type 
+'(Without<FeePaymentCreateInput, FeePaymentUncheckedCreateInput> & FeePaymentUncheckedCreateInput) | 
+(Without<...> & FeePaymentCreateInput)'
+[96msrc/fees/fee-payments.controller.ts[0m:[93m85[0m:[93m16[0m - [91merror[0m[90m TS2353: 
+[0mObject literal may only specify known properties, and 'status' does not exist in type 
+'FeePaymentWhereInput'.
+
+[7m85[0m       where: { status: 'PENDING' },
+[7m  [0m [91m               ~~~~~~[0m
+[96msrc/fees/fee-payments.controller.ts[0m:[93m154[0m:[93m9[0m - [91merror[0m[90m TS2353: 
+[0mObject literal may only specify known properties, and 'status' does not exist in type 
+'(Without<FeePaymentUpdateInput, FeePaymentUncheckedUpdateInput> & FeePaymentUncheckedUpdateInput) | 
+(Without<...> & FeePaymentUpdateInput)'.
+
+[7m154[0m         status: 'APPROVED',
+[7m   [0m [91m        ~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m23757[0m:[93m5[0m
+    [7m23757[0m     data: XOR<FeePaymentUpdateInput, FeePaymentUncheckedUpdateInput>
+    [7m     [0m [96m    ~~~~[0m
+    The expected type comes from property 'data' which is declared here on type '{ select?: 
+FeePaymentSelect<DefaultArgs> | null | undefined; omit?: FeePaymentOmit<DefaultArgs> | null | 
+undefined; include?: FeePaymentInclude<...> | ... 1 more ... | undefined; data: (Without<...> & 
+FeePaymentUncheckedUpdateInput) | (Without<...> & FeePaymentUpdateInput); where: 
+FeePaymentWhereUniqueInput; }'
+[96msrc/fees/fee-payments.controller.ts[0m:[93m169[0m:[93m9[0m - [91merror[0m[90m TS2353: 
+[0mObject literal may only specify known properties, and 'status' does not exist in type 
+'FeePaymentWhereInput'.
+
+[7m169[0m         status: 'APPROVED',
+[7m   [0m [91m        ~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m22853[0m:[93m5[0m
+    [7m22853[0m     where?: FeePaymentWhereInput
+    [7m     [0m [96m    ~~~~~[0m
+    The expected type comes from property 'where' which is declared here on type 
+'Subset<FeePaymentAggregateArgs<DefaultArgs>, FeePaymentAggregateArgs<DefaultArgs>>'
+[96msrc/fees/fee-payments.controller.ts[0m:[93m176[0m:[93m24[0m - [91merror[0m[90m TS18048: 
+[0m'totalPaid._sum' is possibly 'undefined'.
+
+[7m176[0m     const paidAmount = totalPaid._sum.amount || 0;
+[7m   [0m [91m                       ~~~~~~~~~~~~~~[0m
+[96msrc/fees/fee-payments.controller.ts[0m:[93m177[0m:[93m25[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'fee' does not exist on type '{ id: number; createdAt: Date; updatedAt: Date; amount: 
+number; paymentMethod: string; feeId: number; paymentDate: Date; transactionId: string | null; 
+receivedBy: number; notes: string | null; }'.
+
+[7m177[0m     const fee = payment.fee;
+[7m   [0m [91m                        ~~~[0m
+[96msrc/fees/fee-payments.controller.ts[0m:[93m209[0m:[93m9[0m - [91merror[0m[90m TS2353: 
+[0mObject literal may only specify known properties, and 'status' does not exist in type 
+'(Without<FeePaymentUpdateInput, FeePaymentUncheckedUpdateInput> & FeePaymentUncheckedUpdateInput) | 
+(Without<...> & FeePaymentUpdateInput)'.
+
+[7m209[0m         status: 'REJECTED',
+[7m   [0m [91m        ~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m23757[0m:[93m5[0m
+    [7m23757[0m     data: XOR<FeePaymentUpdateInput, FeePaymentUncheckedUpdateInput>
+    [7m     [0m [96m    ~~~~[0m
+    The expected type comes from property 'data' which is declared here on type '{ select?: 
+FeePaymentSelect<DefaultArgs> | null | undefined; omit?: FeePaymentOmit<DefaultArgs> | null | 
+undefined; include?: FeePaymentInclude<...> | ... 1 more ... | undefined; data: (Without<...> & 
+FeePaymentUncheckedUpdateInput) | (Without<...> & FeePaymentUpdateInput); where: 
+FeePaymentWhereUniqueInput; }'
+[96msrc/guardians/guardians.service.ts[0m:[93m46[0m:[93m9[0m - [91merror[0m[90m TS2353: 
+[0mObject literal may only specify known properties, and 'canPickup' does not exist in type 
+'Without<GuardianCreateInput, GuardianUncheckedCreateInput> & GuardianUncheckedCreateInput'.
+
+[7m46[0m         canPickup: data.canPickup ?? true,
+[7m  [0m [91m        ~~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m14614[0m:[93m5[0m
+    [7m14614[0m     data: XOR<GuardianCreateInput, GuardianUncheckedCreateInput>
+    [7m     [0m [96m    ~~~~[0m
+    The expected type comes from property 'data' which is declared here on type '{ select?: 
+GuardianSelect<DefaultArgs> | null | undefined; omit?: GuardianOmit<DefaultArgs> | null | undefined; 
+include?: GuardianInclude<...> | ... 1 more ... | undefined; data: (Without<...> & 
+GuardianUncheckedCreateInput) | (Without<...> & GuardianCreateInput); }'
+[96msrc/guardians/guardians.service.ts[0m:[93m148[0m:[93m9[0m - [91merror[0m[90m TS2353: 
+[0mObject literal may only specify known properties, and 'canPickup' does not exist in type 
+'(Without<GuardianUpdateInput, GuardianUncheckedUpdateInput> & GuardianUncheckedUpdateInput) | 
+(Without<...> & GuardianUpdateInput)'.
+
+[7m148[0m         canPickup: data.canPickup,
+[7m   [0m [91m        ~~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m14670[0m:[93m5[0m
+    [7m14670[0m     data: XOR<GuardianUpdateInput, GuardianUncheckedUpdateInput>
+    [7m     [0m [96m    ~~~~[0m
+    The expected type comes from property 'data' which is declared here on type '{ select?: 
+GuardianSelect<DefaultArgs> | null | undefined; omit?: GuardianOmit<DefaultArgs> | null | undefined; 
+include?: GuardianInclude<...> | ... 1 more ... | undefined; data: (Without<...> & 
+GuardianUncheckedUpdateInput) | (Without<...> & GuardianUpdateInput); where: GuardianWhereUniqueInput; 
+}'
+[96msrc/holidays/holidays.service.ts[0m:[93m10[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'holiday' does not exist on type 'PrismaService'.
+
+[7m10[0m     return this.prisma.holiday.create({ data });
+[7m  [0m [91m                       ~~~~~~~[0m
+[96msrc/holidays/holidays.service.ts[0m:[93m23[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'holiday' does not exist on type 'PrismaService'.
+
+[7m23[0m     return this.prisma.holiday.findMany({
+[7m  [0m [91m                       ~~~~~~~[0m
+[96msrc/holidays/holidays.service.ts[0m:[93m31[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'holiday' does not exist on type 'PrismaService'.
+
+[7m31[0m     return this.prisma.holiday.findMany({
+[7m  [0m [91m                       ~~~~~~~[0m
+[96msrc/holidays/holidays.service.ts[0m:[93m40[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'holiday' does not exist on type 'PrismaService'.
+
+[7m40[0m     return this.prisma.holiday.update({ where: { id }, data });
+[7m  [0m [91m                       ~~~~~~~[0m
+[96msrc/holidays/holidays.service.ts[0m:[93m45[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'holiday' does not exist on type 'PrismaService'.
+
+[7m45[0m     return this.prisma.holiday.delete({ where: { id } });
+[7m  [0m [91m                       ~~~~~~~[0m
+[96msrc/holidays/holidays.service.ts[0m:[93m50[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'makeupClass' does not exist on type 'PrismaService'.
+
+[7m50[0m     return this.prisma.makeupClass.create({
+[7m  [0m [91m                       ~~~~~~~~~~~[0m
+[96msrc/holidays/holidays.service.ts[0m:[93m58[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'makeupClass' does not exist on type 'PrismaService'.
+
+[7m58[0m     return this.prisma.makeupClass.findMany({
+[7m  [0m [91m                       ~~~~~~~~~~~[0m
+[96msrc/holidays/holidays.service.ts[0m:[93m67[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'makeupClass' does not exist on type 'PrismaService'.
+
+[7m67[0m     return this.prisma.makeupClass.update({
+[7m  [0m [91m                       ~~~~~~~~~~~[0m
+[96msrc/homework/homework.dto.ts[0m:[93m3[0m:[93m10[0m - [91merror[0m[90m TS2305: [0mModule 
+'"@prisma/client"' has no exported member 'SubmissionStatus'.
+
+[7m3[0m import { SubmissionStatus } from '@prisma/client';
+[7m [0m [91m         ~~~~~~~~~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m10[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homework' does not exist on type 'PrismaService'.
+
+[7m10[0m     return this.prisma.homework.create({
+[7m  [0m [91m                       ~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m29[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homework' does not exist on type 'PrismaService'.
+
+[7m29[0m     return this.prisma.homework.findMany({
+[7m  [0m [91m                       ~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m50[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homework' does not exist on type 'PrismaService'.
+
+[7m50[0m     return this.prisma.homework.findMany({
+[7m  [0m [91m                       ~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m71[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homework' does not exist on type 'PrismaService'.
+
+[7m71[0m     return this.prisma.homework.findMany({
+[7m  [0m [91m                       ~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m93[0m:[93m40[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homework' does not exist on type 'PrismaService'.
+
+[7m93[0m     const homework = await this.prisma.homework.findUnique({
+[7m  [0m [91m                                       ~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m123[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homework' does not exist on type 'PrismaService'.
+
+[7m123[0m     return this.prisma.homework.update({
+[7m   [0m [91m                       ~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m130[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homework' does not exist on type 'PrismaService'.
+
+[7m130[0m     return this.prisma.homework.delete({
+[7m   [0m [91m                       ~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m137[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homeworkSubmission' does not exist on type 'PrismaService'.
+
+[7m137[0m     return this.prisma.homeworkSubmission.create({
+[7m   [0m [91m                       ~~~~~~~~~~~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m151[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homeworkSubmission' does not exist on type 'PrismaService'.
+
+[7m151[0m     return this.prisma.homeworkSubmission.findMany({
+[7m   [0m [91m                       ~~~~~~~~~~~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m172[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homeworkSubmission' does not exist on type 'PrismaService'.
+
+[7m172[0m     return this.prisma.homeworkSubmission.update({
+[7m   [0m [91m                       ~~~~~~~~~~~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m189[0m:[93m41[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homework' does not exist on type 'PrismaService'.
+
+[7m189[0m     const homeworks = await this.prisma.homework.findMany({
+[7m   [0m [91m                                        ~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m203[0m:[93m29[0m - [91merror[0m[90m TS7006: 
+[0mParameter 'hw' implicitly has an 'any' type.
+
+[7m203[0m     return homeworks.filter(hw => hw.submissions.length > 0);
+[7m   [0m [91m                            ~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m210[0m:[93m42[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homeworkSubmission' does not exist on type 'PrismaService'.
+
+[7m210[0m     const submission = await this.prisma.homeworkSubmission.findUnique({
+[7m   [0m [91m                                         ~~~~~~~~~~~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m221[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homeworkSubmission' does not exist on type 'PrismaService'.
+
+[7m221[0m     return this.prisma.homeworkSubmission.update({
+[7m   [0m [91m                       ~~~~~~~~~~~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m228[0m:[93m42[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homeworkSubmission' does not exist on type 'PrismaService'.
+
+[7m228[0m     const submission = await this.prisma.homeworkSubmission.findUnique({
+[7m   [0m [91m                                         ~~~~~~~~~~~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m239[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homeworkSubmission' does not exist on type 'PrismaService'.
+
+[7m239[0m     return this.prisma.homeworkSubmission.update({
+[7m   [0m [91m                       ~~~~~~~~~~~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m250[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homework' does not exist on type 'PrismaService'.
+
+[7m250[0m     return this.prisma.homework.findMany({
+[7m   [0m [91m                       ~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m270[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homework' does not exist on type 'PrismaService'.
+
+[7m270[0m     return this.prisma.homework.update({
+[7m   [0m [91m                       ~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m278[0m:[93m40[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homework' does not exist on type 'PrismaService'.
+
+[7m278[0m     const homework = await this.prisma.homework.findUnique({
+[7m   [0m [91m                                       ~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m291[0m:[93m7[0m - [91merror[0m[90m TS7006: 
+[0mParameter 'student' implicitly has an 'any' type.
+
+[7m291[0m       student => !homework.submissions.some(s => s.studentId === student.id)
+[7m   [0m [91m      ~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m291[0m:[93m45[0m - [91merror[0m[90m TS7006: 
+[0mParameter 's' implicitly has an 'any' type.
+
+[7m291[0m       student => !homework.submissions.some(s => s.studentId === student.id)
+[7m   [0m [91m                                            ~[0m
+[96msrc/homework/homework.service.ts[0m:[93m294[0m:[93m23[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homework' does not exist on type 'PrismaService'.
+
+[7m294[0m     await this.prisma.homework.update({
+[7m   [0m [91m                      ~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m304[0m:[93m49[0m - [91merror[0m[90m TS7006: 
+[0mParameter 's' implicitly has an 'any' type.
+
+[7m304[0m       recipients: studentsWithoutSubmission.map(s => s.id),
+[7m   [0m [91m                                                ~[0m
+[96msrc/homework/homework.service.ts[0m:[93m313[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homework' does not exist on type 'PrismaService'.
+
+[7m313[0m     return this.prisma.homework.findMany({
+[7m   [0m [91m                       ~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m333[0m:[93m41[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homework' does not exist on type 'PrismaService'.
+
+[7m333[0m     const homeworks = await this.prisma.homework.findMany({
+[7m   [0m [91m                                        ~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m342[0m:[93m26[0m - [91merror[0m[90m TS7006: 
+[0mParameter 'hw' implicitly has an 'any' type.
+
+[7m342[0m     return homeworks.map(hw => ({
+[7m   [0m [91m                         ~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m363[0m:[93m41[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homework' does not exist on type 'PrismaService'.
+
+[7m363[0m     const homeworks = await this.prisma.homework.findMany({
+[7m   [0m [91m                                        ~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m371[0m:[93m48[0m - [91merror[0m[90m TS7006: 
+[0mParameter 'sum' implicitly has an 'any' type.
+
+[7m371[0m     const totalSubmissions = homeworks.reduce((sum, hw) => sum + hw.submissions.length, 0);
+[7m   [0m [91m                                               ~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m371[0m:[93m53[0m - [91merror[0m[90m TS7006: 
+[0mParameter 'hw' implicitly has an 'any' type.
+
+[7m371[0m     const totalSubmissions = homeworks.reduce((sum, hw) => sum + hw.submissions.length, 0);
+[7m   [0m [91m                                                    ~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m373[0m:[93m8[0m - [91merror[0m[90m TS7006: 
+[0mParameter 'sum' implicitly has an 'any' type.
+
+[7m373[0m       (sum, hw) => sum + hw.submissions.filter(s => s.status === 'GRADED').length,
+[7m   [0m [91m       ~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m373[0m:[93m13[0m - [91merror[0m[90m TS7006: 
+[0mParameter 'hw' implicitly has an 'any' type.
+
+[7m373[0m       (sum, hw) => sum + hw.submissions.filter(s => s.status === 'GRADED').length,
+[7m   [0m [91m            ~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m373[0m:[93m48[0m - [91merror[0m[90m TS7006: 
+[0mParameter 's' implicitly has an 'any' type.
+
+[7m373[0m       (sum, hw) => sum + hw.submissions.filter(s => s.status === 'GRADED').length,
+[7m   [0m [91m                                               ~[0m
+[96msrc/homework/homework.service.ts[0m:[93m377[0m:[93m8[0m - [91merror[0m[90m TS7006: 
+[0mParameter 'sum' implicitly has an 'any' type.
+
+[7m377[0m       (sum, hw) => sum + hw.submissions.filter(s => s.lateSubmission).length,
+[7m   [0m [91m       ~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m377[0m:[93m13[0m - [91merror[0m[90m TS7006: 
+[0mParameter 'hw' implicitly has an 'any' type.
+
+[7m377[0m       (sum, hw) => sum + hw.submissions.filter(s => s.lateSubmission).length,
+[7m   [0m [91m            ~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m377[0m:[93m48[0m - [91merror[0m[90m TS7006: 
+[0mParameter 's' implicitly has an 'any' type.
+
+[7m377[0m       (sum, hw) => sum + hw.submissions.filter(s => s.lateSubmission).length,
+[7m   [0m [91m                                               ~[0m
+[96msrc/homework/homework.service.ts[0m:[93m381[0m:[93m40[0m - [91merror[0m[90m TS7006: 
+[0mParameter 'sum' implicitly has an 'any' type.
+
+[7m381[0m     const avgGrade = homeworks.reduce((sum, hw) => sum + (hw.averageGrade || 0), 0) / 
+totalHomework || 0;
+[7m   [0m [91m                                       ~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m381[0m:[93m45[0m - [91merror[0m[90m TS7006: 
+[0mParameter 'hw' implicitly has an 'any' type.
+
+[7m381[0m     const avgGrade = homeworks.reduce((sum, hw) => sum + (hw.averageGrade || 0), 0) / 
+totalHomework || 0;
+[7m   [0m [91m                                            ~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m392[0m:[93m32[0m - [91merror[0m[90m TS7006: 
+[0mParameter 'hw' implicitly has an 'any' type.
+
+[7m392[0m         HIGH: homeworks.filter(hw => hw.priority === 'HIGH').length,
+[7m   [0m [91m                               ~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m393[0m:[93m34[0m - [91merror[0m[90m TS7006: 
+[0mParameter 'hw' implicitly has an 'any' type.
+
+[7m393[0m         MEDIUM: homeworks.filter(hw => hw.priority === 'MEDIUM').length,
+[7m   [0m [91m                                 ~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m394[0m:[93m31[0m - [91merror[0m[90m TS7006: 
+[0mParameter 'hw' implicitly has an 'any' type.
+
+[7m394[0m         LOW: homeworks.filter(hw => hw.priority === 'LOW').length
+[7m   [0m [91m                              ~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m410[0m:[93m43[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homeworkSubmission' does not exist on type 'PrismaService'.
+
+[7m410[0m     const submissions = await this.prisma.homeworkSubmission.findMany({
+[7m   [0m [91m                                          ~~~~~~~~~~~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m418[0m:[93m57[0m - [91merror[0m[90m TS7006: 
+[0mParameter 'sub' implicitly has an 'any' type.
+
+[7m418[0m     const studentPoints = submissions.reduce((acc: any, sub) => {
+[7m   [0m [91m                                                        ~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m453[0m:[93m43[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'homeworkSubmission' does not exist on type 'PrismaService'.
+
+[7m453[0m     const submissions = await this.prisma.homeworkSubmission.findMany({
+[7m   [0m [91m                                          ~~~~~~~~~~~~~~~~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m459[0m:[93m25[0m - [91merror[0m[90m TS7006: 
+[0mParameter 'sub' implicitly has an 'any' type.
+
+[7m459[0m     submissions.forEach(sub => {
+[7m   [0m [91m                        ~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m470[0m:[93m45[0m - [91merror[0m[90m TS7006: 
+[0mParameter 'sum' implicitly has an 'any' type.
+
+[7m470[0m     const totalPoints = submissions.reduce((sum, sub) => sum + (sub.pointsEarned || 0), 0);
+[7m   [0m [91m                                            ~~~[0m
+[96msrc/homework/homework.service.ts[0m:[93m470[0m:[93m50[0m - [91merror[0m[90m TS7006: 
+[0mParameter 'sub' implicitly has an 'any' type.
+
+[7m470[0m     const totalPoints = submissions.reduce((sum, sub) => sum + (sub.pointsEarned || 0), 0);
+[7m   [0m [91m                                                 ~~~[0m
+[96msrc/inventory/inventory.service.ts[0m:[93m10[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'inventoryItem' does not exist on type 'PrismaService'.
+
+[7m10[0m     return this.prisma.inventoryItem.create({ data });
+[7m  [0m [91m                       ~~~~~~~~~~~~~[0m
+[96msrc/inventory/inventory.service.ts[0m:[93m18[0m:[93m43[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'inventoryItem' does not exist on type 'PrismaService'.
+
+[7m18[0m       where.quantity = { lte: this.prisma.inventoryItem.fields.minQuantity };
+[7m  [0m [91m                                          ~~~~~~~~~~~~~[0m
+[96msrc/inventory/inventory.service.ts[0m:[93m21[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'inventoryItem' does not exist on type 'PrismaService'.
+
+[7m21[0m     return this.prisma.inventoryItem.findMany({
+[7m  [0m [91m                       ~~~~~~~~~~~~~[0m
+[96msrc/inventory/inventory.service.ts[0m:[93m32[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'inventoryItem' does not exist on type 'PrismaService'.
+
+[7m32[0m     return this.prisma.inventoryItem.findUnique({
+[7m  [0m [91m                       ~~~~~~~~~~~~~[0m
+[96msrc/inventory/inventory.service.ts[0m:[93m44[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'inventoryItem' does not exist on type 'PrismaService'.
+
+[7m44[0m     return this.prisma.inventoryItem.update({ where: { id }, data });
+[7m  [0m [91m                       ~~~~~~~~~~~~~[0m
+[96msrc/inventory/inventory.service.ts[0m:[93m49[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'inventoryItem' does not exist on type 'PrismaService'.
+
+[7m49[0m     return this.prisma.inventoryItem.delete({ where: { id } });
+[7m  [0m [91m                       ~~~~~~~~~~~~~[0m
+[96msrc/inventory/inventory.service.ts[0m:[93m54[0m:[93m36[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'inventoryItem' does not exist on type 'PrismaService'.
+
+[7m54[0m     const item = await this.prisma.inventoryItem.findUnique({ where: { id: itemId } });
+[7m  [0m [91m                                   ~~~~~~~~~~~~~[0m
+[96msrc/inventory/inventory.service.ts[0m:[93m65[0m:[93m42[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'inventoryAllocation' does not exist on type 'PrismaService'.
+
+[7m65[0m     const allocation = await this.prisma.inventoryAllocation.create({
+[7m  [0m [91m                                         ~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/inventory/inventory.service.ts[0m:[93m76[0m:[93m23[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'inventoryItem' does not exist on type 'PrismaService'.
+
+[7m76[0m     await this.prisma.inventoryItem.update({
+[7m  [0m [91m                      ~~~~~~~~~~~~~[0m
+[96msrc/inventory/inventory.service.ts[0m:[93m86[0m:[93m42[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'inventoryAllocation' does not exist on type 'PrismaService'.
+
+[7m86[0m     const allocation = await this.prisma.inventoryAllocation.findUnique({
+[7m  [0m [91m                                         ~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/inventory/inventory.service.ts[0m:[93m100[0m:[93m23[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'inventoryAllocation' does not exist on type 'PrismaService'.
+
+[7m100[0m     await this.prisma.inventoryAllocation.update({
+[7m   [0m [91m                      ~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/inventory/inventory.service.ts[0m:[93m109[0m:[93m23[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'inventoryItem' does not exist on type 'PrismaService'.
+
+[7m109[0m     await this.prisma.inventoryItem.update({
+[7m   [0m [91m                      ~~~~~~~~~~~~~[0m
+[96msrc/inventory/inventory.service.ts[0m:[93m119[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'inventoryAllocation' does not exist on type 'PrismaService'.
+
+[7m119[0m     return this.prisma.inventoryAllocation.update({
+[7m   [0m [91m                       ~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/inventory/inventory.service.ts[0m:[93m127[0m:[93m24[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'inventoryAllocation' does not exist on type 'PrismaService'.
+
+[7m127[0m     return this.prisma.inventoryAllocation.findMany({
+[7m   [0m [91m                       ~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/leave/leave.service.ts[0m:[93m11[0m:[93m7[0m - [91merror[0m[90m TS2322: [0mType 
+'CreateLeaveRequestDto' is not assignable to type '(Without<LeaveRequestCreateInput, 
+LeaveRequestUncheckedCreateInput> & LeaveRequestUncheckedCreateInput) | (Without<...> & 
+LeaveRequestCreateInput)'.
+  Type 'CreateLeaveRequestDto' is not assignable to type 'Without<LeaveRequestUncheckedCreateInput, 
+LeaveRequestCreateInput> & LeaveRequestCreateInput'.
+    Type 'CreateLeaveRequestDto' is missing the following properties from type 
+'LeaveRequestCreateInput': startDate, endDate, teacher
+
+[7m11[0m       data: dto,
+[7m  [0m [91m      ~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m15792[0m:[93m5[0m
+    [7m15792[0m     data: XOR<LeaveRequestCreateInput, LeaveRequestUncheckedCreateInput>
+    [7m     [0m [96m    ~~~~[0m
+    The expected type comes from property 'data' which is declared here on type '{ select?: 
+LeaveRequestSelect<DefaultArgs> | null | undefined; omit?: LeaveRequestOmit<DefaultArgs> | null | 
+undefined; include?: LeaveRequestInclude<...> | ... 1 more ... | undefined; data: (Without<...> & 
+LeaveRequestUncheckedCreateInput) | (Without<...> & LeaveRequestCreateInput); }'
+[96msrc/leave/leave.service.ts[0m:[93m13[0m:[93m9[0m - [91merror[0m[90m TS2353: [0mObject 
+literal may only specify known properties, and 'student' does not exist in type 
+'LeaveRequestInclude<DefaultArgs>'.
+
+[7m13[0m         student: {
+[7m  [0m [91m        ~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m15788[0m:[93m5[0m
+    [7m15788[0m     include?: LeaveRequestInclude<ExtArgs> | null
+    [7m     [0m [96m    ~~~~~~~[0m
+    The expected type comes from property 'include' which is declared here on type '{ select?: 
+LeaveRequestSelect<DefaultArgs> | null | undefined; omit?: LeaveRequestOmit<DefaultArgs> | null | 
+undefined; include?: LeaveRequestInclude<...> | ... 1 more ... | undefined; data: (Without<...> & 
+LeaveRequestUncheckedCreateInput) | (Without<...> & LeaveRequestCreateInput); }'
+[96msrc/leave/leave.service.ts[0m:[93m29[0m:[93m9[0m - [91merror[0m[90m TS2353: [0mObject 
+literal may only specify known properties, and 'student' does not exist in type 
+'LeaveRequestInclude<DefaultArgs>'.
+
+[7m29[0m         student: {
+[7m  [0m [91m        ~~~~~~~[0m
+[96msrc/leave/leave.service.ts[0m:[93m40[0m:[93m9[0m - [91merror[0m[90m TS2353: [0mObject 
+literal may only specify known properties, and 'appliedAt' does not exist in type 
+'LeaveRequestOrderByWithRelationInput | LeaveRequestOrderByWithRelationInput[]'.
+
+[7m40[0m         appliedAt: 'desc'
+[7m  [0m [91m        ~~~~~~~~~[0m
+[96msrc/leave/leave.service.ts[0m:[93m47[0m:[93m16[0m - [91merror[0m[90m TS2353: [0mObject 
+literal may only specify known properties, and 'studentId' does not exist in type 
+'LeaveRequestWhereInput'.
+
+[7m47[0m       where: { studentId },
+[7m  [0m [91m               ~~~~~~~~~[0m
+[96msrc/leave/leave.service.ts[0m:[93m49[0m:[93m9[0m - [91merror[0m[90m TS2353: [0mObject 
+literal may only specify known properties, and 'appliedAt' does not exist in type 
+'LeaveRequestOrderByWithRelationInput | LeaveRequestOrderByWithRelationInput[]'.
+
+[7m49[0m         appliedAt: 'desc'
+[7m  [0m [91m        ~~~~~~~~~[0m
+[96msrc/leave/leave.service.ts[0m:[93m58[0m:[93m9[0m - [91merror[0m[90m TS2353: [0mObject 
+literal may only specify known properties, and 'student' does not exist in type 
+'LeaveRequestInclude<DefaultArgs>'.
+
+[7m58[0m         student: {
+[7m  [0m [91m        ~~~~~~~[0m
+[96msrc/leave/leave.service.ts[0m:[93m69[0m:[93m9[0m - [91merror[0m[90m TS2353: [0mObject 
+literal may only specify known properties, and 'appliedAt' does not exist in type 
+'LeaveRequestOrderByWithRelationInput | LeaveRequestOrderByWithRelationInput[]'.
+
+[7m69[0m         appliedAt: 'asc'
+[7m  [0m [91m        ~~~~~~~~~[0m
+[96msrc/leave/leave.service.ts[0m:[93m78[0m:[93m9[0m - [91merror[0m[90m TS2353: [0mObject 
+literal may only specify known properties, and 'student' does not exist in type 
+'LeaveRequestInclude<DefaultArgs>'.
+
+[7m78[0m         student: {
+[7m  [0m [91m        ~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m15593[0m:[93m5[0m
+    [7m15593[0m     include?: LeaveRequestInclude<ExtArgs> | null
+    [7m     [0m [96m    ~~~~~~~[0m
+    The expected type comes from property 'include' which is declared here on type '{ select?: 
+LeaveRequestSelect<DefaultArgs> | null | undefined; omit?: LeaveRequestOmit<DefaultArgs> | null | 
+undefined; include?: LeaveRequestInclude<...> | ... 1 more ... | undefined; where: 
+LeaveRequestWhereUniqueInput; }'
+[96msrc/leave/leave.service.ts[0m:[93m103[0m:[93m9[0m - [91merror[0m[90m TS2353: [0mObject 
+literal may only specify known properties, and 'respondedAt' does not exist in type 
+'(Without<LeaveRequestUpdateInput, LeaveRequestUncheckedUpdateInput> & 
+LeaveRequestUncheckedUpdateInput) | (Without<...> & LeaveRequestUpdateInput)'.
+
+[7m103[0m         respondedAt: new Date(),
+[7m   [0m [91m        ~~~~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m15848[0m:[93m5[0m
+    [7m15848[0m     data: XOR<LeaveRequestUpdateInput, LeaveRequestUncheckedUpdateInput>
+    [7m     [0m [96m    ~~~~[0m
+    The expected type comes from property 'data' which is declared here on type '{ select?: 
+LeaveRequestSelect<DefaultArgs> | null | undefined; omit?: LeaveRequestOmit<DefaultArgs> | null | 
+undefined; include?: LeaveRequestInclude<...> | ... 1 more ... | undefined; data: (Without<...> & 
+LeaveRequestUncheckedUpdateInput) | (Without<...> & LeaveRequestUpdateInput); where: 
+LeaveRequestWhereUniqueIn...'
+[96msrc/leave/leave.service.ts[0m:[93m107[0m:[93m9[0m - [91merror[0m[90m TS2353: [0mObject 
+literal may only specify known properties, and 'student' does not exist in type 
+'LeaveRequestInclude<DefaultArgs>'.
+
+[7m107[0m         student: true
+[7m   [0m [91m        ~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m15844[0m:[93m5[0m
+    [7m15844[0m     include?: LeaveRequestInclude<ExtArgs> | null
+    [7m     [0m [96m    ~~~~~~~[0m
+    The expected type comes from property 'include' which is declared here on type '{ select?: 
+LeaveRequestSelect<DefaultArgs> | null | undefined; omit?: LeaveRequestOmit<DefaultArgs> | null | 
+undefined; include?: LeaveRequestInclude<...> | ... 1 more ... | undefined; data: (Without<...> & 
+LeaveRequestUncheckedUpdateInput) | (Without<...> & LeaveRequestUpdateInput); where: 
+LeaveRequestWhereUniqueIn...'
+[96msrc/leave/leave.service.ts[0m:[93m121[0m:[93m9[0m - [91merror[0m[90m TS2353: [0mObject 
+literal may only specify known properties, and 'studentId' does not exist in type 
+'LeaveRequestWhereInput'.
+
+[7m121[0m         studentId,
+[7m   [0m [91m        ~~~~~~~~~[0m
+[96msrc/leave/leave.service.ts[0m:[93m127[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 
+'toDate' does not exist on type '{ id: number; createdAt: Date; updatedAt: Date; teacherId: number; 
+status: LeaveStatus; startDate: Date; endDate: Date; approvedBy: number | null; approvedAt: Date | 
+null; reason: string; leaveType: LeaveType; }'.
+
+[7m127[0m       const days = Math.ceil((leave.toDate.getTime() - leave.fromDate.getTime()) / (1000 * 
+60 * 60 * 24)) + 1;
+[7m   [0m [91m                                    ~~~~~~[0m
+[96msrc/leave/leave.service.ts[0m:[93m127[0m:[93m62[0m - [91merror[0m[90m TS2339: [0mProperty 
+'fromDate' does not exist on type '{ id: number; createdAt: Date; updatedAt: Date; teacherId: number; 
+status: LeaveStatus; startDate: Date; endDate: Date; approvedBy: number | null; approvedAt: Date | 
+null; reason: string; leaveType: LeaveType; }'.
+
+[7m127[0m       const days = Math.ceil((leave.toDate.getTime() - leave.fromDate.getTime()) / (1000 * 
+60 * 60 * 24)) + 1;
+[7m   [0m [91m                                                             ~~~~~~~~[0m
+[96msrc/message-templates/message-templates.service.ts[0m:[93m24[0m:[93m9[0m - 
+[91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'type' does not 
+exist in type '(Without<MessageTemplateCreateInput, MessageTemplateUncheckedCreateInput> & 
+MessageTemplateUncheckedCreateInput) | (Without<...> & MessageTemplateCreateInput)'.
+
+[7m24[0m         type: data.type,
+[7m  [0m [91m        ~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m17995[0m:[93m5[0m
+    [7m17995[0m     data: XOR<MessageTemplateCreateInput, MessageTemplateUncheckedCreateInput>
+    [7m     [0m [96m    ~~~~[0m
+    The expected type comes from property 'data' which is declared here on type '{ select?: 
+MessageTemplateSelect<DefaultArgs> | null | undefined; omit?: MessageTemplateOmit<DefaultArgs> | null | 
+undefined; data: (Without<...> & MessageTemplateUncheckedCreateInput) | (Without<...> & 
+MessageTemplateCreateInput); }'
+[96msrc/message-templates/message-templates.service.ts[0m:[93m37[0m:[93m7[0m - 
+[91merror[0m[90m TS2322: [0mType '{ type: MessageType; } | { type?: undefined; }' is not assignable 
+to type 'MessageTemplateWhereInput | undefined'.
+  Type '{ type: MessageType; }' has no properties in common with type 'MessageTemplateWhereInput'.
+
+[7m37[0m       where,
+[7m  [0m [91m      ~~~~~[0m
+[96msrc/message-templates/message-templates.service.ts[0m:[93m56[0m:[93m16[0m - 
+[91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'type' does not 
+exist in type 'MessageTemplateWhereInput'.
+
+[7m56[0m       where: { type, isActive: true },
+[7m  [0m [91m               ~~~~[0m
+[96msrc/message-templates/message-templates.service.ts[0m:[93m67[0m:[93m9[0m - 
+[91merror[0m[90m TS2353: [0mObject literal may only specify known properties, and 'content' does 
+not exist in type '(Without<MessageTemplateUpdateInput, MessageTemplateUncheckedUpdateInput> & 
+MessageTemplateUncheckedUpdateInput) | (Without<...> & MessageTemplateUpdateInput)'.
+
+[7m67[0m         content: data.content,
+[7m  [0m [91m        ~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m18043[0m:[93m5[0m
+    [7m18043[0m     data: XOR<MessageTemplateUpdateInput, MessageTemplateUncheckedUpdateInput>
+    [7m     [0m [96m    ~~~~[0m
+    The expected type comes from property 'data' which is declared here on type '{ select?: 
+MessageTemplateSelect<DefaultArgs> | null | undefined; omit?: MessageTemplateOmit<DefaultArgs> | null | 
+undefined; data: (Without<...> & MessageTemplateUncheckedUpdateInput) | (Without<...> & 
+MessageTemplateUpdateInput); where: MessageTemplateWhereUniqueInput; }'
+[96msrc/message-templates/message-templates.service.ts[0m:[93m100[0m:[93m47[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'content' does not exist on type '{ id: number; name: string; 
+createdAt: Date; updatedAt: Date; subject: string | null; channel: MessageChannel; variables: 
+JsonValue; messageType: MessageType; body: string; isActive: boolean; }'.
+
+[7m100[0m       content: this.replaceVariables(template.content, variables),
+[7m   [0m [91m                                              ~~~~~~~[0m
+[96msrc/message-templates/message-templates.service.ts[0m:[93m113[0m:[93m27[0m - 
+[91merror[0m[90m TS2551: [0mProperty 'FEE_REMINDER' does not exist on type '{ NOTIFICATION: 
+"NOTIFICATION"; REMINDER: "REMINDER"; ALERT: "ALERT"; ANNOUNCEMENT: "ANNOUNCEMENT"; }'. Did you mean 
+'REMINDER'?
+
+[7m113[0m         type: MessageType.FEE_REMINDER,
+[7m   [0m [91m                          ~~~~~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m168[0m:[93m3[0m
+    [7m168[0m   REMINDER: 'REMINDER',
+    [7m   [0m [96m  ~~~~~~~~[0m
+    'REMINDER' is declared here.
+[96msrc/message-templates/message-templates.service.ts[0m:[93m121[0m:[93m27[0m - 
+[91merror[0m[90m TS2551: [0mProperty 'FEE_REMINDER' does not exist on type '{ NOTIFICATION: 
+"NOTIFICATION"; REMINDER: "REMINDER"; ALERT: "ALERT"; ANNOUNCEMENT: "ANNOUNCEMENT"; }'. Did you mean 
+'REMINDER'?
+
+[7m121[0m         type: MessageType.FEE_REMINDER,
+[7m   [0m [91m                          ~~~~~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m168[0m:[93m3[0m
+    [7m168[0m   REMINDER: 'REMINDER',
+    [7m   [0m [96m  ~~~~~~~~[0m
+    'REMINDER' is declared here.
+[96msrc/message-templates/message-templates.service.ts[0m:[93m130[0m:[93m27[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'ABSENCE_ALERT' does not exist on type '{ NOTIFICATION: 
+"NOTIFICATION"; REMINDER: "REMINDER"; ALERT: "ALERT"; ANNOUNCEMENT: "ANNOUNCEMENT"; }'.
+
+[7m130[0m         type: MessageType.ABSENCE_ALERT,
+[7m   [0m [91m                          ~~~~~~~~~~~~~[0m
+[96msrc/message-templates/message-templates.service.ts[0m:[93m138[0m:[93m27[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'TEST_RESULT' does not exist on type '{ NOTIFICATION: 
+"NOTIFICATION"; REMINDER: "REMINDER"; ALERT: "ALERT"; ANNOUNCEMENT: "ANNOUNCEMENT"; }'.
+
+[7m138[0m         type: MessageType.TEST_RESULT,
+[7m   [0m [91m                          ~~~~~~~~~~~[0m
+[96msrc/message-templates/message-templates.service.ts[0m:[93m153[0m:[93m27[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'BIRTHDAY' does not exist on type '{ NOTIFICATION: 
+"NOTIFICATION"; REMINDER: "REMINDER"; ALERT: "ALERT"; ANNOUNCEMENT: "ANNOUNCEMENT"; }'.
+
+[7m153[0m         type: MessageType.BIRTHDAY,
+[7m   [0m [91m                          ~~~~~~~~[0m
+[96msrc/message-templates/message-templates.service.ts[0m:[93m156[0m:[93m33[0m - 
+[91merror[0m[90m TS2339: [0mProperty 'WHATSAPP' does not exist on type '{ SMS: "SMS"; EMAIL: 
+"EMAIL"; IN_APP: "IN_APP"; }'.
+
+[7m156[0m         channel: MessageChannel.WHATSAPP,
+[7m   [0m [91m                                ~~~~~~~~[0m
+[96msrc/message-templates/message-templates.service.ts[0m:[93m168[0m:[93m11[0m - 
+[91merror[0m[90m TS2322: [0mType '{ isActive: true; name: string; type: any; content: string; 
+subject: string; channel: "EMAIL"; variables: string[]; } | { isActive: true; name: string; type: any; 
+content: string; channel: any; variables: string[]; subject?: undefined; }' is not assignable to type 
+'(Without<MessageTemplateCreateInput, MessageTemplateUncheckedCreateInput> & 
+MessageTemplateUncheckedCreateInput) | (Without<...> & MessageTemplateCreateInput)'.
+  Type '{ isActive: true; name: string; type: any; content: string; subject: string; channel: "EMAIL"; 
+variables: string[]; }' is not assignable to type '(Without<MessageTemplateCreateInput, 
+MessageTemplateUncheckedCreateInput> & MessageTemplateUncheckedCreateInput) | (Without<...> & 
+MessageTemplateCreateInput)'.
+    Type '{ isActive: true; name: string; type: any; content: string; subject: string; channel: 
+"EMAIL"; variables: string[]; }' is not assignable to type 
+'Without<MessageTemplateUncheckedCreateInput, MessageTemplateCreateInput> & MessageTemplateCreateInput'.
+      Type '{ isActive: true; name: string; type: any; content: string; subject: string; channel: 
+"EMAIL"; variables: string[]; }' is missing the following properties from type 
+'MessageTemplateCreateInput': messageType, body
+
+[7m168[0m           data: { ...template, isActive: true },
+[7m   [0m [91m          ~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m17995[0m:[93m5[0m
+    [7m17995[0m     data: XOR<MessageTemplateCreateInput, MessageTemplateUncheckedCreateInput>
+    [7m     [0m [96m    ~~~~[0m
+    The expected type comes from property 'data' which is declared here on type '{ select?: 
+MessageTemplateSelect<DefaultArgs> | null | undefined; omit?: MessageTemplateOmit<DefaultArgs> | null | 
+undefined; data: (Without<...> & MessageTemplateUncheckedCreateInput) | (Without<...> & 
+MessageTemplateCreateInput); }'
+[96msrc/messages/messages.service.ts[0m:[93m11[0m:[93m7[0m - [91merror[0m[90m TS2322: [0mType 
+'CreateMessageDto' is not assignable to type '(Without<MessageCreateInput, MessageUncheckedCreateInput> 
+& MessageUncheckedCreateInput) | (Without<...> & MessageCreateInput)'.
+  Type 'CreateMessageDto' is not assignable to type 'Without<MessageUncheckedCreateInput, 
+MessageCreateInput> & MessageCreateInput'.
+    Type 'CreateMessageDto' is missing the following properties from type 'MessageCreateInput': 
+senderId, recipientId, body
+
+[7m11[0m       data: dto,
+[7m  [0m [91m      ~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m16905[0m:[93m5[0m
+    [7m16905[0m     data: XOR<MessageCreateInput, MessageUncheckedCreateInput>
+    [7m     [0m [96m    ~~~~[0m
+    The expected type comes from property 'data' which is declared here on type '{ select?: 
+MessageSelect<DefaultArgs> | null | undefined; omit?: MessageOmit<DefaultArgs> | null | undefined; 
+data: (Without<...> & MessageUncheckedCreateInput) | (Without<...> & MessageCreateInput); }'
+[96msrc/messages/messages.service.ts[0m:[93m44[0m:[93m13[0m - [91merror[0m[90m TS2353: 
+[0mObject literal may only specify known properties, and 'fromUserId' does not exist in type 
+'MessageWhereInput'.
+
+[7m44[0m           { fromUserId: userId },
+[7m  [0m [91m            ~~~~~~~~~~[0m
+[96msrc/messages/messages.service.ts[0m:[93m45[0m:[93m13[0m - [91merror[0m[90m TS2353: 
+[0mObject literal may only specify known properties, and 'toUserId' does not exist in type 
+'MessageWhereInput'.
+
+[7m45[0m           { toUserId: userId }
+[7m  [0m [91m            ~~~~~~~~[0m
+[96msrc/messages/messages.service.ts[0m:[93m83[0m:[93m13[0m - [91merror[0m[90m TS2353: 
+[0mObject literal may only specify known properties, and 'fromUserId' does not exist in type 
+'MessageWhereInput'.
+
+[7m83[0m           { fromUserId: userId1, toUserId: userId2 },
+[7m  [0m [91m            ~~~~~~~~~~[0m
+[96msrc/messages/messages.service.ts[0m:[93m84[0m:[93m13[0m - [91merror[0m[90m TS2353: 
+[0mObject literal may only specify known properties, and 'fromUserId' does not exist in type 
+'MessageWhereInput'.
+
+[7m84[0m           { fromUserId: userId2, toUserId: userId1 }
+[7m  [0m [91m            ~~~~~~~~~~[0m
+[96msrc/messages/messages.service.ts[0m:[93m122[0m:[93m7[0m - [91merror[0m[90m TS2322: 
+[0mType '{ fromUser: { select: { id: true; name: true; email: true; role: true; }; }; toUser: { 
+select: { id: true; name: true; email: true; role: true; }; }; student: { select: { id: true; 
+firstName: true; lastName: true; }; }; }' is not assignable to type 'never'.
+
+[7m122[0m       include: {
+[7m   [0m [91m      ~~~~~~~[0m
+
+  [96msrc/messages/messages.service.ts[0m:[93m122[0m:[93m7[0m
+    [7m122[0m       include: {
+    [7m   [0m [96m      ~~~~~~~~~~[0m
+    [7m123[0m         fromUser: {
+    [7m   [0m [96m~~~~~~~~~~~~~~~~~~~[0m
+    [7m...[0m 
+    [7m145[0m         }
+    [7m   [0m [96m~~~~~~~~~[0m
+    [7m146[0m       }
+    [7m   [0m [96m~~~~~~~[0m
+    The expected type comes from property 'include' which is declared here on type '{ where: { id: 
+number; }; include: never; }'
+[96msrc/messages/messages.service.ts[0m:[93m169[0m:[93m9[0m - [91merror[0m[90m TS2353: 
+[0mObject literal may only specify known properties, and 'toUserId' does not exist in type 
+'MessageWhereInput'.
+
+[7m169[0m         toUserId: userId,
+[7m   [0m [91m        ~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m16971[0m:[93m5[0m
+Found 189 error(s).
+
+    [7m16971[0m     where?: MessageWhereInput
+    [7m     [0m [96m    ~~~~~[0m
+    The expected type comes from property 'where' which is declared here on type '{ data: 
+(Without<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyInput> & 
+MessageUncheckedUpdateManyInput) | (Without<...> & MessageUpdateManyMutationInput); where?: 
+MessageWhereInput | undefined; limit?: number | undefined; }'
+[96msrc/messages/messages.service.ts[0m:[93m182[0m:[93m9[0m - [91merror[0m[90m TS2353: 
+[0mObject literal may only specify known properties, and 'toUserId' does not exist in type 
+'MessageWhereInput'.
+
+[7m182[0m         toUserId: userId,
+[7m   [0m [91m        ~~~~~~~~[0m
+[96msrc/messages/messages.service.ts[0m:[93m198[0m:[93m13[0m - [91merror[0m[90m TS2353: 
+[0mObject literal may only specify known properties, and 'fromUserId' does not exist in type 
+'MessageWhereInput'.
+
+[7m198[0m           { fromUserId: userId },
+[7m   [0m [91m            ~~~~~~~~~~[0m
+[96msrc/messages/messages.service.ts[0m:[93m199[0m:[93m13[0m - [91merror[0m[90m TS2353: 
+[0mObject literal may only specify known properties, and 'toUserId' does not exist in type 
+'MessageWhereInput'.
+
+[7m199[0m           { toUserId: userId }
+[7m   [0m [91m            ~~~~~~~~[0m
+[96msrc/messages/messages.service.ts[0m:[93m204[0m:[93m15[0m - [91merror[0m[90m TS2322: 
+[0mType '{ OR: ({ subject: { contains: string; mode: "insensitive"; }; } | { message: { contains: 
+string; mode: string; }; })[]; }' is not assignable to type 'MessageWhereInput | MessageWhereInput[] | 
+undefined'.
+  Types of property 'OR' are incompatible.
+    Type '({ subject: { contains: string; mode: "insensitive"; }; } | { message: { contains: string; 
+mode: string; }; })[]' is not assignable to type 'MessageWhereInput[]'.
+      Type '{ subject: { contains: string; mode: "insensitive"; }; } | { message: { contains: string; 
+mode: string; }; }' is not assignable to type 'MessageWhereInput'.
+        Object literal may only specify known properties, and 'message' does not exist in type 
+'MessageWhereInput'.
+
+[7m204[0m             { message: { contains: query, mode: 'insensitive' } }
+[7m   [0m [91m              ~~~~~~~[0m
+[96msrc/referrals/referrals.service.ts[0m:[93m32[0m:[93m9[0m - [91merror[0m[90m TS2561: 
+[0mObject literal may only specify known properties, but 'referredByPhone' does not exist in type 
+'Without<ReferralTrackingCreateInput, ReferralTrackingUncheckedCreateInput> & 
+ReferralTrackingUncheckedCreateInput'. Did you mean to write 'referredBy'?
+
+[7m32[0m         referredByPhone: data.referredByPhone,
+[7m  [0m [91m        ~~~~~~~~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m19119[0m:[93m5[0m
+    [7m19119[0m     data: XOR<ReferralTrackingCreateInput, ReferralTrackingUncheckedCreateInput>
+    [7m     [0m [96m    ~~~~[0m
+    The expected type comes from property 'data' which is declared here on type '{ select?: 
+ReferralTrackingSelect<DefaultArgs> | null | undefined; omit?: ReferralTrackingOmit<DefaultArgs> | null 
+| undefined; include?: ReferralTrackingInclude<...> | ... 1 more ... | undefined; data: (Without<...> & 
+ReferralTrackingUncheckedCreateInput) | (Without<...> & ReferralTrackingCreateInput); }'
+[96msrc/referrals/referrals.service.ts[0m:[93m63[0m:[93m18[0m - [91merror[0m[90m TS2353: 
+[0mObject literal may only specify known properties, and 'referralDate' does not exist in type 
+'ReferralTrackingOrderByWithRelationInput | ReferralTrackingOrderByWithRelationInput[]'.
+
+[7m63[0m       orderBy: { referralDate: 'desc' },
+[7m  [0m [91m                 ~~~~~~~~~~~~[0m
+[96msrc/referrals/referrals.service.ts[0m:[93m103[0m:[93m18[0m - [91merror[0m[90m TS2353: 
+[0mObject literal may only specify known properties, and 'referralDate' does not exist in type 
+'ReferralTrackingOrderByWithRelationInput | ReferralTrackingOrderByWithRelationInput[]'.
+
+[7m103[0m       orderBy: { referralDate: 'desc' },
+[7m   [0m [91m                 ~~~~~~~~~~~~[0m
+[96msrc/referrals/referrals.service.ts[0m:[93m110[0m:[93m9[0m - [91merror[0m[90m TS2353: 
+[0mObject literal may only specify known properties, and 'referralSource' does not exist in type 
+'ReferralTrackingWhereInput'.
+
+[7m110[0m         referralSource: source,
+[7m   [0m [91m        ~~~~~~~~~~~~~~[0m
+[96msrc/referrals/referrals.service.ts[0m:[93m123[0m:[93m18[0m - [91merror[0m[90m TS2353: 
+[0mObject literal may only specify known properties, and 'referralDate' does not exist in type 
+'ReferralTrackingOrderByWithRelationInput | ReferralTrackingOrderByWithRelationInput[]'.
+
+[7m123[0m       orderBy: { referralDate: 'desc' },
+[7m   [0m [91m                 ~~~~~~~~~~~~[0m
+[96msrc/referrals/referrals.service.ts[0m:[93m131[0m:[93m7[0m - [91merror[0m[90m TS2322: 
+[0mType '"referralSource"[]' is not assignable to type 'ReferralTrackingScalarFieldEnum | 
+ReferralTrackingScalarFieldEnum[]'.
+  Type '"referralSource"[]' is not assignable to type 'ReferralTrackingScalarFieldEnum[]'.
+    Type '"referralSource"' is not assignable to type 'ReferralTrackingScalarFieldEnum'.
+
+[7m131[0m       by: ['referralSource'],
+[7m   [0m [91m      ~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m18349[0m:[93m5[0m
+    [7m18349[0m     by: ReferralTrackingScalarFieldEnum[] | ReferralTrackingScalarFieldEnum
+    [7m     [0m [96m    ~~[0m
+    The expected type comes from property 'by' which is declared here on type '{ where?: 
+ReferralTrackingWhereInput | undefined; orderBy?: ReferralTrackingOrderByWithAggregationInput | 
+ReferralTrackingOrderByWithAggregationInput[] | undefined; ... 8 more ...; _max?: 
+ReferralTrackingMaxAggregateInputType | undefined; } & { ...; }'
+[96msrc/referrals/referrals.service.ts[0m:[93m166[0m:[93m9[0m - [91merror[0m[90m TS2561: 
+[0mObject literal may only specify known properties, but 'referredByPhone' does not exist in type 
+'(Without<ReferralTrackingUpdateInput, ReferralTrackingUncheckedUpdateInput> & 
+ReferralTrackingUncheckedUpdateInput) | (Without<...> & ReferralTrackingUpdateInput)'. Did you mean to 
+write 'referredBy'?
+
+[7m166[0m         referredByPhone: data.referredByPhone,
+[7m   [0m [91m        ~~~~~~~~~~~~~~~[0m
+
+  [96mnode_modules/.prisma/client/index.d.ts[0m:[93m19175[0m:[93m5[0m
+    [7m19175[0m     data: XOR<ReferralTrackingUpdateInput, ReferralTrackingUncheckedUpdateInput>
+    [7m     [0m [96m    ~~~~[0m
+    The expected type comes from property 'data' which is declared here on type '{ select?: 
+ReferralTrackingSelect<DefaultArgs> | null | undefined; omit?: ReferralTrackingOmit<DefaultArgs> | null 
+| undefined; include?: ReferralTrackingInclude<...> | ... 1 more ... | undefined; data: (Without<...> & 
+ReferralTrackingUncheckedUpdateInput) | (Without<...> & ReferralTrackingUpdateInput); where: Refer...'
+[96msrc/timetable/timetable.service.ts[0m:[93m70[0m:[93m19[0m - [91merror[0m[90m TS2339: 
+[0mProperty 'room' does not exist on type '{ batch: { id: number; name: string; createdAt: Date; 
+updatedAt: Date; levelId: number; teacherId: number | null; dayMask: number; timeSlot: string; 
+capacity: number | null; }; } & { ...; }'.
+
+[7m70[0m       location: t.room || '',
+[7m  [0m [91m                  ~~~~[0m
+
+npm error Lifecycle script `build` failed with error:
+npm error code 1
+npm error path C:\Project Arnav Abacus\arnav-abacus\apps\api
+npm error workspace api@1.0.0
+npm error location C:\Project Arnav Abacus\arnav-abacus\apps\api
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c nest build
+co

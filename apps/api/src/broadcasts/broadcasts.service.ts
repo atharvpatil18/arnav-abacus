@@ -36,12 +36,12 @@ export class BroadcastsService {
         channel: dto.channel,
         targetType: dto.targetType,
         targetIds: dto.targetIds || [],
-        sentById: dto.sentById,
+        sentBy: dto.sentById,
         recipientCount,
-        deliveryStatus: 'SENT',
+        status: 'SENT',
       },
       include: {
-        sentBy: {
+        sentByUser: {
           select: { id: true, name: true, email: true, role: true },
         },
       },
@@ -62,7 +62,7 @@ export class BroadcastsService {
   async getAllBroadcasts() {
     const broadcasts = await this.prisma.broadcastMessage.findMany({
       include: {
-        sentBy: {
+        sentByUser: {
           select: { id: true, name: true, email: true, role: true },
         },
       },
@@ -76,7 +76,7 @@ export class BroadcastsService {
     const broadcast = await this.prisma.broadcastMessage.findUnique({
       where: { id },
       include: {
-        sentBy: {
+        sentByUser: {
           select: { id: true, name: true, email: true, role: true },
         },
       },

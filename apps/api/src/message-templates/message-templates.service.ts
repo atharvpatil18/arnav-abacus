@@ -21,8 +21,8 @@ export class MessageTemplatesService {
     return this.prisma.messageTemplate.create({
       data: {
         name: data.name,
-        type: data.type,
-        content: data.content,
+        messageType: data.type,
+        body: data.content,
         subject: data.subject,
         channel: data.channel,
         variables: data.variables || [],
@@ -32,7 +32,7 @@ export class MessageTemplatesService {
   }
 
   async findAll(type?: MessageType) {
-    const where = type ? { type } : {};
+    const where = type ? { messageType: type } : {};
     return this.prisma.messageTemplate.findMany({
       where,
       orderBy: { createdAt: 'desc' },
@@ -53,7 +53,7 @@ export class MessageTemplatesService {
 
   async findByType(type: MessageType) {
     return this.prisma.messageTemplate.findMany({
-      where: { type, isActive: true },
+      where: { messageType: type, isActive: true },
     });
   }
 
@@ -64,7 +64,7 @@ export class MessageTemplatesService {
       where: { id },
       data: {
         name: data.name,
-        content: data.content,
+        body: data.content,
         subject: data.subject,
         channel: data.channel,
         variables: data.variables,
@@ -97,7 +97,7 @@ export class MessageTemplatesService {
     const template = await this.findOne(id);
 
     return {
-      content: this.replaceVariables(template.content, variables),
+      content: this.replaceVariables(template.body, variables),
       subject: template.subject
         ? this.replaceVariables(template.subject, variables)
         : undefined,
@@ -110,16 +110,16 @@ export class MessageTemplatesService {
     const defaults = [
       {
         name: 'Fee Reminder - SMS',
-        type: MessageType.FEE_REMINDER,
-        content:
+        messageType: MessageType.FEE_REMINDER,
+        body:
           'Dear {{parentName}}, fee of ₹{{amount}} for {{studentName}} is due on {{dueDate}}. Please pay at earliest.',
         channel: MessageChannel.SMS,
         variables: ['parentName', 'studentName', 'amount', 'dueDate'],
       },
       {
         name: 'Fee Reminder - Email',
-        type: MessageType.FEE_REMINDER,
-        content:
+        messageType: MessageType.FEE_REMINDER,
+        body:
           'Dear {{parentName}},\n\nThis is a reminder that the fee of ₹{{amount}} for {{studentName}} is due on {{dueDate}}.\n\nPlease make the payment at your earliest convenience.\n\nThank you,\nArnav Abacus Team',
         subject: 'Fee Payment Reminder - {{studentName}}',
         channel: MessageChannel.EMAIL,
@@ -127,16 +127,16 @@ export class MessageTemplatesService {
       },
       {
         name: 'Absence Alert - SMS',
-        type: MessageType.ABSENCE_ALERT,
-        content:
+        messageType: MessageType.ABSENCE_ALERT,
+        body:
           'Dear {{parentName}}, {{studentName}} was absent from class on {{date}}. Please inform if any concerns.',
         channel: MessageChannel.SMS,
         variables: ['parentName', 'studentName', 'date'],
       },
       {
         name: 'Test Result - SMS',
-        type: MessageType.TEST_RESULT,
-        content:
+        messageType: MessageType.TEST_RESULT,
+        body:
           '{{studentName}} scored {{percent}}% in {{testName}} on {{date}}. Total: {{obtained}}/{{total}}.',
         channel: MessageChannel.SMS,
         variables: [
@@ -150,8 +150,8 @@ export class MessageTemplatesService {
       },
       {
         name: 'Birthday Wishes - WhatsApp',
-        type: MessageType.BIRTHDAY,
-        content:
+        messageType: MessageType.BIRTHDAY,
+        body:
           'Happy Birthday {{studentName}}! 🎉 Wishing you a wonderful day filled with joy and success! - Arnav Abacus Team',
         channel: MessageChannel.WHATSAPP,
         variables: ['studentName'],

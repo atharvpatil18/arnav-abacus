@@ -48,17 +48,22 @@ export class FeePaymentsController {
     @UploadedFile() file: Express.Multer.File,
     @Request() req: any,
   ) {
+    if (!req.user?.userId) {
+      throw new Error('User not authenticated');
+    }
+
     // Create fee payment record with PENDING status
     const payment = await this.prisma.feePayment.create({
       data: {
         feeId: dto.feeId,
         amount: dto.amount,
         paymentDate: new Date(),
-        paymentMethod: dto.paymentMethod,
+        paymentMethod: dto.paymentMethod || 'CASH',
         transactionId: dto.transactionId,
         receiptUrl: file ? `/uploads/${file.filename}` : null,
         notes: dto.notes,
         status: 'PENDING',
+        receivedBy: req.user.userId,
       },
       include: {
         fee: {
@@ -153,8 +158,6 @@ export class FeePaymentsController {
       data: {
         status: 'APPROVED',
         approvedBy: req.user.userId,
-        approvedAt: new Date(),
-        receiptNumber: dto.receiptNumber,
         notes: dto.notes,
       },
       include: {
@@ -208,8 +211,7 @@ export class FeePaymentsController {
       data: {
         status: 'REJECTED',
         approvedBy: req.user.userId,
-        approvedAt: new Date(),
-        rejectionReason: dto.rejectionReason,
+        notes: dto.rejectionReason,
       },
     });
 

@@ -12,14 +12,18 @@ export class InventoryService {
 
   // Get All Items
   async getAll(lowStock: boolean = false) {
-    const where: any = {};
-    
     if (lowStock) {
-      where.quantity = { lte: this.prisma.inventoryItem.fields.minQuantity };
+      // Fetch all items and filter in JavaScript since Prisma can't compare columns
+      const allItems = await this.prisma.inventoryItem.findMany({
+        include: {
+          _count: { select: { allocations: true } }
+        },
+        orderBy: { name: 'asc' }
+      });
+      return allItems.filter(item => item.quantity <= item.minQuantity);
     }
 
     return this.prisma.inventoryItem.findMany({
-      where,
       include: {
         _count: { select: { allocations: true } }
       },

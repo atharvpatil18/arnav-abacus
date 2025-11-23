@@ -8,15 +8,18 @@ export class LeaveService {
 
   async create(dto: CreateLeaveRequestDto) {
     return this.prisma.leaveRequest.create({
-      data: dto,
+      data: {
+        teacherId: dto.teacherId,
+        startDate: dto.startDate,
+        endDate: dto.endDate,
+        leaveType: dto.leaveType,
+        reason: dto.reason,
+        status: 'PENDING' as any,
+      },
       include: {
-        student: {
+        teacher: {
           include: {
-            batch: {
-              include: {
-                level: true
-              }
-            }
+            user: true,
           }
         }
       }
@@ -26,27 +29,24 @@ export class LeaveService {
   async findAll() {
     return this.prisma.leaveRequest.findMany({
       include: {
-        student: {
+        teacher: {
           include: {
-            batch: {
-              include: {
-                level: true
-              }
-            }
+            user: true,
           }
         }
       },
       orderBy: {
-        appliedAt: 'desc'
+        createdAt: 'desc'
       }
     });
   }
 
-  async findByStudent(studentId: number) {
+  async findByTeacher(teacherId: number) {
+    // Method for fetching leave requests by teacher
     return this.prisma.leaveRequest.findMany({
-      where: { studentId },
+      where: { teacherId },
       orderBy: {
-        appliedAt: 'desc'
+        createdAt: 'desc'
       }
     });
   }
@@ -55,18 +55,14 @@ export class LeaveService {
     return this.prisma.leaveRequest.findMany({
       where: { status: 'PENDING' },
       include: {
-        student: {
+        teacher: {
           include: {
-            batch: {
-              include: {
-                level: true
-              }
-            }
+            user: true,
           }
         }
       },
       orderBy: {
-        appliedAt: 'asc'
+        createdAt: 'asc'
       }
     });
   }
@@ -75,13 +71,9 @@ export class LeaveService {
     const leave = await this.prisma.leaveRequest.findUnique({
       where: { id },
       include: {
-        student: {
+        teacher: {
           include: {
-            batch: {
-              include: {
-                level: true
-              }
-            }
+            user: true,
           }
         }
       }
@@ -100,11 +92,10 @@ export class LeaveService {
       data: {
         status: dto.status,
         approvedBy: dto.approvedBy,
-        respondedAt: new Date(),
-        remarks: dto.remarks
+        approvedAt: new Date(),
       },
       include: {
-        student: true
+        teacher: true
       }
     });
   }
@@ -115,16 +106,16 @@ export class LeaveService {
     });
   }
 
-  async getLeaveStats(studentId: number) {
+  async getLeaveStats(teacherId: number) {
     const leaves = await this.prisma.leaveRequest.findMany({
       where: {
-        studentId,
+        teacherId,
         status: 'APPROVED'
       }
     });
 
     const totalDays = leaves.reduce((sum, leave) => {
-      const days = Math.ceil((leave.toDate.getTime() - leave.fromDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+      const days = Math.ceil((leave.endDate.getTime() - leave.startDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
       return sum + days;
     }, 0);
 

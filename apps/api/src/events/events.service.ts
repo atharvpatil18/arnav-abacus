@@ -117,7 +117,7 @@ export class EventsService {
         description: event.description,
         location: event.location,
         dtstart: event.startDate.toISOString(),
-        dtend: event.endDate.toISOString()
+        dtend: event.endDate?.toISOString() || event.startDate.toISOString()
       }
     };
   }

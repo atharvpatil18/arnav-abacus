@@ -16,6 +16,18 @@ export class LevelsController {
     return { data: levels, success: true, message: 'Levels retrieved successfully' };
   }
 
+  @Get(':id/statistics')
+  async getLevelStatistics(@Param('id') id: string) {
+    const stats = await this.levelsService.getLevelStatistics(+id);
+    return { data: stats, success: true, message: 'Level statistics retrieved successfully' };
+  }
+
+  @Get(':id/students')
+  async getStudentsByLevel(@Param('id') id: string) {
+    const students = await this.levelsService.getStudentsByLevel(+id);
+    return { data: students, success: true, message: 'Students retrieved successfully' };
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const level = await this.levelsService.findOne(+id);

@@ -60,7 +60,7 @@ export default function EditStudentPage() {
         parentPhone: student.parentPhone,
         currentLevel: student.currentLevel,
         batchId: student.batchId,
-        joiningDate: student.joiningDate.split('T')[0],
+        joiningDate: student.joiningDate ? student.joiningDate.split('T')[0] : '',
       });
     }
   }, [student]);

@@ -4,27 +4,14 @@ export class CreateReferralDto {
   @IsInt()
   studentId!: number;
 
+  @IsOptional()
   @IsString()
-  referredBy!: string; // Name of referrer
+  source?: string;
 
   @IsOptional()
   @IsString()
-  referredByPhone?: string;
+  referralSource?: string;
 
-  @IsOptional()
-  @IsString()
-  referralSource?: string; // Online, Friend, Existing Student, Event, etc.
-
-  @IsOptional()
-  @IsDateString()
-  referralDate?: string;
-
-  @IsOptional()
-  @IsString()
-  referralRewards?: string; // Any rewards given
-}
-
-export class UpdateReferralDto {
   @IsOptional()
   @IsString()
   referredBy?: string;
@@ -35,9 +22,43 @@ export class UpdateReferralDto {
 
   @IsOptional()
   @IsString()
+  referralCode?: string;
+
+  @IsOptional()
+  @IsDateString()
+  referralDate?: string;
+
+  @IsOptional()
+  @IsDateString()
+  conversionDate?: string;
+
+  @IsOptional()
+  @IsString()
+  notes?: string;
+}
+
+export class UpdateReferralDto {
+  @IsOptional()
+  @IsString()
+  source?: string;
+
+  @IsOptional()
+  @IsString()
   referralSource?: string;
 
   @IsOptional()
   @IsString()
-  referralRewards?: string;
+  referredBy?: string;
+
+  @IsOptional()
+  @IsString()
+  referredByPhone?: string;
+
+  @IsOptional()
+  @IsString()
+  referralCode?: string;
+
+  @IsOptional()
+  @IsString()
+  notes?: string;
 }

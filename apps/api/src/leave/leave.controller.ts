@@ -28,14 +28,14 @@ export class LeaveController {
     return this.leaveService.findPending();
   }
 
-  @Get('student/:studentId')
-  findByStudent(@Param('studentId') studentId: string) {
-    return this.leaveService.findByStudent(+studentId);
+  @Get('teacher/:teacherId')
+  findByTeacher(@Param('teacherId') teacherId: string) {
+    return this.leaveService.findByTeacher(+teacherId);
   }
 
-  @Get('stats/:studentId')
-  getStats(@Param('studentId') studentId: string) {
-    return this.leaveService.getLeaveStats(+studentId);
+  @Get('stats/:teacherId')
+  getStats(@Param('teacherId') teacherId: string) {
+    return this.leaveService.getLeaveStats(+teacherId);
   }
 
   @Get(':id')

@@ -10,7 +10,19 @@ import { Button } from '@/components/ui/button';
 import { CircularProgress } from '@/components/ui/circular-progress';
 import { toast } from '@/components/ui/use-toast';
 import { axiosInstance } from '@/lib/axios';
-import { Plus, Edit, X, Trophy } from 'lucide-react';
+import { Plus, Edit, X, Trophy, ChevronDown, ChevronUp, Users } from 'lucide-react';
+
+interface Student {
+  id: number;
+  firstName: string;
+  lastName: string;
+  age?: number;
+  parentName?: string;
+  parentPhone?: string;
+  batch?: {
+    name: string;
+  };
+}
 
 interface Level {
   id: number;
@@ -28,6 +40,7 @@ export default function LevelsPage() {
   const [showModal, setShowModal] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [editingLevel, setEditingLevel] = useState<Level | null>(null);
+  const [expandedLevelId, setExpandedLevelId] = useState<number | null>(null);
   const [formData, setFormData] = useState<LevelFormData>({
     name: '',
     description: '',
@@ -54,6 +67,30 @@ export default function LevelsPage() {
         throw error;
       }
     },
+  });
+
+  // Fetch students for expanded level
+  const { data: levelStudents } = useQuery<Student[]>({
+    queryKey: ['level-students', expandedLevelId],
+    queryFn: async () => {
+      if (!expandedLevelId) return [];
+      try {
+        const response = await axiosInstance.get(`/levels/${expandedLevelId}/students`);
+        const data = response.data as Student[] | { items: Student[] } | { data: Student[] };
+        if (Array.isArray(data)) {
+          return data;
+        } else if (data && 'items' in data && Array.isArray(data.items)) {
+          return data.items;
+        } else if (data && 'data' in data && Array.isArray(data.data)) {
+          return data.data;
+        }
+        return [];
+      } catch (error) {
+        console.error('Error fetching level students:', error);
+        return [];
+      }
+    },
+    enabled: expandedLevelId !== null,
   });
 
   const mutation = useMutation<Level, Error, LevelFormData>({
@@ -110,6 +147,10 @@ export default function LevelsPage() {
     });
   };
 
+  const toggleLevelExpansion = (levelId: number) => {
+    setExpandedLevelId(expandedLevelId === levelId ? null : levelId);
+  };
+
   if (isLoading) {
     return <div className="flex justify-center p-8"><CircularProgress /></div>;
   }
@@ -153,7 +194,7 @@ export default function LevelsPage() {
       </div>
 
       {/* Levels Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6">
         {safeLevels.map((level: Level) => (
           <Card
             key={level.id}
@@ -161,25 +202,96 @@ export default function LevelsPage() {
           >
             <div className="bg-gradient-to-br from-purple-500 to-blue-500 p-6 text-white">
               <div className="flex items-center justify-between mb-3">
-                <div className="bg-white/20 p-3 rounded-full">
-                  <Trophy className="w-6 h-6" />
+                <div className="flex items-center gap-3">
+                  <div className="bg-white/20 p-3 rounded-full">
+                    <Trophy className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-2xl font-bold">{level.name}</h3>
                 </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => openEditModal(level)}
-                  className="text-white hover:bg-white/20"
-                >
-                  <Edit className="w-4 h-4 mr-1" />
-                  Edit
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => toggleLevelExpansion(level.id)}
+                    className="text-white hover:bg-white/20 flex items-center gap-1"
+                  >
+                    <Users className="w-4 h-4" />
+                    <span>Students</span>
+                    {expandedLevelId === level.id ? (
+                      <ChevronUp className="w-4 h-4" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4" />
+                    )}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => openEditModal(level)}
+                    className="text-white hover:bg-white/20"
+                  >
+                    <Edit className="w-4 h-4 mr-1" />
+                    Edit
+                  </Button>
+                </div>
               </div>
-              <h3 className="text-2xl font-bold">{level.name}</h3>
             </div>
             <CardContent className="p-6">
-              <p className="text-gray-700 leading-relaxed">
+              <p className="text-gray-700 leading-relaxed mb-4">
                 {level.description || 'No description provided'}
               </p>
+
+              {/* Expanded Students Section */}
+              {expandedLevelId === level.id && (
+                <div className="mt-4 border-t pt-4">
+                  <h4 className="font-semibold text-lg mb-3 flex items-center gap-2">
+                    <Users className="w-5 h-5 text-purple-600" />
+                    Students in {level.name}
+                  </h4>
+                  {levelStudents && levelStudents.length > 0 ? (
+                    <div className="overflow-x-auto">
+                      <table className="w-full">
+                        <thead className="bg-gray-50">
+                          <tr>
+                            <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Name</th>
+                            <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Age</th>
+                            <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Batch</th>
+                            <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Parent</th>
+                            <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Contact</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200">
+                          {levelStudents.map((student: Student) => (
+                            <tr key={student.id} className="hover:bg-gray-50">
+                              <td className="px-4 py-3 text-sm">
+                                {student.firstName} {student.lastName}
+                              </td>
+                              <td className="px-4 py-3 text-sm text-gray-600">
+                                {student.age || 'N/A'}
+                              </td>
+                              <td className="px-4 py-3 text-sm text-gray-600">
+                                {student.batch?.name || (
+                                  <span className="text-gray-400 italic">Not assigned</span>
+                                )}
+                              </td>
+                              <td className="px-4 py-3 text-sm text-gray-600">
+                                {student.parentName || 'N/A'}
+                              </td>
+                              <td className="px-4 py-3 text-sm text-gray-600">
+                                {student.parentPhone || 'N/A'}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  ) : (
+                    <div className="text-center py-8 text-gray-500">
+                      <Users className="w-12 h-12 mx-auto mb-2 text-gray-300" />
+                      <p>No students in this level yet</p>
+                    </div>
+                  )}
+                </div>
+              )}
             </CardContent>
           </Card>
         ))}

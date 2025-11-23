@@ -50,6 +50,7 @@ export class CommunicationsService {
         const log = await this.prisma.communicationLog.create({
           data: {
             type: CommunicationType.EMAIL,
+            channel: 'EMAIL',
             recipientId: recipientId || 0,
             recipientType: dto.recipientType || 'UNKNOWN',
             recipient: recipient,
@@ -57,7 +58,7 @@ export class CommunicationsService {
             message: dto.message,
             status: CommunicationStatus.SENT,
             sentAt: new Date(),
-            createdBy,
+
           },
         });
         logs.push(log);
@@ -66,6 +67,7 @@ export class CommunicationsService {
         const log = await this.prisma.communicationLog.create({
           data: {
             type: CommunicationType.EMAIL,
+            channel: 'EMAIL',
             recipientId: recipientId || 0,
             recipientType: dto.recipientType || 'UNKNOWN',
             recipient: recipient,
@@ -73,7 +75,7 @@ export class CommunicationsService {
             message: dto.message,
             status: CommunicationStatus.FAILED,
             errorMessage: error.message,
-            createdBy,
+
           },
         });
         logs.push(log);
@@ -101,6 +103,7 @@ export class CommunicationsService {
       const log = await this.prisma.communicationLog.create({
         data: {
           type: CommunicationType.SMS,
+          channel: 'SMS',
           recipientId: recipientId || 0,
           recipientType: dto.recipientType || 'UNKNOWN',
           recipient: phoneNumber,
@@ -108,7 +111,7 @@ export class CommunicationsService {
           status: success ? CommunicationStatus.SENT : CommunicationStatus.FAILED,
           sentAt: success ? new Date() : undefined,
           errorMessage: success ? undefined : 'SMS service not configured',
-          createdBy,
+
         },
       });
       logs.push(log);
@@ -135,6 +138,7 @@ export class CommunicationsService {
       const log = await this.prisma.communicationLog.create({
         data: {
           type: CommunicationType.WHATSAPP,
+          channel: 'WHATSAPP',
           recipientId: recipientId || 0,
           recipientType: dto.recipientType || 'UNKNOWN',
           recipient: phoneNumber,
@@ -143,7 +147,7 @@ export class CommunicationsService {
           sentAt: success ? new Date() : undefined,
           errorMessage: success ? undefined : 'WhatsApp service not configured',
           metadata: dto.templateId ? JSON.stringify({ templateId: dto.templateId }) : undefined,
-          createdBy,
+
         },
       });
       logs.push(log);
@@ -172,6 +176,7 @@ export class CommunicationsService {
         const log = await this.prisma.communicationLog.create({
           data: {
             type: CommunicationType.PUSH,
+            channel: 'PUSH',
             recipientId: user.id,
             recipientType: 'USER',
             recipient: user.email,
@@ -180,7 +185,7 @@ export class CommunicationsService {
             status: CommunicationStatus.FAILED,
             errorMessage: 'User does not have FCM token',
             metadata: JSON.stringify(dto.data || {}),
-            createdBy,
+
           },
         });
         logs.push(log);
@@ -193,6 +198,7 @@ export class CommunicationsService {
       const log = await this.prisma.communicationLog.create({
         data: {
           type: CommunicationType.PUSH,
+          channel: 'PUSH',
           recipientId: user.id,
           recipientType: 'USER',
           recipient: user.email,
@@ -202,7 +208,7 @@ export class CommunicationsService {
           sentAt: success ? new Date() : undefined,
           errorMessage: success ? undefined : 'Push notification service not configured',
           metadata: JSON.stringify(dto.data || {}),
-          createdBy,
+
         },
       });
       logs.push(log);

@@ -1,5 +1,6 @@
 import { Controller, Post, Get, Put, Delete, Body, Param, Query, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { TimetableService } from './timetable.service';
+import { CreateTimetableDto, UpdateTimetableDto } from './timetable.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
@@ -12,13 +13,13 @@ export class TimetableController {
 
   @Post()
   @Roles(Role.ADMIN)
-  async create(@Body() data: any) {
+  async create(@Body() data: CreateTimetableDto) {
     return this.timetableService.create(data);
   }
 
   @Put(':id')
   @Roles(Role.ADMIN)
-  async update(@Param('id', ParseIntPipe) id: number, @Body() data: any) {
+  async update(@Param('id', ParseIntPipe) id: number, @Body() data: UpdateTimetableDto) {
     return this.timetableService.update(id, data);
   }
 
@@ -51,6 +52,24 @@ export class TimetableController {
   @Roles(Role.ADMIN, Role.TEACHER)
   async exportToCalendar(@Param('batchId', ParseIntPipe) batchId: number) {
     return this.timetableService.exportToCalendar(batchId);
+  }
+
+  @Get('all')
+  @Roles(Role.ADMIN, Role.TEACHER)
+  async getAllTimetables() {
+    return this.timetableService.getAllTimetables();
+  }
+
+  @Get('weekly-schedule')
+  @Roles(Role.ADMIN, Role.TEACHER)
+  async getWeeklySchedule() {
+    return this.timetableService.getWeeklySchedule();
+  }
+
+  @Get('level/:levelId')
+  @Roles(Role.ADMIN, Role.TEACHER)
+  async getByLevel(@Param('levelId', ParseIntPipe) levelId: number) {
+    return this.timetableService.getByLevel(levelId);
   }
 
   @Delete(':id')

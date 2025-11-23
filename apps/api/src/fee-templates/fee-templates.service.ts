@@ -42,7 +42,7 @@ export class FeeTemplatesService {
     const templates = await this.prisma.feeTypeConfig.findMany({
       where: {
         applicableLevels: {
-          has: level,
+          array_contains: level,
         },
       },
       orderBy: { name: 'asc' },

@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { axiosInstance } from '@/lib/axios';
-import { Search, Filter, Users, UserCheck, UserX, GraduationCap } from 'lucide-react';
+import { Search, Filter, Users, UserCheck, UserX, GraduationCap, LayoutGrid, List } from 'lucide-react';
 
 interface Student {
   id: number;
@@ -19,6 +19,7 @@ interface Student {
   parentPhone: string;
   email: string;
   currentLevel: number;
+  age?: number;
   batch?: { id?: number; name: string };
   status: string;
   joiningDate?: string;
@@ -34,6 +35,7 @@ export default function StudentsPage() {
   const [batchFilter, setBatchFilter] = useState<string>('ALL');
   const [sortBy, setSortBy] = useState<'name' | 'level' | 'joining' | 'age'>('name');
   const [showFilters, setShowFilters] = useState(false);
+  const [viewMode, setViewMode] = useState<'card' | 'list'>('card');
 
   const { data: students, isLoading } = useQuery<Student[], Error>({
     queryKey: ['students'],
@@ -95,10 +97,12 @@ export default function StudentsPage() {
       case 'level':
         return a.currentLevel - b.currentLevel;
       case 'joining':
-        return new Date(b.joiningDate || 0).getTime() - new Date(a.joiningDate || 0).getTime();
+        const aTs = a.joiningDate ? new Date(a.joiningDate).getTime() : Number.POSITIVE_INFINITY;
+        const bTs = b.joiningDate ? new Date(b.joiningDate).getTime() : Number.POSITIVE_INFINITY;
+        return bTs - aTs;
       case 'age':
         if (!a.dob || !b.dob) return 0;
-        return new Date(a.dob).getTime() - new Date(b.dob).getTime();
+        return new Date(b.dob).getTime() - new Date(a.dob).getTime();
       default:
         return 0;
     }
@@ -167,6 +171,32 @@ export default function StudentsPage() {
               />
             </div>
             <div className="flex items-center gap-2">
+              <div className="flex border border-gray-300 rounded-lg overflow-hidden">
+                <button
+                  onClick={() => setViewMode('card')}
+                  className={`px-3 py-2 flex items-center gap-1 ${
+                    viewMode === 'card' 
+                      ? 'bg-purple-600 text-white' 
+                      : 'bg-white text-gray-700 hover:bg-gray-50'
+                  }`}
+                  title="Card View"
+                >
+                  <LayoutGrid className="w-4 h-4" />
+                  <span className="text-sm hidden sm:inline">Cards</span>
+                </button>
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={`px-3 py-2 flex items-center gap-1 ${
+                    viewMode === 'list' 
+                      ? 'bg-purple-600 text-white' 
+                      : 'bg-white text-gray-700 hover:bg-gray-50'
+                  }`}
+                  title="List View"
+                >
+                  <List className="w-4 h-4" />
+                  <span className="text-sm hidden sm:inline">List</span>
+                </button>
+              </div>
               <Button
                 variant="outline"
                 onClick={() => setShowFilters(!showFilters)}
@@ -242,11 +272,13 @@ export default function StudentsPage() {
         </div>
       </div>
 
-      {/* Students Grid */}
+      {/* Students Grid/List */}
       <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sortedStudents.length > 0 ? (
-            sortedStudents.map((student: Student) => (
+        {viewMode === 'card' ? (
+          /* Card View */
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {sortedStudents.length > 0 ? (
+              sortedStudents.map((student: Student) => (
             <Card key={student.id} className="border-none shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
               <div className="bg-gradient-to-br from-purple-500 to-blue-500 text-white p-5 rounded-t-xl">
                 <div className="flex items-start justify-between mb-3">
@@ -270,6 +302,7 @@ export default function StudentsPage() {
                 </div>
                 <div className="space-y-1.5 text-sm text-white/90">
                   <p><span className="font-semibold">Level:</span> {student.currentLevel}</p>
+                  <p><span className="font-semibold">Age:</span> {student.age || 'N/A'}</p>
                   {student.batch && (
                     <p><span className="font-semibold">Batch:</span> {student.batch.name}</p>
                   )}
@@ -340,7 +373,114 @@ export default function StudentsPage() {
               )}
             </div>
           )}
-        </div>
+          </div>
+        ) : (
+          /* List/Table View */
+          <div className="overflow-x-auto">
+            {sortedStudents.length > 0 ? (
+              <table className="w-full">
+                <thead className="bg-gradient-to-r from-purple-100 to-blue-100">
+                  <tr>
+                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Name</th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Age</th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Level</th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Batch</th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Parent</th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Phone</th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Status</th>
+                    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {sortedStudents.map((student: Student) => (
+                    <tr key={student.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
+                            <GraduationCap className="w-4 h-4 text-white" />
+                          </div>
+                          <span className="font-medium text-gray-900">
+                            {student.firstName} {student.lastName}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-gray-700">
+                        {student.age || 'N/A'}
+                      </td>
+                      <td className="px-4 py-3 text-gray-700">
+                        Level {student.currentLevel}
+                      </td>
+                      <td className="px-4 py-3 text-gray-700">
+                        {student.batch?.name || <span className="text-gray-400 italic">Not assigned</span>}
+                      </td>
+                      <td className="px-4 py-3 text-gray-700">
+                        {student.parentName}
+                      </td>
+                      <td className="px-4 py-3 text-gray-700">
+                        {student.parentPhone}
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                          student.status === 'ACTIVE' 
+                            ? 'bg-green-100 text-green-700' 
+                            : 'bg-gray-100 text-gray-700'
+                        }`}>
+                          {student.status}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-2">
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => router.push(`/admin/students/${student.id}`)}
+                          >
+                            View
+                          </Button>
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => router.push(`/admin/students/${student.id}/edit`)}
+                          >
+                            Edit
+                          </Button>
+                          <Button
+                            size="sm"
+                            className={student.status === 'ACTIVE' ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'}
+                            onClick={() => toggleStatusMutation.mutate(student.id)}
+                            disabled={toggleStatusMutation.isPending}
+                          >
+                            {student.status === 'ACTIVE' ? 'Deactivate' : 'Activate'}
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className="text-center py-12">
+                <div className="mb-4">
+                  <Users className="w-16 h-16 mx-auto text-gray-400" />
+                </div>
+                <p className="text-lg font-medium text-gray-700">
+                  {searchQuery || statusFilter !== 'ALL' ? 'No students found matching your filters' : 'No students found'}
+                </p>
+                <p className="text-sm mt-2 text-gray-500">
+                  {searchQuery || statusFilter !== 'ALL' ? 'Try adjusting your search or filters' : 'Add a new student to get started'}
+                </p>
+                {!searchQuery && statusFilter === 'ALL' && (
+                  <Button 
+                    onClick={() => router.push('/admin/students/create')}
+                    className="mt-6 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+                  >
+                    Add First Student
+                  </Button>
+                )}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

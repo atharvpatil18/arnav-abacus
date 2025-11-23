@@ -8,43 +8,61 @@ datasource db {
 }
 
 model User {
-  id          Int      @id @default(autoincrement())
-  email       String   @unique
-  password    String
-  name        String?
-  phoneNumber String?
-  role        Role     @default(PARENT)
-  teacher     Teacher? // FIX: Removed relation arguments to let Prisma infer the back-relation.
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                Int                 @id @default(autoincrement())
+  email             String              @unique
+  password          String
+  name              String?
+  phoneNumber       String?
+  fcmToken          String?             // Added for push notifications
+  isEmailVerified   Boolean             @default(false) // Added for email verification tracking
+  role              Role                @default(PARENT)
+  teacher           Teacher?
+  guardian          Guardian?           @relation(name: "GuardianUser")
+  announcements     Announcement[]      @relation(name: "AnnouncementCreator")
+  broadcastMessages BroadcastMessage[]  @relation(name: "BroadcastSender")
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
 }
 
 model Teacher {
-  id      Int     @id @default(autoincrement())
-  user    User    @relation(fields: [userId], references: [id]) // FIX: This side now correctly defines the 1-to-1 relation.
-  userId  Int     @unique
-  batches Batch[]
+  id             Int             @id @default(autoincrement())
+  user           User            @relation(fields: [userId], references: [id])
+  userId         Int             @unique
+  batches        Batch[]
+  leaveRequests  LeaveRequest[]
+  timetables     Timetable[]     @relation(name: "TimetableTeacher")
+  homeworks      Homework[]
 }
 
 model Student {
-  id           Int           @id @default(autoincrement())
-  firstName    String
-  lastName     String?
-  dob          DateTime?
-  parentName   String?
-  parentPhone  String?
-  email        String?       @unique
-  joiningDate  DateTime
-  currentLevel Int
-  batch        Batch?        @relation(fields: [batchId], references: [id])
-  batchId      Int?
-  photoUrl     String?
-  status       StudentStatus @default(ACTIVE)
-  tests        Test[]
-  attendances  Attendance[]
-  fees         Fee[]
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id                  Int                  @id @default(autoincrement())
+  firstName           String
+  lastName            String?
+  dob                 DateTime?
+  age                 Int?                 // Calculated age field
+  parentName          String?
+  parentPhone         String?
+  email               String?              @unique
+  enrollmentNumber    String?              @unique
+  joiningDate         DateTime
+  currentLevel        Int
+  batch               Batch?               @relation(fields: [batchId], references: [id])
+  batchId             Int?
+  photoUrl            String?
+  status              StudentStatus        @default(ACTIVE)
+  tests               Test[]
+  attendances         Attendance[]
+  fees                Fee[]
+  guardians           Guardian[]           @relation(name: "StudentGuardians")
+  referral            ReferralTracking?    @relation(name: "StudentReferral")
+  siblingsAs1         Sibling[]            @relation(name: "Sibling1")
+  siblingsAs2         Sibling[]            @relation(name: "Sibling2")
+  certificates        Certificate[]        @relation(name: "StudentCertificates")
+  homeworkSubmissions HomeworkSubmission[]
+  eventRegistrations  EventRegistration[]
+  inventoryAllocations InventoryAllocation[]
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
 }
 
 model Level {
@@ -58,20 +76,24 @@ model Level {
 }
 
 model Batch {
-  id          Int          @id @default(autoincrement())
-  name        String
-  level       Level        @relation(fields: [levelId], references: [id])
-  levelId     Int
-  teacher     Teacher?     @relation(fields: [teacherId], references: [id])
-  teacherId   Int?
-  dayMask     Int // bitmask for days of week or store JSON
-  timeSlot    String
-  capacity    Int?
-  students    Student[]
-  attendances Attendance[] // FIX: Added missing back-relation for Attendance.
-  tests       Test[] // FIX: Added missing back-relation for Test.
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  id                   Int                   @id @default(autoincrement())
+  name                 String
+  level                Level                 @relation(fields: [levelId], references: [id])
+  levelId              Int
+  teacher              Teacher?              @relation(fields: [teacherId], references: [id])
+  teacherId            Int?
+  dayMask              Int
+  timeSlot             String
+  capacity             Int?
+  students             Student[]
+  attendances          Attendance[]
+  tests                Test[]
+  timetables           Timetable[]           @relation(name: "TimetableBatch")
+  homeworks            Homework[]
+  inventoryAllocations InventoryAllocation[]
+  makeupClasses        MakeupClass[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
 }
 
 model Attendance {
@@ -106,18 +128,20 @@ model Test {
 }
 
 model Fee {
-  id            Int       @id @default(autoincrement())
-  student       Student   @relation(fields: [studentId], references: [id])
+  id            Int          @id @default(autoincrement())
+  student       Student      @relation(fields: [studentId], references: [id])
   studentId     Int
+  feeTypeConfigId Int?       // Added for linking to fee templates
   amount        Float
   dueDate       DateTime
-  paidAmount    Float     @default(0)
+  paidAmount    Float        @default(0)
   paidDate      DateTime?
   paidBy        String?
-  status        FeeStatus @default(PENDING)
+  status        FeeStatus    @default(PENDING)
   invoiceNumber String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  payments      FeePayment[] @relation(name: "FeePayments")
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 }
 
 model Expenditure {
@@ -130,6 +154,320 @@ model Expenditure {
   receiptUrl    String?
   recordedBy    Int
   remarks       String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Guardian {
+  id           Int       @id @default(autoincrement())
+  userId       Int       @unique
+  user         User      @relation(fields: [userId], references: [id], name: "GuardianUser")
+  studentId    Int
+  student      Student   @relation(fields: [studentId], references: [id], name: "StudentGuardians")
+  relationship String?
+  isPrimary    Boolean   @default(false)
+  canPickup    Boolean   @default(true)
+  emergencyContact Boolean @default(false) // Added for emergency contact flag
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@unique([userId, studentId])
+}
+
+model LeaveRequest {
+  id          Int              @id @default(autoincrement())
+  teacherId   Int
+  teacher     Teacher          @relation(fields: [teacherId], references: [id])
+  startDate   DateTime
+  endDate     DateTime
+  leaveType   LeaveType
+  reason      String
+  status      LeaveStatus      @default(PENDING)
+  approvedBy  Int?
+  approvedAt  DateTime?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model Message {
+  id          Int      @id @default(autoincrement())
+  senderId    Int
+  recipientId Int
+  subject     String?
+  body        String
+  isRead      Boolean  @default(false)
+  readAt      DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model MessageTemplate {
+  id          Int            @id @default(autoincrement())
+  name        String         @unique
+  messageType MessageType
+  channel     MessageChannel
+  subject     String?
+  body        String
+  variables   Json?
+  isActive    Boolean        @default(true)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model ReferralTracking {
+  id              Int       @id @default(autoincrement())
+  studentId       Int       @unique
+  student         Student   @relation(fields: [studentId], references: [id], name: "StudentReferral")
+  source          String?
+  referralSource  String?
+  referredBy      String?
+  referredByPhone String?
+  referralCode    String?
+  referralDate    DateTime?
+  conversionDate  DateTime?
+  notes           String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Sibling {
+  id          Int      @id @default(autoincrement())
+  student1Id  Int
+  student1    Student  @relation(fields: [student1Id], references: [id], name: "Sibling1")
+  student2Id  Int
+  student2    Student  @relation(fields: [student2Id], references: [id], name: "Sibling2")
+  createdAt   DateTime @default(now())
+
+  @@unique([student1Id, student2Id])
+}
+
+model Timetable {
+  id        Int      @id @default(autoincrement())
+  batchId   Int
+  batch     Batch    @relation(fields: [batchId], references: [id], name: "TimetableBatch")
+  teacherId Int?
+  teacher   Teacher? @relation(fields: [teacherId], references: [id], name: "TimetableTeacher")
+  dayOfWeek Int
+  startTime String
+  endTime   String
+  room      String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([batchId, dayOfWeek, startTime, endTime])
+}
+
+model Certificate {
+  id               Int      @id @default(autoincrement())
+  studentId        Int
+  student          Student  @relation(fields: [studentId], references: [id], name: "StudentCertificates")
+  certificateType  String
+  issuedDate       DateTime
+  enrollmentNumber String?
+  pdfUrl           String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model FeePayment {
+  id            Int      @id @default(autoincrement())
+  feeId         Int
+  fee           Fee      @relation(fields: [feeId], references: [id], name: "FeePayments", onDelete: Cascade)
+  amount        Float
+  paymentDate   DateTime
+  paymentMethod String
+  transactionId String?
+  receiptUrl    String?  // Added for receipt file storage
+  receivedBy    Int
+  approvedBy    Int?     // Added for approval tracking
+  status        String   @default("PENDING")
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Homework {
+  id          Int                  @id @default(autoincrement())
+  title       String
+  description String?
+  dueDate     DateTime
+  batchId     Int
+  batch       Batch                @relation(fields: [batchId], references: [id])
+  teacherId   Int
+  teacher     Teacher              @relation(fields: [teacherId], references: [id])
+  priority    String?
+  averageGrade Float?
+  submissions HomeworkSubmission[]
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+}
+
+model HomeworkSubmission {
+  id             Int       @id @default(autoincrement())
+  homeworkId     Int
+  homework       Homework  @relation(fields: [homeworkId], references: [id])
+  studentId      Int
+  student        Student   @relation(fields: [studentId], references: [id])
+  submittedAt    DateTime?
+  status         String
+  grade          Float?
+  feedback       String?
+  pointsEarned   Int?
+  lateSubmission Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model InventoryItem {
+  id          Int                    @id @default(autoincrement())
+  name        String
+  description String?
+  quantity    Int
+  minQuantity Int
+  category    String?
+  unit        String?
+  allocations InventoryAllocation[]
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
+}
+
+model InventoryAllocation {
+  id          Int           @id @default(autoincrement())
+  itemId      Int
+  item        InventoryItem @relation(fields: [itemId], references: [id])
+  batchId     Int?
+  batch       Batch?        @relation(fields: [batchId], references: [id])
+  studentId   Int?
+  student     Student?      @relation(fields: [studentId], references: [id])
+  quantity    Int
+  allocatedAt DateTime      @default(now())
+  returnedAt  DateTime?
+  status      String        @default("ALLOCATED")
+  notes       String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model Announcement {
+  id          Int      @id @default(autoincrement())
+  title       String
+  content     String
+  priority    String?
+  targetRole  String?
+  targetRoles String?  // Added for multiple roles support
+  isActive    Boolean  @default(true)
+  publishedAt DateTime @default(now())
+  expiresAt   DateTime?
+  createdBy   Int
+  createdByUser User   @relation(fields: [createdBy], references: [id], name: "AnnouncementCreator")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model BroadcastMessage {
+  id          Int      @id @default(autoincrement())
+  title       String?  // Added for message title
+  subject     String?
+  message     String
+  channel     String
+  targetType  String
+  targetIds   Json?
+  status      String   @default("PENDING")
+  sentAt      DateTime?
+  sentBy      Int
+  sentByUser  User     @relation(fields: [sentBy], references: [id], name: "BroadcastSender")
+  recipientCount Int?
+  successCount   Int?
+  failureCount   Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model CommunicationLog {
+  id          Int      @id @default(autoincrement())
+  type        String
+  channel     String
+  recipient   String
+  recipientId Int?     // Added for user ID reference
+  recipientType String? // Added for recipient type tracking
+  subject     String?
+  message     String
+  status      String
+  sentAt      DateTime?
+  deliveredAt DateTime? // Added for delivery tracking
+  readAt      DateTime? // Added for read tracking
+  errorMessage String?
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Event {
+  id          Int                 @id @default(autoincrement())
+  title       String
+  description String?
+  eventDate   DateTime
+  startDate   DateTime            @default(now()) // Alias for eventDate
+  endDate     DateTime?           // Added for event end time
+  location    String?
+  capacity    Int?
+  fee         Float?
+  status      String              @default("UPCOMING")
+  isActive    Boolean             @default(true) // Added for soft delete
+  registrations EventRegistration[]
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+}
+
+model EventRegistration {
+  id          Int      @id @default(autoincrement())
+  eventId     Int
+  event       Event    @relation(fields: [eventId], references: [id])
+  studentId   Int
+  student     Student  @relation(fields: [studentId], references: [id])
+  status      String   @default("REGISTERED")
+  paymentStatus String?
+  registeredAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([eventId, studentId], name: "eventId_studentId")
+}
+
+model FeeTypeConfig {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String?
+  amount      Float
+  frequency   String
+  category    String?  // Added for categorization
+  applicableLevels Json?   // Changed to Json for array support
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Holiday {
+  id          Int      @id @default(autoincrement())
+  name        String
+  date        DateTime
+  description String?
+  isRecurring Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model MakeupClass {
+  id            Int      @id @default(autoincrement())
+  originalDate  DateTime
+  makeupDate    DateTime
+  newDate       DateTime @default(now()) // Alias for makeupDate
+  batchId       Int
+  batch         Batch    @relation(fields: [batchId], references: [id])
+  reason        String?
+  status        String   @default("SCHEDULED")
+  notified      Boolean  @default(false) // Added for notification tracking
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
@@ -156,4 +494,43 @@ enum FeeStatus {
   PENDING
   PARTIAL
   PAID
+}
+
+enum LeaveType {
+  MEDICAL
+  CASUAL
+  EMERGENCY
+  VACATION
+}
+
+enum LeaveStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum MessageType {
+  NOTIFICATION
+  REMINDER
+  ALERT
+  ANNOUNCEMENT
+  FEE_REMINDER
+  ABSENCE_ALERT
+  TEST_RESULT
+  BIRTHDAY
+}
+
+enum MessageChannel {
+  SMS
+  EMAIL
+  IN_APP
+  WHATSAPP
+}
+
+enum SubmissionStatus {
+  PENDING
+  SUBMITTED
+  GRADED
+  LATE
+  MISSING
 }

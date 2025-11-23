@@ -4,24 +4,21 @@ import { LeaveType, LeaveStatus } from '@prisma/client';
 
 export class CreateLeaveRequestDto {
   @IsInt()
-  studentId!: number;
+  teacherId!: number;  // Changed from studentId since LeaveRequest is for teachers
 
   @IsDate()
   @Transform(({ value }) => new Date(value))
-  fromDate!: Date;
+  startDate!: Date;  // Changed from fromDate to match schema
 
   @IsDate()
   @Transform(({ value }) => new Date(value))
-  toDate!: Date;
+  endDate!: Date;  // Changed from toDate to match schema
 
   @IsString()
   reason!: string;
 
   @IsEnum(LeaveType)
   leaveType!: LeaveType;
-
-  @IsInt()
-  appliedBy!: number;
 }
 
 export class ApproveLeaveRequestDto {

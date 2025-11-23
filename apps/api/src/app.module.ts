@@ -19,18 +19,19 @@ import { SiblingsModule } from './siblings/siblings.module';
 import { ReferralsModule } from './referrals/referrals.module';
 import { MessagesModule } from './messages/messages.module';
 import { MessageTemplatesModule } from './message-templates/message-templates.module';
-import { EventsModule } from './events/events.module';
+// import { EventsModule } from './events/events.module';
 import { ExpenditureModule } from './expenditure/expenditure.module';
-import { HolidaysModule } from './holidays/holidays.module';
+// import { HolidaysModule } from './holidays/holidays.module';
 import { LeaveModule } from './leave/leave.module';
-import { InventoryModule } from './inventory/inventory.module';
+// import { InventoryModule } from './inventory/inventory.module';
 import { GuardiansModule } from './guardians/guardians.module';
 import { FeeTemplatesModule } from './fee-templates/fee-templates.module';
 import { CertificatesModule } from './certificates/certificates.module';
-import { CommunicationsModule } from './communications/communications.module';
-import { BroadcastsModule } from './broadcasts/broadcasts.module';
-import { AnnouncementsModule } from './announcements/announcements.module';
+// import { CommunicationsModule } from './communications/communications.module';
+// import { BroadcastsModule } from './broadcasts/broadcasts.module';
+// import { AnnouncementsModule } from './announcements/announcements.module';
 import { HealthModule } from './health/health.module';
+import { TeacherModule } from './teacher/teacher.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { HealthModule } from './health/health.module';
     HealthModule,
     AuthModule,
     UsersModule,
+    TeacherModule,
     StudentsModule,
     ParentsModule,
     GuardiansModule,
@@ -56,15 +58,15 @@ import { HealthModule } from './health/health.module';
     NotificationsModule,
     MessagesModule,
     MessageTemplatesModule,
-    CommunicationsModule,
-    BroadcastsModule,
-    AnnouncementsModule,
-    EventsModule,
-    HolidaysModule,
+    // CommunicationsModule,
+    // BroadcastsModule,
+    // AnnouncementsModule,
+    // EventsModule,
+    // HolidaysModule,
     SiblingsModule,
     ReferralsModule,
     CertificatesModule,
-    InventoryModule,
+    // InventoryModule,
     FilesModule,
     ReportsModule,
     AnalyticsModule,
